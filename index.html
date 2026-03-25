@@ -1,745 +1,490 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>법무사김경찬사무소 | 블로그 대행 제안서</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<style>
-body{font-family:'Noto Sans KR',sans-serif;scroll-behavior:smooth;word-break:keep-all;}
-.hover-lift{transition:all .35s ease;}
-.hover-lift:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,0.12);}
-.img-zoom{overflow:hidden;}
-.img-zoom img{transition:transform .6s ease;}
-.img-zoom:hover img{transform:scale(1.05);}
-.kakao-btn{background:#FEE500;color:#191919;transition:all .3s cubic-bezier(0.175,0.885,0.32,1.275);}
-.kakao-btn:hover{transform:scale(1.05) translateY(-3px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.15);}
-.flow-step{position:relative;}
-.flow-step:not(:last-child)::after{content:'';position:absolute;top:50%;right:-24px;width:24px;height:2px;background:#B8972E;}
-@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-
-@media(max-width:640px){
-  .trust-num{font-size:28px !important;}
-  .trust-grid{grid-template-columns:1fr 1fr !important;gap:16px !important;}
-  .price-compare{gap:12px !important;flex-direction:column;align-items:center;}
-  .price-special{font-size:32px !important;}
-  .price-discount{font-size:14px !important;padding:7px 14px !important;}
-  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -8px;padding:0 8px;}
-  .table-wrap table{min-width:520px;}
-  .total-cost-big{font-size:28px !important;}
-  .saving-big{font-size:22px !important;}
-  .cta-title{font-size:18px !important;}
-  .cta-price{font-size:48px !important;}
-  .kakao-float{bottom:1rem !important;right:1rem !important;padding:10px 16px !important;font-size:13px !important;}
-  .hero-section{min-height:75vh !important;}
-  .urgent-banner{padding:14px 16px !important;}
-  .urgent-banner .text-base{font-size:13px !important;}
-  .sale-banner-title{font-size:18px !important;}
-  .cta-inner{padding:24px 16px !important;}
-  .impact-title{font-size:18px !important;}
-  .flow-step:not(:last-child)::after{display:none;}
-  .flow-grid{grid-template-columns:1fr !important;gap:12px !important;}
-  .svc-grid{grid-template-columns:1fr 1fr !important;}
-  .metrics-grid{grid-template-columns:1fr 1fr !important;}
-  .why-grid{grid-template-columns:1fr !important;}
-  .timeline-grid{flex-direction:column !important;}
-  .timeline-step{flex-direction:row !important;text-align:left !important;}
-  .timeline-step .tl-circle{margin:0 !important;}
-  .timeline-connector-h{display:none !important;}
-  .timeline-connector-v{display:block !important;width:2px;height:24px;margin:0 auto;}
-  .tier-wrap{flex-direction:column !important;align-items:center !important;}
-  .tier-wrap > div{max-width:100% !important;transform:none !important;}
-}
-@media(max-width:420px){
-  .trust-grid{grid-template-columns:1fr !important;}
-  .price-special{font-size:26px !important;}
-  .svc-grid{grid-template-columns:1fr !important;}
-  .metrics-grid{grid-template-columns:1fr !important;}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감자네트워크 | 사업 제안서</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body{
+      font-family:'Noto Sans KR',sans-serif;
+      scroll-behavior:smooth;
+      word-break:keep-all;
+      background:#f8fafc;
+      color:#1f2937;
+    }
+    .hover-lift{transition:all .35s ease;}
+    .hover-lift:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(0,0,0,.12);}
+    .glass{
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .kakao-btn{
+      background:#FEE500;
+      color:#191919;
+      transition:all .28s ease;
+    }
+    .kakao-btn:hover{
+      transform:translateY(-3px) scale(1.02);
+      box-shadow:0 18px 28px rgba(0,0,0,.18);
+    }
+    .phone-btn{
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      border:2px solid rgba(255,255,255,.24);
+      transition:all .28s ease;
+    }
+    .phone-btn:hover{
+      transform:translateY(-3px) scale(1.02);
+      background:rgba(255,255,255,.18);
+      box-shadow:0 18px 28px rgba(0,0,0,.18);
+    }
+    .cta-card{
+      border-radius:22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .cta-card::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,0));
+      pointer-events:none;
+    }
+    .section-title{
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      color:#0284c7;
+      margin-bottom:10px;
+    }
+    .service-card{
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:24px;
+      padding:28px 24px;
+      height:100%;
+    }
+    .service-icon{
+      width:62px;
+      height:62px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      margin-bottom:18px;
+      background:linear-gradient(135deg,#e0f2fe,#dbeafe);
+    }
+    .mini-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+      color:#0369a1;
+      font-size:12px;
+      font-weight:700;
+    }
+    .contact-tile{
+      border-radius:24px;
+      padding:24px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      text-decoration:none;
+      font-weight:900;
+    }
+    .contact-icon{
+      width:64px;
+      height:64px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .floating-kakao{
+      position:fixed;
+      right:24px;
+      bottom:24px;
+      z-index:9999;
+      text-decoration:none;
+      border-radius:999px;
+      padding:14px 22px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      box-shadow:0 10px 28px rgba(0,0,0,.25);
+    }
+    @media (max-width: 768px){
+      .hero-title{font-size:34px !important; line-height:1.25 !important;}
+      .floating-kakao{
+        right:16px;
+        bottom:16px;
+        padding:12px 18px;
+        font-size:14px;
+      }
+      .contact-tile{
+        padding:20px;
+      }
+      .contact-icon{
+        width:56px;
+        height:56px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-stone-50 text-stone-800 antialiased">
+<body class="antialiased">
 
-<!-- 플로팅 카카오 -->
-<a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn kakao-float" style="position:fixed;bottom:2rem;right:2rem;z-index:9999;border-radius:50px;padding:14px 22px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;box-shadow:0 4px 24px rgba(0,0,0,0.25);text-decoration:none;">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
-  카카오 상담
-</a>
+  <!-- 플로팅 카카오 -->
+  <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn floating-kakao">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919" aria-hidden="true">
+      <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/>
+    </svg>
+    카카오 상담
+  </a>
 
-<!-- 네비 -->
-<nav class="bg-white/90 backdrop-blur-md border-b border-stone-200 sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
-    <div class="flex items-center gap-2">
-      <span class="text-xl font-black tracking-tighter" style="color:#B8972E;">감자네트워크</span>
-      <span class="text-sm text-stone-500 hidden sm:block">| 블로그 대행 제안서</span>
+  <!-- 네비 -->
+  <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-xl font-black tracking-tight text-sky-700">감자네트워크</span>
+        <span class="text-sm text-slate-400 hidden sm:block">| 제주 비즈니스 솔루션 제안서</span>
+      </div>
+      <div class="hidden md:flex items-center gap-5 text-sm font-bold text-slate-600">
+        <a href="#business" class="hover:opacity-70">사업영역</a>
+        <a href="#process" class="hover:opacity-70">진행방식</a>
+        <a href="#strength" class="hover:opacity-70">강점</a>
+        <a href="#contact" class="px-4 py-2 rounded-xl text-white" style="background:linear-gradient(135deg,#0284c7,#06b6d4);">문의하기</a>
+      </div>
     </div>
-    <div class="flex gap-4 text-sm font-bold text-stone-600">
-      <a href="#why-hard" class="hover:opacity-70 transition hidden sm:block">왜 어려운가</a>
-      <a href="#preview" class="hover:opacity-70 transition hidden sm:block">콘텐츠미리보기</a>
-      <a href="#effect" class="hover:opacity-70 transition hidden sm:block">견적요약</a>
-      <a href="#contact" class="px-4 py-2 rounded-lg text-white transition hover:opacity-90" style="background:#B8972E;">문의하기</a>
-    </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- 1. HERO -->
-<header class="relative bg-stone-950 overflow-hidden hero-section" style="min-height:95vh;display:flex;align-items:center;">
-  <div class="absolute inset-0" style="opacity:0.45;">
-    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1600" class="w-full h-full object-cover" onerror="this.style.display='none'">
-  </div>
-  <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.65) 100%);"></div>
-  <div class="relative max-w-4xl mx-auto px-6 py-20">
-    <div class="inline-block px-4 py-1 mb-6 text-xs font-bold tracking-wider rounded-full text-white" style="border:1px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.1);">
-      제주 제주시 남광북3길 &middot; 블로그 대행 맞춤 제안서
+  <!-- HERO -->
+  <header class="relative overflow-hidden" style="min-height:92vh;display:flex;align-items:center;background:#0f172a;">
+    <div class="absolute inset-0">
+      <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&q=80&w=1800"
+           alt=""
+           class="w-full h-full object-cover opacity-30">
     </div>
-    <h1 class="text-4xl sm:text-6xl font-black text-white mb-6 leading-tight drop-shadow-2xl">
-      <span style="color:#fff;">법무사김경찬사무소의</span><br>
-      <span style="color:#B8972E;">블로그를 검색 1페이지로</span><br>
-      <span style="color:#fff;">만들어 드립니다</span>
-    </h1>
-    <p class="text-xl text-white/90 max-w-2xl mb-10 leading-relaxed drop-shadow-lg">
-      매일 꾸준한 콘텐츠가 쌓이면 &#8212;<br>
-      <strong style="color:#B8972E;">고객이 먼저 찾아옵니다</strong>
-    </p>
-    <div class="flex flex-wrap items-center gap-4">
-      <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn inline-flex items-center px-8 py-4 rounded-2xl font-black text-lg shadow-2xl">
-        <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
-        카카오톡으로 상담 시작하기
-      </a>
-      <a href="tel:01046530114" class="inline-flex items-center px-8 py-4 rounded-2xl font-black text-lg text-white border-2 border-white/30 hover:bg-white/10 transition" style="text-decoration:none;">&#128222; 010-4653-0114</a>
-    </div>
-  </div>
-</header>
+    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(2,6,23,.86),rgba(2,132,199,.62));"></div>
 
-<!-- 2. 후킹 배너 -->
-<div class="urgent-banner" style="background:#B8972E;padding:18px 24px;">
-  <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
-    <div class="text-white font-black text-base">&#128680; 지금 이 순간에도 경쟁업체는 블로그 글로 문의를 받고 있습니다 &#8212; 법무사김경찬사무소는 어떤가요?</div>
-    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn px-6 py-3 rounded-xl font-black text-sm flex-shrink-0">블로그 현황 확인하기 &rarr;</a>
-  </div>
-</div>
-
-<!-- 3. 신뢰 지표 -->
-<section style="background:#111827;padding:56px 24px;">
-  <div class="max-w-6xl mx-auto text-center">
-    <div style="font-size:13px;font-weight:700;letter-spacing:3px;color:#B8972E;text-transform:uppercase;margin-bottom:12px;">BLOG MANAGEMENT</div>
-    <h2 style="font-size:32px;font-weight:900;color:#fff;margin-bottom:48px;">감자네트워크와 함께라면<br><span style="color:#B8972E;">법무사김경찬사무소가 이렇게 변합니다</span></h2>
-    <div class="trust-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px;max-width:900px;margin:0 auto;">
-      <div>
-        <div class="trust-num" style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">월 8건</div>
-        <div style="font-size:14px;color:#9CA3AF;">SEO 최적화 포스팅</div>
-      </div>
-      <div>
-        <div class="trust-num" style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">3개월</div>
-        <div style="font-size:14px;color:#9CA3AF;">계약 기간</div>
-      </div>
-      <div>
-        <div class="trust-num" style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">24건</div>
-        <div style="font-size:14px;color:#9CA3AF;">총 콘텐츠 누적</div>
-      </div>
-      <div>
-        <div class="trust-num" style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">0개</div>
-        <div style="font-size:14px;color:#9CA3AF;">추가 옵션 포함</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 3.5 타겟 키워드 -->
-<section style="background:#0F172A;padding:40px 24px 48px;">
-  <div class="max-w-4xl mx-auto text-center">
-    <div style="font-size:13px;font-weight:700;letter-spacing:3px;color:#B8972E;text-transform:uppercase;margin-bottom:12px;">TARGET KEYWORDS</div>
-    <h2 style="font-size:24px;font-weight:900;color:#fff;margin-bottom:24px;">&#127919; 법무사김경찬사무소 타겟 키워드</h2>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
-      <div style="background:#B8972E;padding:10px 22px;border-radius:50px;font-size:15px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.3);">#제주지방법원 미산과장</div><div style="background:#B8972E;padding:10px 22px;border-radius:50px;font-size:15px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.3);">#등기과장</div><div style="background:#B8972E;padding:10px 22px;border-radius:50px;font-size:15px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.3);">#호적과장</div><div style="background:#B8972E;padding:10px 22px;border-radius:50px;font-size:15px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.3);">#총무과장</div><div style="background:#B8972E;padding:10px 22px;border-radius:50px;font-size:15px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.3);">#집행관 역임</div>
-    </div>
-    <div style="font-size:13px;color:#6B7280;margin-top:16px;">위 키워드를 중심으로 SEO 최적화 콘텐츠를 제작합니다</div>
-  </div>
-</section>
-
-<!-- 4. 실제 성과 Key Metrics -->
-<section style="background:linear-gradient(135deg,#0F172A,#1E293B);padding:64px 24px;">
-  <div class="max-w-6xl mx-auto text-center">
-    <div style="font-size:13px;font-weight:700;letter-spacing:3px;color:#B8972E;text-transform:uppercase;margin-bottom:12px;">KEY METRICS</div>
-    <h2 style="font-size:32px;font-weight:900;color:#fff;margin-bottom:48px;">블로그 대행 <span style="color:#B8972E;">실제 성과</span></h2>
-    <div class="metrics-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:900px;margin:0 auto;">
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 20px;">
-        <div style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">+120%</div>
-        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">노출지수</div>
-        <div style="font-size:12px;color:#9CA3AF;">평균 노출 증가율</div>
-      </div>
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 20px;">
-        <div style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">50+</div>
-        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">타겟 키워드</div>
-        <div style="font-size:12px;color:#9CA3AF;">상위 노출 키워드</div>
-      </div>
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 20px;">
-        <div style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">2.3x</div>
-        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">전환율</div>
-        <div style="font-size:12px;color:#9CA3AF;">문의 전환 향상</div>
-      </div>
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 20px;">
-        <div style="font-size:48px;font-weight:900;color:#B8972E;margin-bottom:8px;">35%</div>
-        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">재방문율</div>
-        <div style="font-size:12px;color:#9CA3AF;">고객 재방문 비율</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. 왜 우리인가? 6 strengths -->
-<section style="background:#fff;padding:80px 24px;">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12">
-      <div style="font-size:13px;font-weight:700;letter-spacing:3px;color:#B8972E;text-transform:uppercase;margin-bottom:12px;">WHY US</div>
-      <h2 style="font-size:32px;font-weight:900;color:#111827;margin-bottom:8px;">왜 <span style="color:#B8972E;">감자네트워크</span>인가?</h2>
-      <p style="font-size:16px;color:#6B7280;">차별화된 6가지 강점</p>
-    </div>
-    <div class="why-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
-      <div style="background:#FAFAF9;border:1px solid #E5E7EB;border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;" class="hover-lift">
-        <div style="font-size:40px;margin-bottom:16px;">&#128221;</div>
-        <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:8px;">업종 전문 작가</div>
-        <div style="font-size:14px;color:#6B7280;line-height:1.6;">해당 업종에 대한 깊은 이해를 바탕으로 전문적인 콘텐츠를 제작합니다.</div>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E7EB;border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;" class="hover-lift">
-        <div style="font-size:40px;margin-bottom:16px;">&#128270;</div>
-        <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:8px;">SEO 키워드 최적화</div>
-        <div style="font-size:14px;color:#6B7280;line-height:1.6;">검색 상위 노출을 위한 데이터 기반 키워드 전략을 수립합니다.</div>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E7EB;border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;" class="hover-lift">
-        <div style="font-size:40px;margin-bottom:16px;">&#128100;</div>
-        <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:8px;">전담 매니저 배정</div>
-        <div style="font-size:14px;color:#6B7280;line-height:1.6;">1:1 맞춤 관리로 업체 특성에 맞는 콘텐츠를 지속적으로 관리합니다.</div>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E7EB;border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;" class="hover-lift">
-        <div style="font-size:40px;margin-bottom:16px;">&#128202;</div>
-        <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:8px;">월간 성과 리포트</div>
-        <div style="font-size:14px;color:#6B7280;line-height:1.6;">데이터 기반 전략 수정으로 지속적인 성과 개선을 추구합니다.</div>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E7EB;border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;" class="hover-lift">
-        <div style="font-size:40px;margin-bottom:16px;">&#128640;</div>
-        <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:8px;">빠른 시작</div>
-        <div style="font-size:14px;color:#6B7280;line-height:1.6;">상담 후 3일 내 첫 콘텐츠 발행을 시작합니다.</div>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E7EB;border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;" class="hover-lift">
-        <div style="font-size:40px;margin-bottom:16px;">&#128176;</div>
-        <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:8px;">합리적 가격</div>
-        <div style="font-size:14px;color:#6B7280;line-height:1.6;">직원 채용 대비 최대 70% 비용 절감 효과</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 6. 이 업종이 홍보가 어려운 이유 -->
-<section id="why-hard" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-  <div class="mb-12">
-    <div class="text-xs font-black tracking-widest uppercase mb-3" style="color:#B8972E;">WHY IT'S HARD</div>
-    <h2 class="text-3xl font-black text-stone-900 mb-4">&#128680; 이 업종이 홍보가 어려운 이유</h2>
-    <p class="text-stone-600 max-w-2xl text-base leading-relaxed">법률/전문직 업종은 일반적인 마케팅 방식으로는 효과를 보기 어렵습니다.</p>
-  </div>
-  <div class="bg-white rounded-2xl border border-stone-200 p-8 md:p-12">
-    <div class="space-y-5 mb-8">
-      
-    <div class="flex items-start gap-3">
-      <span class="text-red-500 font-black text-lg flex-shrink-0 mt-0.5">&#10060;</span>
-      <span class="text-base text-stone-700 leading-relaxed">서비스 특성상 체험단 자체가 불가능</span>
-    </div>
-    <div class="flex items-start gap-3">
-      <span class="text-red-500 font-black text-lg flex-shrink-0 mt-0.5">&#10060;</span>
-      <span class="text-base text-stone-700 leading-relaxed">전문성을 보여줄 채널이 마땅치 않음</span>
-    </div>
-    <div class="flex items-start gap-3">
-      <span class="text-red-500 font-black text-lg flex-shrink-0 mt-0.5">&#10060;</span>
-      <span class="text-base text-stone-700 leading-relaxed">광고만으로는 신뢰를 얻기 어려움</span>
-    </div>
-    </div>
-    <div class="rounded-xl p-5" style="background:rgba(184,151,46,0.1);border-left:5px solid #B8972E;">
-      <div class="flex items-start gap-3">
-        <span class="text-2xl flex-shrink-0">&rarr;</span>
-        <div class="text-lg font-black" style="color:#B8972E;">"전문 지식 블로그가 상담 문의의 80%를 만듭니다"</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 7. 블로그 글 구성 미리보기 -->
-<section id="preview" class="bg-stone-100 py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="mb-12">
-      <div class="text-xs font-black tracking-widest uppercase mb-3" style="color:#B8972E;">CONTENT PREVIEW</div>
-      <h2 class="text-3xl font-black text-stone-900 mb-4">&#128214; 이런 글이 매월 올라갑니다</h2>
-      <p class="text-stone-600 max-w-2xl text-base leading-relaxed">검색부터 문의까지, 블로그 콘텐츠가 만드는 자연스러운 고객 유입 흐름입니다.</p>
-    </div>
-
-    <!-- Flow diagram -->
-    <div class="flow-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:40px;">
-      
-      <div class="flow-step bg-white rounded-xl p-4 text-center border border-stone-200">
-        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-black text-sm" style="background:#B8972E;">1</div>
-        <div class="text-2xl mb-2">&#128270;</div>
-        <div class="text-xs font-bold text-stone-700 leading-relaxed">고객이 "제주시 법무사"을 검색</div>
-      </div>
-      <div class="flow-step bg-white rounded-xl p-4 text-center border border-stone-200">
-        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-black text-sm" style="background:#B8972E;">2</div>
-        <div class="text-2xl mb-2">&#128196;</div>
-        <div class="text-xs font-bold text-stone-700 leading-relaxed">블로그 글이 상위 노출</div>
-      </div>
-      <div class="flow-step bg-white rounded-xl p-4 text-center border border-stone-200">
-        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-black text-sm" style="background:#B8972E;">3</div>
-        <div class="text-2xl mb-2">&#128161;</div>
-        <div class="text-xs font-bold text-stone-700 leading-relaxed">전문 콘텐츠를 보며 신뢰 형성</div>
-      </div>
-      <div class="flow-step bg-white rounded-xl p-4 text-center border border-stone-200">
-        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-black text-sm" style="background:#B8972E;">4</div>
-        <div class="text-2xl mb-2">&#128073;</div>
-        <div class="text-xs font-bold text-stone-700 leading-relaxed">글 하단 CTA &#8594; "무료 상담받기" 클릭</div>
-      </div>
-      <div class="flow-step bg-white rounded-xl p-4 text-center border border-stone-200">
-        <div class="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-black text-sm" style="background:#B8972E;">5</div>
-        <div class="text-2xl mb-2">&#128222;</div>
-        <div class="text-xs font-bold text-stone-700 leading-relaxed">카카오톡/전화 문의 발생</div>
-      </div>
-    </div>
-
-    <!-- Example blog titles -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-      
-    <div class="bg-white rounded-xl border border-stone-200 hover-lift overflow-hidden">
-      <div style="display:flex;gap:0;">
-        <div style="width:120px;min-height:100px;flex-shrink:0;overflow:hidden;">
-          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display='none'">
+    <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center px-4 py-2 rounded-full glass text-white text-xs font-bold tracking-widest mb-6">
+          JEJU LOCAL BUSINESS SOLUTION
         </div>
-        <div style="padding:16px;flex:1;display:flex;flex-direction:column;justify-content:center;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <div class="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-xs" style="background:#B8972E;">1</div>
-            <div class="text-xs text-stone-400">SEO 최적화 포스팅</div>
-          </div>
-          <div class="font-bold text-stone-800 text-sm leading-relaxed">법인세 절세, 사장님이 꼭 알아야 할 3가지</div>
+
+        <h1 class="hero-title text-white font-black mb-6" style="font-size:58px;line-height:1.15;">
+          감자네트워크의 사업을<br>
+          <span class="text-sky-400">한 번에 이해할 수 있는</span><br>
+          통합 제안서
+        </h1>
+
+        <p class="text-white/85 text-lg md:text-xl max-w-3xl leading-relaxed mb-10">
+          감자네트워크는 단순 광고대행이 아니라,
+          <strong class="text-sky-300">마케팅 · 통신 · 운영 효율 · 정보화 인프라</strong>를
+          하나의 흐름으로 연결해 제주 소상공인의 성장을 돕는 실전형 비즈니스 파트너입니다.
+        </p>
+
+        <div class="flex flex-wrap gap-3 mb-10">
+          <span class="mini-tag">네이버 플레이스 운영</span>
+          <span class="mini-tag">블로그 · SNS 마케팅</span>
+          <span class="mini-tag">KT 테이블오더</span>
+          <span class="mini-tag">기업인터넷 · CCTV</span>
+          <span class="mini-tag">네트워크 보안 · 랜공사</span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn cta-card inline-flex items-center gap-3 px-8 py-5 rounded-2xl text-lg font-black">
+            <span class="w-12 h-12 rounded-2xl bg-black/10 flex items-center justify-center">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="#191919" aria-hidden="true">
+                <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/>
+              </svg>
+            </span>
+            <span>
+              <span class="block text-xs font-bold opacity-70">빠른 상담</span>
+              <span class="block">카카오 상담 바로가기</span>
+            </span>
+          </a>
+
+          <a href="tel:01046530114" class="phone-btn cta-card inline-flex items-center gap-3 px-8 py-5 rounded-2xl text-lg font-black">
+            <span class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-2xl">📞</span>
+            <span>
+              <span class="block text-xs font-bold text-white/70">즉시 연결</span>
+              <span class="block">010-4653-0114</span>
+            </span>
+          </a>
         </div>
       </div>
     </div>
-    <div class="bg-white rounded-xl border border-stone-200 hover-lift overflow-hidden">
-      <div style="display:flex;gap:0;">
-        <div style="width:120px;min-height:100px;flex-shrink:0;overflow:hidden;">
-          <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display='none'">
-        </div>
-        <div style="padding:16px;flex:1;display:flex;flex-direction:column;justify-content:center;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <div class="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-xs" style="background:#B8972E;">2</div>
-            <div class="text-xs text-stone-400">SEO 최적화 포스팅</div>
-          </div>
-          <div class="font-bold text-stone-800 text-sm leading-relaxed">이혼 소송 절차, 변호사가 알려주는 A to Z</div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white rounded-xl border border-stone-200 hover-lift overflow-hidden">
-      <div style="display:flex;gap:0;">
-        <div style="width:120px;min-height:100px;flex-shrink:0;overflow:hidden;">
-          <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display='none'">
-        </div>
-        <div style="padding:16px;flex:1;display:flex;flex-direction:column;justify-content:center;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <div class="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-xs" style="background:#B8972E;">3</div>
-            <div class="text-xs text-stone-400">SEO 최적화 포스팅</div>
-          </div>
-          <div class="font-bold text-stone-800 text-sm leading-relaxed">세무조사 대응, 이것만 알면 걱정 없습니다</div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white rounded-xl border border-stone-200 hover-lift overflow-hidden">
-      <div style="display:flex;gap:0;">
-        <div style="width:120px;min-height:100px;flex-shrink:0;overflow:hidden;">
-          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display='none'">
-        </div>
-        <div style="padding:16px;flex:1;display:flex;flex-direction:column;justify-content:center;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <div class="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-xs" style="background:#B8972E;">4</div>
-            <div class="text-xs text-stone-400">SEO 최적화 포스팅</div>
-          </div>
-          <div class="font-bold text-stone-800 text-sm leading-relaxed">개인사업자 종합소득세 신고 가이드</div>
-        </div>
-      </div>
-    </div>
-    </div>
+  </header>
 
-    <div class="bg-white rounded-xl p-5 border-2 text-center" style="border-color:#B8972E;">
-      <div class="text-base font-black" style="color:#B8972E;">&#128161; 모든 글 하단에 상담 유도 CTA가 자동 삽입됩니다. 글 하나하나가 24시간 영업사원 역할을 합니다.</div>
+  <!-- 후킹 배너 -->
+  <section style="background:linear-gradient(135deg,#0284c7,#06b6d4);" class="py-5">
+    <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
+      <div class="text-white font-extrabold text-sm md:text-base">
+        지금 필요한 것은 “단순 홍보”가 아니라, 실제 문의와 계약으로 이어지는 구조입니다.
+      </div>
+      <a href="#contact" class="bg-white text-sky-700 px-5 py-3 rounded-xl font-black text-sm">상담 문의하기 →</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 8. 방치하면 vs 대행 시작 후 -->
-<section class="py-20" style="position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;opacity:0.06;">
-    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
-  </div>
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" style="position:relative;z-index:1;">
-  <div class="mb-10">
-    <div class="text-xs font-black tracking-widest uppercase mb-3" style="color:#B8972E;">BEFORE & AFTER</div>
-    <h2 class="text-3xl font-black text-stone-900">&#128680; 블로그를 하지 않으면...</h2>
-    <p class="text-stone-600 mt-3 text-base leading-relaxed">좋은 서비스를 운영하고 있어도, 검색에 노출되지 않으면 고객이 찾을 수 없습니다.</p>
-  </div>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden hover-lift">
-      <div class="p-7">
-        <h3 class="text-xl font-black mb-5 text-stone-700">&#128532; 블로그를 하지 않으면...</h3>
-        <ul class="space-y-4">
-          <li class="flex items-start gap-3"><span class="text-red-500 font-black text-lg mt-0.5">&#10007;</span><span class="text-base text-stone-600 leading-relaxed">경쟁업체가 검색 1페이지를 독점합니다</span></li>
-          <li class="flex items-start gap-3"><span class="text-red-500 font-black text-lg mt-0.5">&#10007;</span><span class="text-base text-stone-600 leading-relaxed">고객이 검색해도 내 업체는 안 보입니다</span></li>
-          <li class="flex items-start gap-3"><span class="text-red-500 font-black text-lg mt-0.5">&#10007;</span><span class="text-base text-stone-600 leading-relaxed">체험단도 못 하는데, 블로그마저 없으면 홍보 수단이 0입니다</span></li>
-          <li class="flex items-start gap-3"><span class="text-red-500 font-black text-lg mt-0.5">&#10007;</span><span class="text-base text-stone-600 leading-relaxed">직접 쓰자니 시간도 없고, 글 퀄리티도 안 나옵니다</span></li>
-          <li class="flex items-start gap-3"><span class="text-red-500 font-black text-lg mt-0.5">&#10007;</span><span class="text-base text-stone-600 leading-relaxed">시작이 늦어질수록 경쟁업체와의 격차는 더 벌어집니다</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="rounded-2xl overflow-hidden hover-lift" style="border:2px solid #B8972E;">
-      <div class="p-7" style="background:rgba(184,151,46,0.1);">
-        <h3 class="text-xl font-black mb-5" style="color:#B8972E;">&#10024; 대행 시작 후 달라지는 것</h3>
-        <ul class="space-y-4">
-          <li class="flex items-start gap-3"><span class="font-black text-lg mt-0.5" style="color:#B8972E;">&#10003;</span><span class="text-base text-stone-700 leading-relaxed">매주 전문 콘텐츠가 꾸준히 쌓입니다</span></li>
-          <li class="flex items-start gap-3"><span class="font-black text-lg mt-0.5" style="color:#B8972E;">&#10003;</span><span class="text-base text-stone-700 leading-relaxed">타겟 키워드로 검색 1페이지 진입</span></li>
-          <li class="flex items-start gap-3"><span class="font-black text-lg mt-0.5" style="color:#B8972E;">&#10003;</span><span class="text-base text-stone-700 leading-relaxed">글 하나하나가 24시간 영업사원 역할</span></li>
-          <li class="flex items-start gap-3"><span class="font-black text-lg mt-0.5" style="color:#B8972E;">&#10003;</span><span class="text-base text-stone-700 leading-relaxed">문의 전화 및 카카오 상담이 자연스럽게 늘어남</span></li>
-          <li class="flex items-start gap-3"><span class="font-black text-lg mt-0.5" style="color:#B8972E;">&#10003;</span><span class="text-base text-stone-700 leading-relaxed">경쟁업체와의 검색 격차가 매달 벌어집니다</span></li>
-          <li class="flex items-start gap-3"><span class="font-black text-lg mt-0.5" style="color:#B8972E;">&#10003;</span><span class="text-base font-bold leading-relaxed" style="color:#B8972E;">&#9733; 키워드 분석 + 월간 리포트로 성과 확인 가능</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  </div>
-</section>
-
-<!-- 9. 5단계 프로세스 & 타임라인 -->
-<section id="process" class="py-20" style="background:#FAFAF9;">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <div class="text-xs font-black tracking-widest uppercase mb-3" style="color:#B8972E;">PROCESS & TIMELINE</div>
-      <h2 class="text-3xl font-black text-stone-900">&#128203; 블로그 대행 5단계 프로세스</h2>
-      <p class="text-stone-600 mt-2 text-base">사장님은 영업에만 집중하세요. 블로그는 저희가 다 해드립니다.</p>
-    </div>
-    <div class="timeline-grid" style="display:flex;justify-content:center;align-items:flex-start;gap:0;position:relative;">
-      
-      <div style="flex:1;text-align:center;position:relative;">
-        <div style="width:60px;height:60px;border-radius:50%;background:#B8972E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;box-shadow:0 4px 16px rgba(184,151,46,0.1);position:relative;z-index:2;">&#128270;</div>
-        <div class="timeline-connector-h" style="position:absolute;top:30px;left:calc(50% + 30px);right:calc(-50% + 30px);height:3px;background:#B8972E;z-index:1;"></div>
-        <div style="display:inline-block;background:rgba(184,151,46,0.1);color:#B8972E;font-size:11px;font-weight:900;padding:3px 12px;border-radius:50px;margin-bottom:8px;">1~2일</div>
-        <div style="font-size:15px;font-weight:900;color:#111827;margin-bottom:8px;">STEP 1</div>
-        <div style="font-size:14px;font-weight:700;color:#B8972E;margin-bottom:8px;">진단/컨설팅</div>
-        <div style="font-size:12px;color:#6B7280;line-height:1.6;">&middot; 업종 분석<br>&middot; 경쟁사 조사<br>&middot; 키워드 리서치</div>
-      </div>
-      <div style="flex:1;text-align:center;position:relative;">
-        <div style="width:60px;height:60px;border-radius:50%;background:#B8972E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;box-shadow:0 4px 16px rgba(184,151,46,0.1);position:relative;z-index:2;">&#128197;</div>
-        <div class="timeline-connector-h" style="position:absolute;top:30px;left:calc(50% + 30px);right:calc(-50% + 30px);height:3px;background:#B8972E;z-index:1;"></div>
-        <div style="display:inline-block;background:rgba(184,151,46,0.1);color:#B8972E;font-size:11px;font-weight:900;padding:3px 12px;border-radius:50px;margin-bottom:8px;">2~3일</div>
-        <div style="font-size:15px;font-weight:900;color:#111827;margin-bottom:8px;">STEP 2</div>
-        <div style="font-size:14px;font-weight:700;color:#B8972E;margin-bottom:8px;">전략/키워드맵</div>
-        <div style="font-size:12px;color:#6B7280;line-height:1.6;">&middot; 콘텐츠 전략 수립<br>&middot; 키워드 맵 작성</div>
-      </div>
-      <div style="flex:1;text-align:center;position:relative;">
-        <div style="width:60px;height:60px;border-radius:50%;background:#B8972E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;box-shadow:0 4px 16px rgba(184,151,46,0.1);position:relative;z-index:2;">&#9997;&#65039;</div>
-        <div class="timeline-connector-h" style="position:absolute;top:30px;left:calc(50% + 30px);right:calc(-50% + 30px);height:3px;background:#B8972E;z-index:1;"></div>
-        <div style="display:inline-block;background:rgba(184,151,46,0.1);color:#B8972E;font-size:11px;font-weight:900;padding:3px 12px;border-radius:50px;margin-bottom:8px;">3~5일</div>
-        <div style="font-size:15px;font-weight:900;color:#111827;margin-bottom:8px;">STEP 3</div>
-        <div style="font-size:14px;font-weight:700;color:#B8972E;margin-bottom:8px;">제작/세팅</div>
-        <div style="font-size:12px;color:#6B7280;line-height:1.6;">&middot; 블로그 세팅<br>&middot; 첫 콘텐츠 제작</div>
-      </div>
-      <div style="flex:1;text-align:center;position:relative;">
-        <div style="width:60px;height:60px;border-radius:50%;background:#B8972E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;box-shadow:0 4px 16px rgba(184,151,46,0.1);position:relative;z-index:2;">&#128200;</div>
-        <div class="timeline-connector-h" style="position:absolute;top:30px;left:calc(50% + 30px);right:calc(-50% + 30px);height:3px;background:#B8972E;z-index:1;"></div>
-        <div style="display:inline-block;background:rgba(184,151,46,0.1);color:#B8972E;font-size:11px;font-weight:900;padding:3px 12px;border-radius:50px;margin-bottom:8px;">매월</div>
-        <div style="font-size:15px;font-weight:900;color:#111827;margin-bottom:8px;">STEP 4</div>
-        <div style="font-size:14px;font-weight:700;color:#B8972E;margin-bottom:8px;">운영/실행</div>
-        <div style="font-size:12px;color:#6B7280;line-height:1.6;">&middot; 정기 포스팅<br>&middot; 이웃관리<br>&middot; 댓글관리</div>
-      </div>
-      <div style="flex:1;text-align:center;position:relative;">
-        <div style="width:60px;height:60px;border-radius:50%;background:#B8972E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;box-shadow:0 4px 16px rgba(184,151,46,0.1);position:relative;z-index:2;">&#128202;</div>
-        
-        <div style="display:inline-block;background:rgba(184,151,46,0.1);color:#B8972E;font-size:11px;font-weight:900;padding:3px 12px;border-radius:50px;margin-bottom:8px;">매월</div>
-        <div style="font-size:15px;font-weight:900;color:#111827;margin-bottom:8px;">STEP 5</div>
-        <div style="font-size:14px;font-weight:700;color:#B8972E;margin-bottom:8px;">리포트/개선</div>
-        <div style="font-size:12px;color:#6B7280;line-height:1.6;">&middot; 성과 분석<br>&middot; 전략 수정</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 12. 서비스 구성 -->
-<section class="bg-stone-100 py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
-      <div class="text-xs font-black tracking-widest uppercase mb-3" style="color:#B8972E;">SERVICE PACKAGE</div>
-      <h2 class="text-3xl font-black text-stone-900 mb-4">&#128230; 서비스 구성 및 비용 안내</h2>
-      <p class="text-stone-600 text-base">법무사김경찬사무소법무사김경찬사무소 위한 맞춤 서비스 구성입니다.</p>
-    </div>
-
-    <!-- 기본 서비스 (풀와이드) -->
-    <div class="rounded-2xl hover-lift" style="background:rgba(184,151,46,0.1);border:2.5px solid #B8972E;position:relative;overflow:hidden;margin-bottom:20px;">
-      <div style="position:absolute;top:0;left:0;right:0;background:#B8972E;color:#fff;font-size:12px;font-weight:900;padding:6px 0;text-align:center;letter-spacing:2px;">&#11088; 기본 서비스 (필수)</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:40px 32px 24px;flex-wrap:wrap;gap:16px;">
-        <div style="display:flex;align-items:center;gap:16px;">
-          <div style="font-size:40px;">&#9997;&#65039;</div>
-          <div>
-            <div class="font-black text-xl" style="color:#B8972E;">블로그 포스팅</div>
-            <div class="text-sm text-stone-600" style="margin-top:4px;">월 8건 SEO 최적화 포스팅 · 고급 이미지 편집 포함</div>
-          </div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:32px;font-weight:900;color:#B8972E;">월 40만원</div>
-        </div>
-      </div>
-      <div style="border-top:1.5px solid #B8972E22;display:flex;flex-wrap:wrap;gap:0;">
-        <div style="flex:1;min-width:150px;padding:14px 24px;display:flex;align-items:center;gap:10px;border-right:1px solid #B8972E15;">
-          <span style="font-size:20px;">&#128640;</span>
-          <div><div style="font-size:12px;font-weight:900;color:#374151;">빠른 시작</div><div style="font-size:11px;color:#6B7280;">상담 후 3일 이내 발행</div></div>
-        </div>
-        <div style="flex:1;min-width:150px;padding:14px 24px;display:flex;align-items:center;gap:10px;border-right:1px solid #B8972E15;">
-          <span style="font-size:20px;">&#128170;</span>
-          <div><div style="font-size:12px;font-weight:900;color:#374151;">전담 매니저</div><div style="font-size:11px;color:#6B7280;">업종 전문 1:1 관리</div></div>
-        </div>
-        <div style="flex:1;min-width:150px;padding:14px 24px;display:flex;align-items:center;gap:10px;">
-          <span style="font-size:20px;">&#128176;</span>
-          <div><div style="font-size:12px;font-weight:900;color:#374151;">성과 보장</div><div style="font-size:11px;color:#6B7280;">키워드 상위 노출 관리</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 선택 옵션 + 스킨 + 무료 서비스 그리드 -->
-    <div class="svc-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:20px;">
-      
-      <!-- 무료 포함 서비스 -->
-      <div class="bg-white rounded-xl border border-stone-200 hover-lift" style="position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;right:0;background:#16A34A;color:#fff;font-size:10px;font-weight:900;padding:4px 12px;border-radius:0 0 0 12px;">무료</div>
-        <div style="padding:24px 20px 16px;">
-          <div class="text-3xl mb-2">&#128200;</div>
-          <div class="font-black text-base mb-1">SEO 키워드 분석</div>
-          <div class="text-sm text-stone-500 mb-3">업종 맞춤 키워드 리서치</div>
-        </div>
-        <div style="border-top:1px solid #F3F4F6;padding:12px 20px;background:#F0FDF4;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:12px;color:#9CA3AF;">월 비용</span>
-          <span style="font-size:18px;font-weight:900;color:#16A34A;">무료</span>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl border border-stone-200 hover-lift" style="position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;right:0;background:#16A34A;color:#fff;font-size:10px;font-weight:900;padding:4px 12px;border-radius:0 0 0 12px;">무료</div>
-        <div style="padding:24px 20px 16px;">
-          <div class="text-3xl mb-2">&#128202;</div>
-          <div class="font-black text-base mb-1">월간 성과 리포트</div>
-          <div class="text-sm text-stone-500 mb-3">검색 순위·유입 분석 보고서</div>
-        </div>
-        <div style="border-top:1px solid #F3F4F6;padding:12px 20px;background:#F0FDF4;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:12px;color:#9CA3AF;">월 비용</span>
-          <span style="font-size:18px;font-weight:900;color:#16A34A;">무료</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 합산 비용 요약 바 -->
-    <div class="rounded-xl" style="background:#B8972E;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:24px;">&#128179;</span>
-        <div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:600;">기본 + 선택 옵션 합산</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.6);">블로그 8건 + 무료 서비스 2종</div>
-        </div>
-      </div>
-      <div style="text-align:right;">
-        
-        <div style="font-size:28px;font-weight:900;color:#fff;">월 40만원</div>
-      </div>
-    </div>
-
-    
-  </div>
-</section>
-
-<!-- 13. 최종 견적 요약 -->
-
-<section id="effect" class="py-20" style="background:linear-gradient(180deg,#111827 0%,#0F172A 100%);">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <div class="text-xs font-black tracking-widest uppercase mb-3" style="color:#B8972E;">FINAL QUOTE</div>
-      <h2 class="text-4xl font-black text-white mb-4">&#128176; 법무사김경찬사무소 최종 견적</h2>
-      <p class="text-stone-400 text-lg">명확하고 투명한 가격을 제시합니다.</p>
-    </div>
-
-    <div style="display:flex;gap:24px;justify-content:center;align-items:stretch;flex-wrap:wrap;margin-bottom:32px;">
-      <!-- Option A: 블로그 원고만 -->
-      <div style="flex:1;min-width:300px;max-width:460px;background:rgba(255,255,255,0.06);border:2.5px solid #B8972E;border-radius:24px;padding:36px 32px;position:relative;">
-        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#B8972E;color:#fff;font-size:12px;font-weight:900;padding:5px 20px;border-radius:50px;letter-spacing:1px;">&#11088; 추천</div>
-        <div style="font-size:13px;font-weight:900;letter-spacing:2px;color:#B8972E;text-transform:uppercase;margin-bottom:8px;">YOUR PLAN</div>
-        <div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:20px;">블로그 원고 대행</div>
-        <div style="text-align:center;margin-bottom:20px;">
-          <div><s style="color:#9CA3AF;font-size:16px;">정가 월 44만원</s></div>
-          <div style="display:inline-block;background:rgba(220,38,38,0.2);color:#FCA5A5;font-size:12px;font-weight:900;padding:4px 12px;border-radius:50px;margin:8px 0;">10% 할인</div>
-          <div style="font-size:52px;font-weight:900;color:#B8972E;line-height:1;margin:8px 0;text-shadow:0 0 40px rgba(255,255,255,0.2);">월 40만원</div>
-          <div style="font-size:13px;color:#9CA3AF;margin-top:8px;">3개월 계약 총 <strong style="color:#fff;">120만원</strong></div>
-        </div>
-        <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;">
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:#D1D5DB;">&#9989; 월 8건 SEO 최적화 포스팅</div>
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:#D1D5DB;">&#9989; SEO 키워드 분석 <span style="color:#16A34A;font-weight:700;">무료</span></div>
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:#D1D5DB;">&#9989; 월간 성과 리포트 <span style="color:#16A34A;font-weight:700;">무료</span></div>
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:#D1D5DB;">&#9989; 고급 이미지 편집</div>
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:#D1D5DB;">&#9989; 전담 매니저</div>
-        </div>
-        
-      </div>
-
-      
-    </div>
-
-    <!-- 네이버 검색광고 vs 블로그 대행 비교 (대행 비용의 4~8배 자동 계산) -->
-    <div style="max-width:700px;margin:0 auto 32px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px;overflow:hidden;">
-      <div style="font-size:13px;font-weight:900;letter-spacing:2px;color:#B8972E;text-transform:uppercase;margin-bottom:8px;">AD COST COMPARISON</div>
-      <div style="font-size:20px;font-weight:900;color:#fff;margin-bottom:20px;">&#128202; 네이버 검색광고 vs 블로그 대행</div>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
-        <div style="flex:1;min-width:200px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:20px;">
-          <div style="font-size:14px;font-weight:900;color:#FCA5A5;margin-bottom:12px;">&#128308; 네이버 검색광고</div>
-          <div style="font-size:13px;color:#D1D5DB;line-height:2;">
-            &middot; 클릭당 <strong style="color:#FCA5A5;">1,000~5,000원</strong><br>
-            &middot; 월 평균 <strong style="color:#FCA5A5;">160~320만원</strong> 소진<br>
-            &middot; 광고 끄면 유입 <strong style="color:#FCA5A5;">즉시 0</strong><br>
-            &middot; "광고" 표시로 <strong style="color:#FCA5A5;">신뢰도 낮음</strong><br>
-            &middot; 경쟁 심화 → <strong style="color:#FCA5A5;">단가 계속 상승</strong>
-          </div>
-          <div style="margin-top:12px;background:rgba(239,68,68,0.15);border-radius:10px;padding:10px;text-align:center;">
-            <div style="font-size:11px;color:#9CA3AF;">6개월 비용</div>
-            <div style="font-size:24px;font-weight:900;color:#FCA5A5;">960~1920만원</div>
-            <div style="font-size:11px;color:#FCA5A5;">+ 남는 자산 없음</div>
-          </div>
-        </div>
-        <div style="flex:1;min-width:200px;background:rgba(5,150,105,0.08);border:1.5px solid #B8972E;border-radius:14px;padding:20px;">
-          <div style="font-size:14px;font-weight:900;color:#B8972E;margin-bottom:12px;">&#128994; 블로그 대행</div>
-          <div style="font-size:13px;color:#D1D5DB;line-height:2;">
-            &middot; 월 고정 <strong style="color:#B8972E;">40만원</strong><br>
-            &middot; 콘텐츠가 <strong style="color:#B8972E;">자산으로 누적</strong><br>
-            &middot; 글은 <strong style="color:#B8972E;">영구 노출</strong><br>
-            &middot; 정보성 글 → <strong style="color:#B8972E;">높은 신뢰도</strong><br>
-            &middot; 시간이 갈수록 <strong style="color:#B8972E;">유입 증가</strong>
-          </div>
-          <div style="margin-top:12px;background:rgba(5,150,105,0.15);border-radius:10px;padding:10px;text-align:center;">
-            <div style="font-size:11px;color:#9CA3AF;">6개월 비용</div>
-            <div style="font-size:24px;font-weight:900;color:#B8972E;">240만원</div>
-            <div style="font-size:11px;color:#B8972E;">+ 콘텐츠 48건 자산</div>
-          </div>
-        </div>
-      </div>
-      <div style="background:rgba(254,229,0,0.1);border:1px solid rgba(254,229,0,0.2);border-radius:12px;padding:14px;text-align:center;">
-        <div style="font-size:15px;font-weight:900;color:#FEE500;">&#128161; 블로그 대행이 검색광고 대비 최대 700% 비용 절감</div>
-        <div style="font-size:12px;color:#9CA3AF;margin-top:4px;">검색광고는 소모, 블로그는 자산 &mdash; 시간이 지날수록 격차는 벌어집니다</div>
-      </div>
-    </div>
-
-    <!-- 장기 계약 할인 안내 -->
-    <div style="max-width:600px;margin:24px auto 0;background:#B8972E;border-radius:20px;padding:32px;text-align:center;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(255,255,255,0.08);border-radius:50%;"></div>
-      <div style="position:absolute;bottom:-15px;left:-15px;width:80px;height:80px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
-      <div class="relative" style="position:relative;z-index:1;">
-        <div style="font-size:18px;font-weight:900;color:#fff;margin-bottom:16px;">&#128184; 장기 계약 시 추가 할인!</div>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-          <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:20px 28px;min-width:180px;">
-            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:4px;">3개월 계약</div>
-            <div style="font-size:36px;font-weight:900;color:#FEE500;">10%</div>
-            <div style="font-size:13px;color:#fff;font-weight:700;">할인 적용</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.15);border-radius:14px;padding:20px 28px;min-width:180px;">
-            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:4px;">3개월 이상</div>
-            <div style="font-size:36px;font-weight:900;color:#FEE500;">15%</div>
-            <div style="font-size:13px;color:#fff;font-weight:700;">추가 할인 적용</div>
-          </div>
-        </div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:16px;">&#9889; 계약 기간이 길수록 더 많은 할인 혜택을 드립니다</div>
-      </div>
-    </div>
-  </div>
-</section>
-<style>@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}</style>
-
-<!-- 14. 마무리 + 연락처 통합 -->
-<section id="contact" style="background:linear-gradient(180deg,#FAFAF9 0%,#fff 100%);" class="py-20">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <!-- 마무리 멘트 -->
-    <div class="text-center mb-12">
-      <div style="font-size:48px;margin-bottom:16px;">&#129309;</div>
-      <h2 class="text-3xl font-black text-stone-900 mb-4">법무사김경찬사무소 사장님,<br>블로그 마케팅은 저희에게 맡겨주세요</h2>
-      <p class="text-stone-500 text-base leading-relaxed max-w-2xl mx-auto">
-        법무사김경찬사무소의 강점을 가장 잘 전달할 수 있는 블로그 콘텐츠를 만들겠습니다.<br>
-        상담은 무료이며, 진행 여부는 상담 후 결정하시면 됩니다.
+  <!-- 소개 -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="section-title">ABOUT GAMJA NETWORK</div>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-5">감자네트워크는 무엇을 하는 회사인가</h2>
+      <p class="text-slate-600 text-lg max-w-4xl leading-relaxed">
+        감자네트워크는 제주 지역 소상공인과 사업장을 대상으로
+        고객 유입을 만드는 마케팅 서비스부터, 현장 운영을 효율화하는 테이블오더,
+        그리고 안정적인 매장 운영을 위한 기업인터넷·보안·랜공사까지 연결하는
+        <strong class="text-sky-700">통합형 비즈니스 솔루션</strong>을 제공합니다.
       </p>
     </div>
+  </section>
 
-    <!-- 월 계약 vs 3개월 할인 -->
-    <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;justify-content:center;">
-      <div style="flex:1;min-width:180px;max-width:280px;background:#fff;border:1.5px solid #E5E7EB;border-radius:20px;padding:28px 24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.05);">
-        <div style="font-size:12px;color:#9CA3AF;font-weight:700;margin-bottom:8px;">월 계약</div>
-        <div style="font-size:36px;font-weight:900;color:#374151;">40만원</div>
-        <div style="font-size:12px;color:#9CA3AF;margin-top:4px;">/월</div>
+  <!-- 핵심 사업 -->
+  <section id="business" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <div class="section-title">CORE BUSINESS</div>
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">감자네트워크 핵심 사업 영역</h2>
+        <p class="text-slate-500 text-lg">현장 영업, 온라인 유입, 정보화 인프라를 하나로 연결합니다.</p>
       </div>
-      <div style="flex:1;min-width:180px;max-width:280px;background:rgba(184,151,46,0.1);border:2.5px solid #B8972E;border-radius:20px;padding:28px 24px;text-align:center;position:relative;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
-        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#DC2626;color:#fff;font-size:11px;font-weight:900;padding:3px 14px;border-radius:50px;">10% 할인</div>
-        <div style="font-size:12px;color:#B8972E;font-weight:700;margin-bottom:8px;">3개월 계약</div>
-        <div style="font-size:36px;font-weight:900;color:#B8972E;">36만원</div>
-        <div style="font-size:12px;color:#B8972E;margin-top:4px;">/월</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div class="service-card hover-lift">
+          <div class="service-icon">🍽️</div>
+          <h3 class="text-xl font-black text-slate-900 mb-3">KT 테이블오더 · 하이오더</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            식당 운영 효율을 높이고 추가 주문을 유도하는 주문 시스템 제안 및 현장 영업 사업입니다.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-700">
+            <li>✔ 직원 동선 감소</li>
+            <li>✔ 주문 실수 및 누락 감소</li>
+            <li>✔ 인건비 부담 완화</li>
+            <li>✔ 제주 지역 식당 대상 현장 제안</li>
+          </ul>
+        </div>
+
+        <div class="service-card hover-lift">
+          <div class="service-icon">📍</div>
+          <h3 class="text-xl font-black text-slate-900 mb-3">네이버 플레이스 · 블로그 마케팅</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            검색 노출과 신뢰 형성을 동시에 만드는 로컬 마케팅 중심 사업입니다.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-700">
+            <li>✔ 스마트플레이스 최적화</li>
+            <li>✔ 블로그 리뷰/기자단 운영</li>
+            <li>✔ 지역 키워드 콘텐츠 설계</li>
+            <li>✔ 문의 전환 구조 강화</li>
+          </ul>
+        </div>
+
+        <div class="service-card hover-lift">
+          <div class="service-icon">🎬</div>
+          <h3 class="text-xl font-black text-slate-900 mb-3">SNS · 쇼츠 · 인스타 운영</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            짧고 강한 콘텐츠로 관심을 만들고 브랜드 유입을 늘리는 채널 운영 사업입니다.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-700">
+            <li>✔ 쇼츠 기획 및 스크립트 구성</li>
+            <li>✔ 인스타 계정 운영 방향 설계</li>
+            <li>✔ 업종 맞춤 광고 문구 제작</li>
+            <li>✔ 상담 연결형 콘텐츠 전략</li>
+          </ul>
+        </div>
+
+        <div class="service-card hover-lift">
+          <div class="service-icon">📈</div>
+          <h3 class="text-xl font-black text-slate-900 mb-3">매출 성장 컨설팅</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            광고만이 아니라 실제 고객 유입과 운영 병목을 기준으로 보는 실전형 컨설팅입니다.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-700">
+            <li>✔ 업종별 유입 구조 분석</li>
+            <li>✔ 리뷰 · 노출 · 전환 동선 점검</li>
+            <li>✔ 지역 상권 기반 전략 설계</li>
+            <li>✔ 실행 중심 성장 방향 제안</li>
+          </ul>
+        </div>
+
+        <div class="service-card hover-lift">
+          <div class="service-icon">🛡️</div>
+          <h3 class="text-xl font-black text-slate-900 mb-3">정보화 사업</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            사업장 운영에 필요한 네트워크 인프라와 보안 환경을 구축하는 정보화 사업입니다.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-700">
+            <li>✔ 네트워크 보안 점검 및 구성</li>
+            <li>✔ 랜공사 및 배선 정리</li>
+            <li>✔ 기업인터넷 구축 및 연계</li>
+            <li>✔ CCTV 및 보안장비 설치 제안</li>
+          </ul>
+        </div>
+
+        <div class="service-card hover-lift">
+          <div class="service-icon">⚙️</div>
+          <h3 class="text-xl font-black text-slate-900 mb-3">제안 · 영업 자동화 시스템</h3>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            반복되는 제안과 상담 과정을 빠르고 깔끔하게 정리하는 자동화 기반 사업입니다.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-700">
+            <li>✔ HTML 제안서 자동 생성</li>
+            <li>✔ 영업용 자료 표준화</li>
+            <li>✔ 이메일 발송 연계</li>
+            <li>✔ 상담 효율 향상 구조 구축</li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div style="font-size:13px;color:#6B7280;text-align:center;margin-bottom:32px;">&#9889; 3개월 이상 계약 시 15% 추가 할인 가능</div>
+  </section>
 
-    <!-- 직원 채용 vs 블로그 대행 비교 -->
-    <div style="background:#1C1917;border-radius:20px;padding:28px;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto;">
-      <div style="font-size:12px;font-weight:900;letter-spacing:1px;color:#B8972E;margin-bottom:10px;">COST COMPARISON</div>
-      <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:16px;">직원 채용 vs 블로그 대행</div>
-      <div style="margin-bottom:12px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-          <span style="font-size:13px;font-weight:700;color:#FCA5A5;">직원 1명 월 인건비</span>
-          <span style="font-size:13px;font-weight:900;color:#FCA5A5;">250만원</span>
-        </div>
-        <div style="background:rgba(239,68,68,0.2);border-radius:9999px;height:12px;overflow:hidden;">
-          <div style="background:#EF4444;height:12px;border-radius:9999px;width:100%;"></div>
-        </div>
+  <!-- 강점 -->
+  <section id="strength" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <div class="section-title">WHY GAMJA NETWORK</div>
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">감자네트워크의 강점</h2>
+        <p class="text-slate-500 text-lg">각 서비스를 따로 파는 것이 아니라, 고객 상황에 맞게 조합해 제안합니다.</p>
       </div>
-      <div style="margin-bottom:16px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-          <span style="font-size:13px;font-weight:700;color:#B8972E;">블로그 대행</span>
-          <span style="font-size:13px;font-weight:900;color:#B8972E;">40만원</span>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="service-card hover-lift">
+          <div class="service-icon">🎯</div>
+          <h3 class="text-xl font-black mb-3">영업형 솔루션</h3>
+          <p class="text-slate-600">KT 테이블오더, 현장 인프라, 통신 제안처럼 바로 매출과 연결되는 서비스에 강합니다.</p>
         </div>
-        <div style="background:rgba(5,150,105,0.2);border-radius:9999px;height:12px;overflow:hidden;">
-          <div style="background:#B8972E;height:12px;border-radius:9999px;width:16%;"></div>
+        <div class="service-card hover-lift">
+          <div class="service-icon">🔁</div>
+          <h3 class="text-xl font-black mb-3">지속 운영형 솔루션</h3>
+          <p class="text-slate-600">플레이스, 블로그, SNS처럼 꾸준히 쌓이며 신뢰와 노출을 만드는 운영형 서비스가 가능합니다.</p>
         </div>
-      </div>
-      <div style="background:rgba(254,229,0,0.1);border:1px solid rgba(254,229,0,0.3);border-radius:12px;padding:12px;text-align:center;">
-        <div style="font-size:11px;color:#9CA3AF;">월 절감 효과</div>
-        <div style="font-size:24px;font-weight:900;color:#FEE500;">210만원 절감</div>
+        <div class="service-card hover-lift">
+          <div class="service-icon">🏗️</div>
+          <h3 class="text-xl font-black mb-3">정보화 인프라 솔루션</h3>
+          <p class="text-slate-600">기업인터넷, 네트워크 보안, 랜공사, CCTV까지 사업장 운영의 기본 인프라를 함께 봅니다.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- 연락처 + CTA 버튼 -->
-    <div style="background:#B8972E;border-radius:24px;padding:40px;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,0.15);">
-      <div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:8px;">감자네트워크</div>
-      <div style="font-size:15px;color:rgba(255,255,255,0.8);margin-bottom:4px;">&#128222; 010-4653-0114</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:24px;">상담 후 진행 여부 결정 가능 &middot; 계약 강요 없음 &middot; 평균 응답시간 10분 이내</div>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn" style="display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:16px;font-weight:900;font-size:17px;text-decoration:none;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
-          카카오톡 상담하기
+  <!-- 진행 방식 -->
+  <section id="process" class="py-20 bg-slate-900">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <div class="section-title">PROCESS</div>
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-4">진행 방식</h2>
+        <p class="text-slate-400 text-lg">상담부터 실행까지, 현장에 맞는 방식으로 빠르게 연결합니다.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="glass rounded-3xl p-7 text-white hover-lift">
+          <div class="text-sky-400 text-sm font-black mb-3">STEP 01</div>
+          <div class="text-2xl mb-3">📝</div>
+          <h3 class="text-xl font-black mb-2">상담</h3>
+          <p class="text-white/75 text-sm leading-relaxed">업종, 지역, 현재 운영 방식, 필요한 문제를 먼저 파악합니다.</p>
+        </div>
+        <div class="glass rounded-3xl p-7 text-white hover-lift">
+          <div class="text-sky-400 text-sm font-black mb-3">STEP 02</div>
+          <div class="text-2xl mb-3">🔍</div>
+          <h3 class="text-xl font-black mb-2">진단</h3>
+          <p class="text-white/75 text-sm leading-relaxed">검색 노출, 고객 유입, 운영 효율, 네트워크 환경을 점검합니다.</p>
+        </div>
+        <div class="glass rounded-3xl p-7 text-white hover-lift">
+          <div class="text-sky-400 text-sm font-black mb-3">STEP 03</div>
+          <div class="text-2xl mb-3">📦</div>
+          <h3 class="text-xl font-black mb-2">맞춤 제안</h3>
+          <p class="text-white/75 text-sm leading-relaxed">필요한 서비스만 조합해서 가장 현실적인 방향으로 제안합니다.</p>
+        </div>
+        <div class="glass rounded-3xl p-7 text-white hover-lift">
+          <div class="text-sky-400 text-sm font-black mb-3">STEP 04</div>
+          <div class="text-2xl mb-3">🚀</div>
+          <h3 class="text-xl font-black mb-2">실행</h3>
+          <p class="text-white/75 text-sm leading-relaxed">운영, 설치, 세팅, 관리까지 실제 현장에서 바로 적용합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 기대효과 -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <div class="section-title">EXPECTED RESULT</div>
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">기대 효과</h2>
+      </div>
+      <div class="flex flex-wrap gap-3 justify-center">
+        <span class="mini-tag">검색 노출 강화</span>
+        <span class="mini-tag">실제 문의 증가</span>
+        <span class="mini-tag">브랜드 신뢰도 향상</span>
+        <span class="mini-tag">매장 운영 효율 개선</span>
+        <span class="mini-tag">주문 누락 감소</span>
+        <span class="mini-tag">인프라 안정성 강화</span>
+        <span class="mini-tag">보안 환경 정비</span>
+        <span class="mini-tag">현장 문제 해결</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 연락처 -->
+  <section id="contact" class="py-20" style="background:linear-gradient(135deg,#0f172a,#1e293b);">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <div class="text-5xl mb-4">🤝</div>
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-4">
+          감자네트워크와 함께<br>성장 구조를 만들어보세요
+        </h2>
+        <p class="text-slate-300 text-lg leading-relaxed">
+          온라인 마케팅부터 테이블오더, 정보화 인프라까지<br>
+          필요한 것만 정확하게 연결해드립니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <a href="tel:01046530114" class="contact-tile hover-lift" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;">
+          <div class="contact-icon" style="background:rgba(255,255,255,.14);">
+            <span style="font-size:30px;">📞</span>
+          </div>
+          <div>
+            <div class="text-sm text-white/70 font-bold mb-1">전화 연결</div>
+            <div class="text-2xl font-black">010-4653-0114</div>
+            <div class="text-sm text-white/80 mt-1">터치하면 바로 전화 연결됩니다</div>
+          </div>
         </a>
-        <a href="tel:01046530114" style="display:inline-flex;align-items:center;gap:8px;padding:16px 32px;border-radius:16px;font-weight:900;font-size:17px;background:rgba(255,255,255,0.15);color:#fff;text-decoration:none;border:2px solid rgba(255,255,255,0.3);transition:all .3s;">
-          &#128222; 전화 문의
+
+        <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="contact-tile kakao-btn hover-lift">
+          <div class="contact-icon" style="background:rgba(0,0,0,.08);">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="#191919" aria-hidden="true">
+              <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm text-black/60 font-bold mb-1">카카오톡 상담</div>
+            <div class="text-2xl font-black text-black">채팅으로 바로 문의</div>
+            <div class="text-sm text-black/70 mt-1">클릭하면 카카오 상담창으로 이동합니다</div>
+          </div>
         </a>
-        
+      </div>
+
+      <div class="mt-10 text-center">
+        <div class="inline-flex flex-wrap justify-center gap-2">
+          <span class="mini-tag">감자네트워크</span>
+          <span class="mini-tag">제주 비즈니스 솔루션</span>
+          <span class="mini-tag">상담 · 설치 · 운영 원스톱</span>
+        </div>
+        <div class="text-slate-500 text-sm mt-6">© 감자네트워크</div>
       </div>
     </div>
-
-    <!-- 서비스 태그 -->
-    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:24px;">
-      <span style="font-size:12px;color:#9CA3AF;background:#F3F4F6;padding:4px 12px;border-radius:50px;">블로그 대행</span>
-      <span style="font-size:12px;color:#9CA3AF;background:#F3F4F6;padding:4px 12px;border-radius:50px;">SEO 최적화</span>
-      <span style="font-size:12px;color:#9CA3AF;background:#F3F4F6;padding:4px 12px;border-radius:50px;">키워드 분석</span>
-      <span style="font-size:12px;color:#9CA3AF;background:#F3F4F6;padding:4px 12px;border-radius:50px;">월간 리포트</span>
-    </div>
-    <div style="text-align:center;margin-top:16px;font-size:12px;color:#D1D5DB;">&copy; 감자네트워크 &times; 법무사김경찬사무소</div>
-  </div>
-</section>
+  </section>
 
 </body>
 </html>
