@@ -1,490 +1,338 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>감자네트워크 | 사업 제안서</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  <style>
-    body{
-      font-family:'Noto Sans KR',sans-serif;
-      scroll-behavior:smooth;
-      word-break:keep-all;
-      background:#f8fafc;
-      color:#1f2937;
-    }
-    .hover-lift{transition:all .35s ease;}
-    .hover-lift:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(0,0,0,.12);}
-    .glass{
-      background:rgba(255,255,255,.08);
-      backdrop-filter:blur(10px);
-      border:1px solid rgba(255,255,255,.14);
-    }
-    .kakao-btn{
-      background:#FEE500;
-      color:#191919;
-      transition:all .28s ease;
-    }
-    .kakao-btn:hover{
-      transform:translateY(-3px) scale(1.02);
-      box-shadow:0 18px 28px rgba(0,0,0,.18);
-    }
-    .phone-btn{
-      background:rgba(255,255,255,.12);
-      color:#fff;
-      border:2px solid rgba(255,255,255,.24);
-      transition:all .28s ease;
-    }
-    .phone-btn:hover{
-      transform:translateY(-3px) scale(1.02);
-      background:rgba(255,255,255,.18);
-      box-shadow:0 18px 28px rgba(0,0,0,.18);
-    }
-    .cta-card{
-      border-radius:22px;
-      overflow:hidden;
-      position:relative;
-    }
-    .cta-card::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,0));
-      pointer-events:none;
-    }
-    .section-title{
-      font-size:13px;
-      font-weight:800;
-      letter-spacing:3px;
-      text-transform:uppercase;
-      color:#0284c7;
-      margin-bottom:10px;
-    }
-    .service-card{
-      background:#fff;
-      border:1px solid #e5e7eb;
-      border-radius:24px;
-      padding:28px 24px;
-      height:100%;
-    }
-    .service-icon{
-      width:62px;
-      height:62px;
-      border-radius:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      margin-bottom:18px;
-      background:linear-gradient(135deg,#e0f2fe,#dbeafe);
-    }
-    .mini-tag{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#eff6ff;
-      border:1px solid #bfdbfe;
-      color:#0369a1;
-      font-size:12px;
-      font-weight:700;
-    }
-    .contact-tile{
-      border-radius:24px;
-      padding:24px;
-      display:flex;
-      align-items:center;
-      gap:16px;
-      text-decoration:none;
-      font-weight:900;
-    }
-    .contact-icon{
-      width:64px;
-      height:64px;
-      border-radius:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-shrink:0;
-    }
-    .floating-kakao{
-      position:fixed;
-      right:24px;
-      bottom:24px;
-      z-index:9999;
-      text-decoration:none;
-      border-radius:999px;
-      padding:14px 22px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:800;
-      box-shadow:0 10px 28px rgba(0,0,0,.25);
-    }
-    @media (max-width: 768px){
-      .hero-title{font-size:34px !important; line-height:1.25 !important;}
-      .floating-kakao{
-        right:16px;
-        bottom:16px;
-        padding:12px 18px;
-        font-size:14px;
-      }
-      .contact-tile{
-        padding:20px;
-      }
-      .contact-icon{
-        width:56px;
-        height:56px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>감자네트워크 | 제주 No.1 통합 비즈니스 솔루션</title>
+    <meta name="description" content="제주 소상공인을 위한 마케팅, KT 테이블오더, 기업인터넷, 보안 인프라까지 감자네트워크가 한 번에 해결해 드립니다.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            word-break: keep-all;
+            background: #f8fafc;
+            color: #1f2937;
+        }
+        .hover-lift { transition: all .35s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,.08); }
+        
+        .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); }
+        
+        .kakao-btn { background: #FEE500; color: #191919; }
+        .kakao-btn:hover { background: #fada0a; transform: scale(1.02); }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(2, 132, 199, 0.7) 100%);
+        }
+
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .section-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        details summary::-webkit-details-marker { display:none; }
+        details[open] summary svg { transform: rotate(180deg); }
+
+        .logo-text { color: #2D3E5E; }
+    </style>
 </head>
 <body class="antialiased">
 
-  <!-- 플로팅 카카오 -->
-  <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn floating-kakao">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919" aria-hidden="true">
-      <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/>
-    </svg>
-    카카오 상담
-  </a>
+    <!-- 플로팅 카카오 -->
+    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn fixed right-6 bottom-6 z-[9999] flex items-center gap-3 px-6 py-4 rounded-full font-black shadow-2xl transition-all hover:-translate-y-2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/>
+        </svg>
+        <span>실시간 상담</span>
+    </a>
 
-  <!-- 네비 -->
-  <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-xl font-black tracking-tight text-sky-700">감자네트워크</span>
-        <span class="text-sm text-slate-400 hidden sm:block">| 제주 비즈니스 솔루션 제안서</span>
-      </div>
-      <div class="hidden md:flex items-center gap-5 text-sm font-bold text-slate-600">
-        <a href="#business" class="hover:opacity-70">사업영역</a>
-        <a href="#process" class="hover:opacity-70">진행방식</a>
-        <a href="#strength" class="hover:opacity-70">강점</a>
-        <a href="#contact" class="px-4 py-2 rounded-xl text-white" style="background:linear-gradient(135deg,#0284c7,#06b6d4);">문의하기</a>
-      </div>
-    </div>
-  </nav>
+    <!-- 네비게이션 -->
+    <nav id="mainNav" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <span class="text-2xl font-black tracking-tighter logo-text">감자네트워크</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8 text-[15px] font-bold text-slate-700">
+                <a href="#about" class="hover:text-sky-600 transition-colors">회사소개</a>
+                <a href="#business" class="hover:text-sky-600 transition-colors">사업영역</a>
+                <a href="#location" class="hover:text-sky-600 transition-colors">오시는 길</a>
+                <a href="#faq" class="hover:text-sky-600 transition-colors">자주묻는질문</a>
+                <a href="tel:01046530114" class="bg-sky-600 text-white px-6 py-2.5 rounded-full hover:bg-sky-700 transition-all shadow-md">전화 문의하기</a>
+            </div>
 
-  <!-- HERO -->
-  <header class="relative overflow-hidden" style="min-height:92vh;display:flex;align-items:center;background:#0f172a;">
-    <div class="absolute inset-0">
-      <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&q=80&w=1800"
-           alt=""
-           class="w-full h-full object-cover opacity-30">
-    </div>
-    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(2,6,23,.86),rgba(2,132,199,.62));"></div>
+            <button class="md:hidden text-slate-900" id="mobileMenuBtn" onclick="location.href='tel:01046530114'">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            </button>
+        </div>
+    </nav>
 
-    <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
-      <div class="max-w-4xl">
-        <div class="inline-flex items-center px-4 py-2 rounded-full glass text-white text-xs font-bold tracking-widest mb-6">
-          JEJU LOCAL BUSINESS SOLUTION
+    <!-- 히어로 섹션 -->
+    <section class="relative h-screen flex items-center overflow-hidden bg-slate-900">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-40" alt="Jeju Business Background">
+            <div class="absolute inset-0 hero-gradient"></div>
         </div>
 
-        <h1 class="hero-title text-white font-black mb-6" style="font-size:58px;line-height:1.15;">
-          감자네트워크의 사업을<br>
-          <span class="text-sky-400">한 번에 이해할 수 있는</span><br>
-          통합 제안서
-        </h1>
-
-        <p class="text-white/85 text-lg md:text-xl max-w-3xl leading-relaxed mb-10">
-          감자네트워크는 단순 광고대행이 아니라,
-          <strong class="text-sky-300">마케팅 · 통신 · 운영 효율 · 정보화 인프라</strong>를
-          하나의 흐름으로 연결해 제주 소상공인의 성장을 돕는 실전형 비즈니스 파트너입니다.
-        </p>
-
-        <div class="flex flex-wrap gap-3 mb-10">
-          <span class="mini-tag">네이버 플레이스 운영</span>
-          <span class="mini-tag">블로그 · SNS 마케팅</span>
-          <span class="mini-tag">KT 테이블오더</span>
-          <span class="mini-tag">기업인터넷 · CCTV</span>
-          <span class="mini-tag">네트워크 보안 · 랜공사</span>
+        <div class="relative max-w-7xl mx-auto px-6 pt-20">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-white text-xs font-bold tracking-widest mb-8 uppercase">
+                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                    Jeju Total Business Partner
+                </div>
+                <h1 class="text-white font-black text-5xl md:text-7xl leading-[1.15] mb-8">
+                    제주 비즈니스의<br>
+                    <span class="text-sky-400">성장 엔진</span>이 됩니다
+                </h1>
+                <p class="text-white/80 text-lg md:text-xl mb-12 leading-relaxed">
+                    마케팅 따로, 통신 따로 고민하지 마세요. 감자네트워크는<br class="hidden md:block">
+                    고객 유입부터 매장 운영 효율화까지 원스톱으로 해결합니다.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="tel:01046530114" class="px-10 py-5 bg-white text-slate-900 rounded-2xl font-black text-xl hover:bg-sky-50 transition-all shadow-xl flex items-center gap-3">
+                        <svg class="w-6 h-6 text-sky-600" fill="currentColor" viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 00-1.02.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.02c-.37-1.12-.57-2.32-.57-3.57 0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"></path></svg>
+                        지금 바로 전화 상담
+                    </a>
+                    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="px-10 py-5 kakao-btn rounded-2xl font-black text-xl transition-all shadow-xl">
+                        카톡으로 문의
+                    </a>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="flex flex-wrap items-center gap-4">
-          <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn cta-card inline-flex items-center gap-3 px-8 py-5 rounded-2xl text-lg font-black">
-            <span class="w-12 h-12 rounded-2xl bg-black/10 flex items-center justify-center">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="#191919" aria-hidden="true">
-                <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/>
-              </svg>
-            </span>
-            <span>
-              <span class="block text-xs font-bold opacity-70">빠른 상담</span>
-              <span class="block">카카오 상담 바로가기</span>
-            </span>
-          </a>
-
-          <a href="tel:01046530114" class="phone-btn cta-card inline-flex items-center gap-3 px-8 py-5 rounded-2xl text-lg font-black">
-            <span class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-2xl">📞</span>
-            <span>
-              <span class="block text-xs font-bold text-white/70">즉시 연결</span>
-              <span class="block">010-4653-0114</span>
-            </span>
-          </a>
+    <!-- 회사소개 섹션 -->
+    <section id="about" class="py-24 bg-white section-reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">Company</h4>
+                    <h2 class="text-4xl font-black text-slate-900 mb-6 leading-tight">
+                        제주 소상공인의 든든한<br>성공 파트너가 되겠습니다
+                    </h2>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-8">
+                        제주는 특별한 시장입니다. 로컬의 특수성을 이해하지 못하면 아무리 좋은 기술도 빛을 발하기 어렵습니다. <br><br>
+                        감자네트워크는 제주 현장에서 쌓아온 풍부한 경험을 바탕으로 마케팅부터 IT 인프라 구축까지 통합 비즈니스 서비스를 제공합니다. 단순히 기술 지원을 넘어 매장 가치를 높이는 일에 집중합니다.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-sky-600">
+                            <div class="text-3xl font-black text-sky-600 mb-1">01</div>
+                            <div class="text-sm text-slate-700 font-bold">로컬 시장 이해도</div>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-sky-600">
+                            <div class="text-3xl font-black text-sky-600 mb-1">02</div>
+                            <div class="text-sm text-slate-700 font-bold">원스톱 유지보수</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000" class="rounded-[40px] shadow-2xl" alt="Consulting Image">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
+    </section>
 
-  <!-- 후킹 배너 -->
-  <section style="background:linear-gradient(135deg,#0284c7,#06b6d4);" class="py-5">
-    <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
-      <div class="text-white font-extrabold text-sm md:text-base">
-        지금 필요한 것은 “단순 홍보”가 아니라, 실제 문의와 계약으로 이어지는 구조입니다.
-      </div>
-      <a href="#contact" class="bg-white text-sky-700 px-5 py-3 rounded-xl font-black text-sm">상담 문의하기 →</a>
-    </div>
-  </section>
+    <!-- 사업영역 섹션 -->
+    <section id="business" class="py-24 bg-slate-50 section-reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">Our Services</h4>
+                <h2 class="text-4xl font-black text-slate-900 mb-4">비즈니스 성공을 위한 4대 핵심 축</h2>
+                <div class="w-20 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
+            </div>
 
-  <!-- 소개 -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="section-title">ABOUT GAMJA NETWORK</div>
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-5">감자네트워크는 무엇을 하는 회사인가</h2>
-      <p class="text-slate-600 text-lg max-w-4xl leading-relaxed">
-        감자네트워크는 제주 지역 소상공인과 사업장을 대상으로
-        고객 유입을 만드는 마케팅 서비스부터, 현장 운영을 효율화하는 테이블오더,
-        그리고 안정적인 매장 운영을 위한 기업인터넷·보안·랜공사까지 연결하는
-        <strong class="text-sky-700">통합형 비즈니스 솔루션</strong>을 제공합니다.
-      </p>
-    </div>
-  </section>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 서비스 카드들 -->
+                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100">
+                    <div class="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center text-3xl mb-8">📱</div>
+                    <h3 class="text-2xl font-black text-slate-900 mb-4">디지털 마케팅</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">네이버 플레이스 최적화, 인스타그램 채널 운영 등 제주 상권 맞춤형 유입 전략을 수립합니다.</p>
+                </div>
 
-  <!-- 핵심 사업 -->
-  <section id="business" class="py-20 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <div class="section-title">CORE BUSINESS</div>
-        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">감자네트워크 핵심 사업 영역</h2>
-        <p class="text-slate-500 text-lg">현장 영업, 온라인 유입, 정보화 인프라를 하나로 연결합니다.</p>
-      </div>
+                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-8">🤖</div>
+                    <h3 class="text-2xl font-black text-slate-900 mb-4">스마트 오더</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">KT 하이오더 전문 입점 및 관리. 인건비 절감과 주문 회전율 극대화를 위한 시스템을 구축합니다.</p>
+                </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div class="service-card hover-lift">
-          <div class="service-icon">🍽️</div>
-          <h3 class="text-xl font-black text-slate-900 mb-3">KT 테이블오더 · 하이오더</h3>
-          <p class="text-slate-600 leading-relaxed mb-4">
-            식당 운영 효율을 높이고 추가 주문을 유도하는 주문 시스템 제안 및 현장 영업 사업입니다.
-          </p>
-          <ul class="space-y-2 text-sm text-slate-700">
-            <li>✔ 직원 동선 감소</li>
-            <li>✔ 주문 실수 및 누락 감소</li>
-            <li>✔ 인건비 부담 완화</li>
-            <li>✔ 제주 지역 식당 대상 현장 제안</li>
-          </ul>
+                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center text-3xl mb-8">🌐</div>
+                    <h3 class="text-2xl font-black text-slate-900 mb-4">통신 인프라</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">기업 전용 인터넷, 네트워크 보안, 깔끔한 랜선 정리 및 배선 공사까지 완벽하게 지원합니다.</p>
+                </div>
+
+                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-8">🛡️</div>
+                    <h3 class="text-2xl font-black text-slate-900 mb-4">매장 안전 관리</h3>
+                    <p class="text-slate-500 leading-relaxed text-sm mb-6">사각지대 없는 CCTV 설치, 원격 보안 모니터링 시스템 구축으로 안심할 수 있는 매장을 만듭니다.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="service-card hover-lift">
-          <div class="service-icon">📍</div>
-          <h3 class="text-xl font-black text-slate-900 mb-3">네이버 플레이스 · 블로그 마케팅</h3>
-          <p class="text-slate-600 leading-relaxed mb-4">
-            검색 노출과 신뢰 형성을 동시에 만드는 로컬 마케팅 중심 사업입니다.
-          </p>
-          <ul class="space-y-2 text-sm text-slate-700">
-            <li>✔ 스마트플레이스 최적화</li>
-            <li>✔ 블로그 리뷰/기자단 운영</li>
-            <li>✔ 지역 키워드 콘텐츠 설계</li>
-            <li>✔ 문의 전환 구조 강화</li>
-          </ul>
+    <!-- 지도 섹션 -->
+    <section id="location" class="py-24 bg-white section-reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">Location</h4>
+                <h2 class="text-4xl font-black text-slate-900 mb-4">오시는 길</h2>
+                <p class="text-slate-500 text-lg font-medium">제주특별자치도 제주시 동문로 47</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-[50px] shadow-sm overflow-hidden border border-slate-100">
+                <div class="relative w-full h-[450px] bg-slate-200 rounded-[40px] overflow-hidden">
+                    <!-- 지도 배경 및 마커 오버레이 -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-10 bg-black/5">
+                        <div class="w-20 h-20 bg-sky-600 text-white rounded-full flex items-center justify-center text-3xl mb-6 shadow-2xl animate-bounce">
+                            📍
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 mb-2">감자네트워크 본사</h3>
+                        <p class="text-slate-600 mb-8 font-bold">제주특별자치도 제주시 동문로 47</p>
+                        <a href="https://pcmap.place.naver.com/place/37942445/home" 
+                           target="_blank" 
+                           class="px-10 py-4 bg-emerald-500 text-white rounded-full font-black flex items-center gap-3 hover:bg-emerald-600 transition-all shadow-xl">
+                           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                           네이버 지도로 자세히 보기
+                        </a>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-30 select-none pointer-events-none" alt="Map Background">
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="service-card hover-lift">
-          <div class="service-icon">🎬</div>
-          <h3 class="text-xl font-black text-slate-900 mb-3">SNS · 쇼츠 · 인스타 운영</h3>
-          <p class="text-slate-600 leading-relaxed mb-4">
-            짧고 강한 콘텐츠로 관심을 만들고 브랜드 유입을 늘리는 채널 운영 사업입니다.
-          </p>
-          <ul class="space-y-2 text-sm text-slate-700">
-            <li>✔ 쇼츠 기획 및 스크립트 구성</li>
-            <li>✔ 인스타 계정 운영 방향 설계</li>
-            <li>✔ 업종 맞춤 광고 문구 제작</li>
-            <li>✔ 상담 연결형 콘텐츠 전략</li>
-          </ul>
+    <!-- FAQ 섹션 -->
+    <section id="faq" class="py-24 bg-slate-50 section-reveal">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">FAQ</h4>
+                <h2 class="text-4xl font-black text-slate-900">궁금한 점을 확인하세요</h2>
+            </div>
+
+            <div class="space-y-4">
+                <details class="group bg-white border border-slate-200 rounded-3xl overflow-hidden transition-all shadow-sm">
+                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8">
+                        <span class="text-lg md:text-xl font-bold text-slate-800">어떤 서비스부터 시작해야 할지 모르겠어요.</span>
+                        <svg class="w-6 h-6 text-slate-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </summary>
+                    <div class="px-6 md:px-8 pb-8 text-slate-600 leading-relaxed text-lg">
+                        전화로 매장 상황을 말씀해 주시면 전문가가 직접 방문하거나 유선으로 현장 진단을 해드립니다. 현재 가장 시급한 문제를 파악하여 효율적인 솔루션을 제안해 드립니다.
+                    </div>
+                </details>
+
+                <details class="group bg-white border border-slate-200 rounded-3xl overflow-hidden transition-all shadow-sm">
+                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8">
+                        <span class="text-lg md:text-xl font-bold text-slate-800">제주 전 지역 어디든 방문 가능한가요?</span>
+                        <svg class="w-6 h-6 text-slate-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </summary>
+                    <div class="px-6 md:px-8 pb-8 text-slate-600 leading-relaxed text-lg">
+                        네, 그렇습니다. 제주시, 서귀포시는 물론 읍면 지역 및 섬 지역까지 제주 전역 어디든 감자네트워크의 도움이 필요한 곳이라면 찾아갑니다.
+                    </div>
+                </details>
+
+                <details class="group bg-white border border-slate-200 rounded-3xl overflow-hidden transition-all shadow-sm">
+                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8">
+                        <span class="text-lg md:text-xl font-bold text-slate-800">상담 비용은 무료인가요?</span>
+                        <svg class="w-6 h-6 text-slate-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </summary>
+                    <div class="px-6 md:px-8 pb-8 text-slate-600 leading-relaxed text-lg">
+                        네, 초기 비즈니스 컨설팅 및 방문 진단은 전액 무료로 진행됩니다. 고객님의 부담은 덜고 성공의 확률은 높여드립니다.
+                    </div>
+                </details>
+            </div>
         </div>
+    </section>
 
-        <div class="service-card hover-lift">
-          <div class="service-icon">📈</div>
-          <h3 class="text-xl font-black text-slate-900 mb-3">매출 성장 컨설팅</h3>
-          <p class="text-slate-600 leading-relaxed mb-4">
-            광고만이 아니라 실제 고객 유입과 운영 병목을 기준으로 보는 실전형 컨설팅입니다.
-          </p>
-          <ul class="space-y-2 text-sm text-slate-700">
-            <li>✔ 업종별 유입 구조 분석</li>
-            <li>✔ 리뷰 · 노출 · 전환 동선 점검</li>
-            <li>✔ 지역 상권 기반 전략 설계</li>
-            <li>✔ 실행 중심 성장 방향 제안</li>
-          </ul>
+    <!-- 하단 CTA 섹션 -->
+    <section class="py-24 bg-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-sky-500 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-[120px]"></div>
         </div>
-
-        <div class="service-card hover-lift">
-          <div class="service-icon">🛡️</div>
-          <h3 class="text-xl font-black text-slate-900 mb-3">정보화 사업</h3>
-          <p class="text-slate-600 leading-relaxed mb-4">
-            사업장 운영에 필요한 네트워크 인프라와 보안 환경을 구축하는 정보화 사업입니다.
-          </p>
-          <ul class="space-y-2 text-sm text-slate-700">
-            <li>✔ 네트워크 보안 점검 및 구성</li>
-            <li>✔ 랜공사 및 배선 정리</li>
-            <li>✔ 기업인터넷 구축 및 연계</li>
-            <li>✔ CCTV 및 보안장비 설치 제안</li>
-          </ul>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-8 leading-tight">
+                지금 바로, 제주 최고의<br><span class="text-sky-400">비즈니스 파트너</span>를 만나보세요
+            </h2>
+            <p class="text-slate-400 text-lg mb-12">평일 오전 9시 - 오후 6시 사이 언제든 전문 상담사가 대기 중입니다.</p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <a href="tel:01046530114" class="flex flex-col items-center p-10 bg-white/5 border border-white/10 rounded-[40px] hover:bg-white/10 transition-all group">
+                    <div class="w-16 h-16 bg-sky-600 text-white rounded-full flex items-center justify-center text-3xl mb-6 shadow-lg group-hover:scale-110 transition-transform">📞</div>
+                    <span class="text-white/60 text-sm font-bold mb-2">대표번호 (클릭하면 통화 연결)</span>
+                    <span class="text-3xl text-white font-black">010-4653-0114</span>
+                </a>
+                <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="flex flex-col items-center p-10 bg-[#FEE500] rounded-[40px] hover:brightness-95 transition-all group">
+                    <div class="w-16 h-16 bg-black text-[#FEE500] rounded-full flex items-center justify-center text-3xl mb-6 shadow-lg group-hover:scale-110 transition-transform">💬</div>
+                    <span class="text-black/60 text-sm font-bold mb-2">카카오 실시간 상담</span>
+                    <span class="text-3xl text-black font-black">감자네트워크 채널</span>
+                </a>
+            </div>
         </div>
+    </section>
 
-        <div class="service-card hover-lift">
-          <div class="service-icon">⚙️</div>
-          <h3 class="text-xl font-black text-slate-900 mb-3">제안 · 영업 자동화 시스템</h3>
-          <p class="text-slate-600 leading-relaxed mb-4">
-            반복되는 제안과 상담 과정을 빠르고 깔끔하게 정리하는 자동화 기반 사업입니다.
-          </p>
-          <ul class="space-y-2 text-sm text-slate-700">
-            <li>✔ HTML 제안서 자동 생성</li>
-            <li>✔ 영업용 자료 표준화</li>
-            <li>✔ 이메일 발송 연계</li>
-            <li>✔ 상담 효율 향상 구조 구축</li>
-          </ul>
+    <!-- 푸터 -->
+    <footer class="bg-slate-950 py-16 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
+                <div class="max-w-sm">
+                    <div class="text-2xl font-black text-white mb-6 tracking-tighter">감자네트워크</div>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">
+                        제주 소상공인의 성공적인 비즈니스 안착을 돕는 통합 솔루션 전문 기업입니다. 마케팅부터 IT 인프라까지, 최고의 효율을 약속합니다.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-12 md:gap-24">
+                    <div>
+                        <h5 class="text-white font-black mb-6 uppercase tracking-widest text-xs">Menu</h5>
+                        <ul class="space-y-4 text-slate-500 text-sm font-bold">
+                            <li><a href="#about" class="hover:text-white transition-colors text-slate-400">회사소개</a></li>
+                            <li><a href="#business" class="hover:text-white transition-colors text-slate-400">사업영역</a></li>
+                            <li><a href="#location" class="hover:text-white transition-colors text-slate-400">오시는 길</a></li>
+                            <li><a href="#faq" class="hover:text-white transition-colors text-slate-400">자주묻는질문</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-white font-black mb-6 uppercase tracking-widest text-xs">Information</h5>
+                        <div class="space-y-3 text-slate-500 text-sm font-medium">
+                            <p>상호명: 감자네트워크</p>
+                            <p>대표번호: 010-4653-0114</p>
+                            <p>주소: 제주특별자치도 제주시 동문로 47</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-white/5 text-center">
+                <p class="text-slate-600 text-xs">© 2024 Gamja Network. All rights reserved.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- 강점 -->
-  <section id="strength" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <div class="section-title">WHY GAMJA NETWORK</div>
-        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">감자네트워크의 강점</h2>
-        <p class="text-slate-500 text-lg">각 서비스를 따로 파는 것이 아니라, 고객 상황에 맞게 조합해 제안합니다.</p>
-      </div>
+    <script>
+        // 네비게이션 효과
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) nav.classList.add('nav-scrolled');
+            else nav.classList.remove('nav-scrolled');
+        });
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="service-card hover-lift">
-          <div class="service-icon">🎯</div>
-          <h3 class="text-xl font-black mb-3">영업형 솔루션</h3>
-          <p class="text-slate-600">KT 테이블오더, 현장 인프라, 통신 제안처럼 바로 매출과 연결되는 서비스에 강합니다.</p>
-        </div>
-        <div class="service-card hover-lift">
-          <div class="service-icon">🔁</div>
-          <h3 class="text-xl font-black mb-3">지속 운영형 솔루션</h3>
-          <p class="text-slate-600">플레이스, 블로그, SNS처럼 꾸준히 쌓이며 신뢰와 노출을 만드는 운영형 서비스가 가능합니다.</p>
-        </div>
-        <div class="service-card hover-lift">
-          <div class="service-icon">🏗️</div>
-          <h3 class="text-xl font-black mb-3">정보화 인프라 솔루션</h3>
-          <p class="text-slate-600">기업인터넷, 네트워크 보안, 랜공사, CCTV까지 사업장 운영의 기본 인프라를 함께 봅니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 진행 방식 -->
-  <section id="process" class="py-20 bg-slate-900">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <div class="section-title">PROCESS</div>
-        <h2 class="text-3xl md:text-4xl font-black text-white mb-4">진행 방식</h2>
-        <p class="text-slate-400 text-lg">상담부터 실행까지, 현장에 맞는 방식으로 빠르게 연결합니다.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="glass rounded-3xl p-7 text-white hover-lift">
-          <div class="text-sky-400 text-sm font-black mb-3">STEP 01</div>
-          <div class="text-2xl mb-3">📝</div>
-          <h3 class="text-xl font-black mb-2">상담</h3>
-          <p class="text-white/75 text-sm leading-relaxed">업종, 지역, 현재 운영 방식, 필요한 문제를 먼저 파악합니다.</p>
-        </div>
-        <div class="glass rounded-3xl p-7 text-white hover-lift">
-          <div class="text-sky-400 text-sm font-black mb-3">STEP 02</div>
-          <div class="text-2xl mb-3">🔍</div>
-          <h3 class="text-xl font-black mb-2">진단</h3>
-          <p class="text-white/75 text-sm leading-relaxed">검색 노출, 고객 유입, 운영 효율, 네트워크 환경을 점검합니다.</p>
-        </div>
-        <div class="glass rounded-3xl p-7 text-white hover-lift">
-          <div class="text-sky-400 text-sm font-black mb-3">STEP 03</div>
-          <div class="text-2xl mb-3">📦</div>
-          <h3 class="text-xl font-black mb-2">맞춤 제안</h3>
-          <p class="text-white/75 text-sm leading-relaxed">필요한 서비스만 조합해서 가장 현실적인 방향으로 제안합니다.</p>
-        </div>
-        <div class="glass rounded-3xl p-7 text-white hover-lift">
-          <div class="text-sky-400 text-sm font-black mb-3">STEP 04</div>
-          <div class="text-2xl mb-3">🚀</div>
-          <h3 class="text-xl font-black mb-2">실행</h3>
-          <p class="text-white/75 text-sm leading-relaxed">운영, 설치, 세팅, 관리까지 실제 현장에서 바로 적용합니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 기대효과 -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <div class="section-title">EXPECTED RESULT</div>
-        <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">기대 효과</h2>
-      </div>
-      <div class="flex flex-wrap gap-3 justify-center">
-        <span class="mini-tag">검색 노출 강화</span>
-        <span class="mini-tag">실제 문의 증가</span>
-        <span class="mini-tag">브랜드 신뢰도 향상</span>
-        <span class="mini-tag">매장 운영 효율 개선</span>
-        <span class="mini-tag">주문 누락 감소</span>
-        <span class="mini-tag">인프라 안정성 강화</span>
-        <span class="mini-tag">보안 환경 정비</span>
-        <span class="mini-tag">현장 문제 해결</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 연락처 -->
-  <section id="contact" class="py-20" style="background:linear-gradient(135deg,#0f172a,#1e293b);">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-12">
-        <div class="text-5xl mb-4">🤝</div>
-        <h2 class="text-3xl md:text-4xl font-black text-white mb-4">
-          감자네트워크와 함께<br>성장 구조를 만들어보세요
-        </h2>
-        <p class="text-slate-300 text-lg leading-relaxed">
-          온라인 마케팅부터 테이블오더, 정보화 인프라까지<br>
-          필요한 것만 정확하게 연결해드립니다.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <a href="tel:01046530114" class="contact-tile hover-lift" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;">
-          <div class="contact-icon" style="background:rgba(255,255,255,.14);">
-            <span style="font-size:30px;">📞</span>
-          </div>
-          <div>
-            <div class="text-sm text-white/70 font-bold mb-1">전화 연결</div>
-            <div class="text-2xl font-black">010-4653-0114</div>
-            <div class="text-sm text-white/80 mt-1">터치하면 바로 전화 연결됩니다</div>
-          </div>
-        </a>
-
-        <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="contact-tile kakao-btn hover-lift">
-          <div class="contact-icon" style="background:rgba(0,0,0,.08);">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="#191919" aria-hidden="true">
-              <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/>
-            </svg>
-          </div>
-          <div>
-            <div class="text-sm text-black/60 font-bold mb-1">카카오톡 상담</div>
-            <div class="text-2xl font-black text-black">채팅으로 바로 문의</div>
-            <div class="text-sm text-black/70 mt-1">클릭하면 카카오 상담창으로 이동합니다</div>
-          </div>
-        </a>
-      </div>
-
-      <div class="mt-10 text-center">
-        <div class="inline-flex flex-wrap justify-center gap-2">
-          <span class="mini-tag">감자네트워크</span>
-          <span class="mini-tag">제주 비즈니스 솔루션</span>
-          <span class="mini-tag">상담 · 설치 · 운영 원스톱</span>
-        </div>
-        <div class="text-slate-500 text-sm mt-6">© 감자네트워크</div>
-      </div>
-    </div>
-  </section>
-
+        // 애니메이션 효과
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
