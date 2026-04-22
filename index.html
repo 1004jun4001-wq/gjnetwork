@@ -1,316 +1,177 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="naver-site-verification" content="aff77b4ec858c10657ecce901959a4f1a4f98d89" />
-    
-    <title>감자네트워크 | 제주 No.1 통합 비즈니스 솔루션</title>
-    <meta name="description" content="제주 소상공인을 위한 마케팅, KT 테이블오더, 기업인터넷, 보안 인프라까지 감자네트워크가 한 번에 해결해 드립니다.">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="감자네트워크">
-    <meta property="og:description" content="제주 비즈니스의 성장 엔진, 마케팅부터 IT 인프라까지 원스톱 솔루션">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamjaBuilder | AI 홈페이지 자동생성 솔루션</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            word-break: keep-all;
-            background: #f8fafc;
-            color: #1f2937;
-        }
-        .hover-lift { transition: all .35s cubic-bezier(0.4, 0, 0.2, 1); }
-        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,.08); }
-        .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); }
-        .kakao-btn { background: #FEE500; color: #191919; }
-        .kakao-btn:hover { background: #fada0a; transform: scale(1.02); }
-        .hero-gradient { background: linear-gradient(135deg, rgba(15, 23, 24, 0.9) 0%, rgba(2, 132, 199, 0.7) 100%); }
-        .nav-scrolled { background: rgba(255, 255, 255, 0.98) !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .section-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .section-reveal.active { opacity: 1; transform: translateY(0); }
-        .logo-text { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.05em; }
-        details summary::-webkit-details-marker { display: none; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .gradient-text { background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-blue-500 selection:text-white">
 
-    <!-- 플로팅 카카오 -->
-    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="kakao-btn fixed right-6 bottom-6 z-[9999] flex items-center gap-3 px-6 py-4 rounded-full font-black shadow-2xl transition-all hover:-translate-y-2">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
-        <span>실시간 상담</span>
-    </a>
-
-    <!-- 네비게이션 -->
-    <nav id="mainNav" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent">
+    <header class="fixed w-full top-0 z-50 glass-card border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-2">
-                <span id="navLogo" class="logo-text text-white">감자네트워크</span>
-            </a>
-            <div class="hidden md:flex items-center gap-8 text-[15px] font-bold text-white transition-colors duration-300" id="navLinks">
-                <a href="#about" class="hover:text-sky-400 transition-colors">회사소개</a>
-                <a href="#business" class="hover:text-sky-400 transition-colors">사업영역</a>
-                <a href="#location" class="hover:text-sky-400 transition-colors">오시는 길</a>
-                <a href="#faq" class="hover:text-sky-400 transition-colors">자주묻는질문</a>
-                <a href="tel:01046530114" class="bg-sky-600 text-white px-6 py-2.5 rounded-full hover:bg-sky-700 transition-all shadow-md border-0">전화 문의하기</a>
-            </div>
-            <button class="md:hidden text-white" id="mobileMenuBtn" onclick="location.href='tel:01046530114'">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-            </button>
-        </div>
-    </nav>
-
-    <!-- 히어로 섹션 (버튼 크기 수정 완료) -->
-    <section class="relative h-screen flex items-center overflow-hidden bg-slate-900">
-        <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-40" alt="Jeju Business Background">
-            <div class="absolute inset-0 hero-gradient"></div>
-        </div>
-        <div class="relative max-w-7xl mx-auto px-6 pt-20">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-white text-xs font-bold tracking-widest mb-8 uppercase">
-                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                    Jeju Total Business Partner
-                </div>
-                <h1 class="text-white font-black text-5xl md:text-7xl leading-[1.15] mb-8">
-                    제주 비즈니스의<br>
-                    <span class="text-sky-400">성장 엔진</span>이 됩니다
-                </h1>
-                <p class="text-white/80 text-lg md:text-xl mb-12 leading-relaxed">
-                    마케팅 따로, 통신 따로 고민하지 마세요. 감자네트워크는<br class="hidden md:block">
-                    고객 유입부터 매장 운영 효율화까지 원스톱으로 해결합니다.
-                </p>
-                <!-- 버튼 크기 통일 작업 -->
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="tel:01046530114" class="w-full sm:w-auto h-20 px-10 bg-white text-slate-900 rounded-2xl font-black text-xl hover:bg-sky-50 transition-all shadow-xl flex items-center justify-center gap-3">
-                        <svg class="w-6 h-6 text-sky-600 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 00-1.02.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.02c-.37-1.12-.57-2.32-.57-3.57 0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"></path></svg>
-                        <span>지금 바로 전화 상담</span>
-                    </a>
-                    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="w-full sm:w-auto h-20 px-10 kakao-btn rounded-2xl font-black text-xl transition-all shadow-xl flex items-center justify-center gap-3">
-                        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
-                        <span>카톡으로 문의</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 회사소개 -->
-    <section id="about" class="py-24 bg-white section-reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">Company</h4>
-                    <h2 class="text-4xl font-black text-slate-900 mb-6 leading-tight">
-                        제주 소상공인의 든든한<br>성공 파트너가 되겠습니다
-                    </h2>
-                    <p class="text-slate-600 text-lg leading-relaxed mb-8">
-                        제주는 특별한 시장입니다. 로컬의 특수성을 이해하지 못하면 아무리 좋은 기술도 빛을 발하기 어렵습니다. <br><br>
-                        감자네트워크는 제주 현장에서 쌓아온 풍부한 경험을 바탕으로 마케팅부터 IT 인프라 구축까지 통합 비즈니스 서비스를 제공합니다. 단순히 기술 지원을 넘어 매장 가치를 높이는 일에 집중합니다.
-                    </p>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-sky-600">
-                            <div class="text-3xl font-black text-sky-600 mb-1">01</div>
-                            <div class="text-sm text-slate-700 font-bold">로컬 시장 이해도</div>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-sky-600">
-                            <div class="text-3xl font-black text-sky-600 mb-1">02</div>
-                            <div class="text-sm text-slate-700 font-bold">원스톱 유지보수</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000" class="rounded-[40px] shadow-2xl" alt="Consulting Image">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 사업영역 -->
-    <section id="business" class="py-24 bg-slate-50 section-reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">Our Services</h4>
-                <h2 class="text-4xl font-black text-slate-900 mb-4">비즈니스 성공을 위한 4대 핵심 축</h2>
-                <div class="w-20 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100 text-center">
-                    <div class="w-16 h-16 bg-sky-100 rounded-2xl flex items-center justify-center text-3xl mb-8 mx-auto">📱</div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-4">디지털 마케팅</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">네이버 플레이스 최적화 및 로컬 상권 맞춤형 유입 전략 수립.</p>
-                </div>
-                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100 text-center">
-                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-8 mx-auto">🤖</div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-4">스마트 오더</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">KT 하이오더 전문 입점 및 관리. 인건비 절감 시스템 구축.</p>
-                </div>
-                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100 text-center">
-                    <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center text-3xl mb-8 mx-auto">🌐</div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-4">통신 인프라</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">기업 인터넷 및 네트워크 보안, 완벽한 배선 공사 지원.</p>
-                </div>
-                <div class="bg-white p-10 rounded-[40px] shadow-sm hover-lift border border-slate-100 text-center">
-                    <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-8 mx-auto">🛡️</div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-4">매장 안전 관리</h3>
-                    <p class="text-slate-500 leading-relaxed text-sm">CCTV 설치 및 원격 보안 모니터링 시스템 구축.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="py-24 bg-white section-reveal">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">FAQ</h4>
-                <h2 class="text-4xl font-black text-slate-900">궁금한 점을 확인하세요</h2>
-            </div>
-            <div class="space-y-4">
-                <details class="group bg-slate-50 border border-slate-200 rounded-[32px] overflow-hidden shadow-sm transition-all">
-                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8 font-bold text-lg text-slate-800">
-                        <span>초기 상담 및 견적 확인은 비용이 발생하나요?</span>
-                        <svg class="w-6 h-6 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </summary>
-                    <div class="px-8 pb-8 text-slate-600 text-lg leading-relaxed">
-                        아니요, <span class="text-sky-600 font-bold">완전 무료</span>입니다. 매장 방문을 통한 진단 및 비즈니스 맞춤 견적 산출까지 별도의 비용 없이 진행해 드리고 있습니다.
-                    </div>
-                </details>
+            <div class="text-2xl font-extrabold tracking-tight">Gamja<span class="text-blue-500">Builder</span></div>
+            
+            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
+                <a href="#features" class="hover:text-white transition">기능 소개</a>
+                <a href="#pricing" class="hover:text-white transition">요금제</a>
                 
-                <details class="group bg-slate-50 border border-slate-200 rounded-[32px] overflow-hidden shadow-sm transition-all">
-                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8 font-bold text-lg text-slate-800">
-                        <span>마케팅 서비스만 단독으로 신청할 수 있나요?</span>
-                        <svg class="w-6 h-6 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </summary>
-                    <div class="px-8 pb-8 text-slate-600 text-lg leading-relaxed">
-                        네, 가능합니다. 플레이스 최적화, 블로그 마케팅, SNS 광고 등 사장님께 가장 필요한 마케팅 서비스만 선택하여 단독으로 진행하실 수 있습니다.
-                    </div>
-                </details>
+                <div class="flex items-center gap-3 pl-4 border-l border-slate-700">
+                    <a href="GamjaBuilder_V7_97_사용설명서.pdf" download="GamjaBuilder_V7_97_사용설명서.pdf" class="px-4 py-2 border border-slate-500 hover:bg-slate-800 text-white rounded-full transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        매뉴얼 다운로드
+                    </a>
+                    <a href="#contact" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full transition shadow-lg shadow-blue-500/20">도입 문의</a>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-                <details class="group bg-slate-50 border border-slate-200 rounded-[32px] overflow-hidden shadow-sm transition-all">
-                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8 font-bold text-lg text-slate-800">
-                        <span>KT 하이오더 설치 기간은 얼마나 걸리나요?</span>
-                        <svg class="w-6 h-6 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </summary>
-                    <div class="px-8 pb-8 text-slate-600 text-lg leading-relaxed">
-                        상담 후 접수부터 설치 완료까지 보통 <span class="font-bold">영업일 기준 5~7일</span> 정도 소요됩니다. 깔끔한 배선 공사와 기기 사용법 교육까지 완벽하게 마무리해 드립니다.
-                    </div>
-                </details>
-
-                <details class="group bg-slate-50 border border-slate-200 rounded-[32px] overflow-hidden shadow-sm transition-all">
-                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8 font-bold text-lg text-slate-800">
-                        <span>기존 인터넷 약정이 남았는데 교체가 가능한가요?</span>
-                        <svg class="w-6 h-6 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </summary>
-                    <div class="px-8 pb-8 text-slate-600 text-lg leading-relaxed">
-                        현재 이용 중인 약정 상황을 분석하여 <span class="font-bold">위약금 최소화 방안</span>이나 전환 혜택을 최대로 받으실 수 있는 최적의 결합 상품을 제안해 드립니다.
-                    </div>
-                </details>
-
-                <details class="group bg-slate-50 border border-slate-200 rounded-[32px] overflow-hidden shadow-sm transition-all">
-                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8 font-bold text-lg text-slate-800">
-                        <span>A/S 발생 시 대응은 어떻게 이루어지나요?</span>
-                        <svg class="w-6 h-6 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </summary>
-                    <div class="px-8 pb-8 text-slate-600 text-lg leading-relaxed">
-                        감자네트워크는 <span class="text-sky-600 font-bold">제주 로컬 밀착 케어</span>를 원칙으로 합니다. 문제 발생 시 담당 직통 번호로 연락 주시면 원격 지원 또는 즉각적인 현장 방문 조치를 지원합니다.
-                    </div>
-                </details>
-
-                <details class="group bg-slate-50 border border-slate-200 rounded-[32px] overflow-hidden shadow-sm transition-all">
-                    <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8 font-bold text-lg text-slate-800">
-                        <span>법인 사업자나 다회선 운영도 가능한가요?</span>
-                        <svg class="w-6 h-6 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </summary>
-                    <div class="px-8 pb-8 text-slate-600 text-lg leading-relaxed">
-                        네, 가능합니다. 법인 전용 요금제는 물론 프랜차이즈나 다회선 매장의 통합 관리 시스템 구축도 전문적으로 지원하고 있습니다. 비즈니스 규모에 맞게 맞춤형 설계를 도와드립니다.
-                    </div>
-                </details>
+    <section class="pt-40 pb-20 px-6 text-center relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/20 blur-[120px] rounded-full z-0"></div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-block py-1 px-3 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-sm font-semibold mb-6">
+                🚀 V7.97 Premium Studio 정식 출시
             </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-8">
+                단 1분, AI가 완성하는<br><span class="gradient-text">하이엔드 웹사이트</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 mb-12 leading-relaxed">
+                업체명만 입력하세요. 제미나이(Gemini) AI 카피라이팅부터<br>프리미엄 디자인, 텔레그램 실시간 예약 시스템까지 한 번에 구축됩니다.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="#contact" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition shadow-lg shadow-blue-500/30">
+                    프로그램 시연 요청하기
+                </a>
+                <a href="#features" class="px-8 py-4 glass-card hover:bg-white/10 text-white font-bold rounded-lg transition">
+                    자세히 알아보기
+                </a>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] border border-white/10 glass-card p-2 md:p-3 transform hover:scale-[1.01] transition duration-500">
+                <div class="aspect-video rounded-xl overflow-hidden bg-black relative">
+                    <iframe width="100%" height="100%" 
+                            src="https://www.youtube.com/embed/PWahAVSt84M?autoplay=1&mute=1&loop=1&playlist=PWahAVSt84M" 
+                            title="GamjaBuilder Demo Video" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <p class="text-slate-500 text-sm mt-4 tracking-widest uppercase">▶ 감자빌더 활용 시연 영상 (Test)</p>
         </div>
     </section>
 
-    <!-- 위치 -->
-    <section id="location" class="py-24 bg-slate-50 section-reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h4 class="text-sky-600 font-black tracking-widest text-sm mb-4 uppercase">Location</h4>
-                <h2 class="text-4xl font-black text-slate-900 mb-4">오시는 길</h2>
-                <p class="text-slate-500 text-lg font-medium">제주특별자치도 제주시 동문로 47</p>
+    <section id="features" class="py-24 px-6 border-t border-white/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">웹에이전시가 필요 없는 이유</h2>
+                <p class="text-slate-400">대리점주와 영업사원을 위한 가장 강력한 무기입니다.</p>
             </div>
-            <div class="bg-white p-4 rounded-[50px] shadow-sm border border-slate-100 overflow-hidden">
-                <div class="relative w-full h-[450px] bg-slate-200 rounded-[40px] overflow-hidden">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-10 bg-black/5">
-                        <div class="w-20 h-20 bg-sky-600 text-white rounded-full flex items-center justify-center text-3xl mb-6 shadow-2xl animate-bounce">📍</div>
-                        <h3 class="text-2xl font-black text-slate-900 mb-2">감자네트워크 본사</h3>
-                        <p class="text-slate-600 mb-8 font-bold">제주특별자치도 제주시 동문로 47</p>
-                        <a href="https://pcmap.place.naver.com/place/37942445/home" target="_blank" class="px-10 py-4 bg-emerald-500 text-white rounded-full font-black flex items-center gap-3 hover:bg-emerald-600 transition-all shadow-xl">네이버 지도로 자세히 보기</a>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-30 select-none pointer-events-none" alt="Map Background">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-6">✨</div>
+                    <h3 class="text-xl font-bold mb-4">AI 수석 카피라이터</h3>
+                    <p class="text-slate-400 leading-relaxed">상호명과 업종만 입력하면, Gemini AI가 타겟 고객을 사로잡는 럭셔리한 카피를 5초 만에 작성합니다.</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-6">📱</div>
+                    <h3 class="text-xl font-bold mb-4">실시간 텔레그램 알림</h3>
+                    <p class="text-slate-400 leading-relaxed">고객이 홈페이지에 문의를 남기는 즉시, 사장님의 스마트폰(텔레그램)으로 다이렉트 알림이 전송됩니다.</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-6">🛡️</div>
+                    <h3 class="text-xl font-bold mb-4">완벽한 라이선스 제어</h3>
+                    <p class="text-slate-400 leading-relaxed">본사 전용 관리자 앱을 통해 대리점별 생성 횟수 제한, 만료일 설정, 강제 차단 등을 완벽하게 통제합니다.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 푸터 -->
-    <footer class="bg-slate-950 py-20">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
+    <section id="pricing" class="py-24 px-6 bg-slate-900/50 border-t border-white/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">합리적인 파트너 요금제</h2>
+                <p class="text-slate-400">비즈니스 규모에 맞는 라이선스를 선택하고 즉시 수익을 창출하세요.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="glass-card p-10 rounded-2xl border-t-4 border-slate-500">
+                    <h3 class="text-2xl font-bold mb-2">BASIC</h3>
+                    <p class="text-slate-400 mb-6">영세 1인 대리점용</p>
+                    <div class="text-4xl font-bold mb-8">₩199,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-300 text-sm md:text-base">
+                        <li class="flex items-center gap-3">✔️ <span class="text-white font-bold">월 20회</span> 생성 한도</li>
+                        <li class="flex items-center gap-3">✔️ Gemini AI 카피라이팅</li>
+                        <li class="flex items-center gap-3">✔️ 프리미엄 이미지 큐레이션</li>
+                        <li class="flex items-center gap-3">✔️ 텔레그램 실시간 알림 연동</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-10 rounded-2xl border-t-4 border-blue-500 transform md:-translate-y-4 shadow-2xl shadow-blue-500/20 relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold">BEST PARTNER</div>
+                    <h3 class="text-2xl font-bold mb-2">PRO</h3>
+                    <p class="text-slate-400 mb-6">일반 마케팅 에이전시</p>
+                    <div class="text-4xl font-bold mb-8 text-blue-400">₩399,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-300 text-sm md:text-base">
+                        <li class="flex items-center gap-3">✔️ <span class="text-blue-400 font-bold">월 50회</span> 넉넉한 생성 한도</li>
+                        <li class="flex items-center gap-3">✔️ BASIC의 모든 기능 포함</li>
+                        <li class="flex items-center gap-3">✔️ 본사 우선 기술 지원 (Hotline)</li>
+                        <li class="flex items-center gap-3">✔️ 신규 기능 무상 우선 업데이트</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-10 rounded-2xl border-t-4 border-purple-500">
+                    <h3 class="text-2xl font-bold mb-2">ULTRA</h3>
+                    <p class="text-slate-400 mb-6">기업형 총판 및 프랜차이즈</p>
+                    <div class="text-4xl font-bold mb-8">별도 문의</div>
+                    <ul class="space-y-4 mb-8 text-slate-300 text-sm md:text-base">
+                        <li class="flex items-center gap-3">✔️ <span class="text-purple-400 font-bold">무제한</span> 생성 라이선스</li>
+                        <li class="flex items-center gap-3">✔️ 마스터 관리자 앱 제공</li>
+                        <li class="flex items-center gap-3">✔️ 독립 서버 세팅 및 커스텀 지원</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 px-6 border-t border-white/10 relative">
+        <div class="max-w-3xl mx-auto glass-card p-10 md:p-16 rounded-3xl relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">도입 문의 및 데모 신청</h2>
+                <p class="text-slate-400">아래 정보를 남겨주시면, 담당자가 신속하게 연락드리겠습니다.</p>
+            </div>
+            
+            <form action="http://119.207.63.126:8000/api/leads/submit" method="POST" class="space-y-6">
+                <input type="hidden" name="license_key" value="GAMJA_OFFICIAL_SITE">
+                <input type="hidden" name="target_chat_id" value="7745000281"> 
+
                 <div>
-                    <div class="text-2xl font-black text-white mb-6 tracking-tighter uppercase">감자네트워크</div>
-                    <p class="text-slate-500 text-sm font-medium max-w-sm">제주 소상공인의 성공적인 비즈니스 안착을 돕는 통합 솔루션 전문 기업입니다.</p>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">업체명 / 성함</label>
+                    <input type="text" name="name" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition" placeholder="예: 감자네트워크 김성준" required>
                 </div>
-                <div class="grid grid-cols-2 gap-12 md:gap-24">
-                    <div>
-                        <h5 class="text-white font-black mb-6 uppercase tracking-widest text-xs">Menu</h5>
-                        <ul class="space-y-4 text-slate-500 text-sm font-bold">
-                            <li><a href="#about" class="hover:text-white transition-colors">회사소개</a></li>
-                            <li><a href="#business" class="hover:text-white transition-colors">사업영역</a></li>
-                            <li><a href="#location" class="hover:text-white transition-colors">오시는 길</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 class="text-white font-black mb-6 uppercase tracking-widest text-xs">Info</h5>
-                        <div class="space-y-3 text-slate-500 text-sm font-medium">
-                            <p>상호명: 감자네트워크</p>
-                            <p>대표번호: 010-4653-0114</p>
-                            <p>주소: 제주시 동문로 47</p>
-                        </div>
-                    </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">연락처</label>
+                    <input type="tel" name="phone" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition" placeholder="010-0000-0000" required>
                 </div>
-            </div>
-            <div class="mt-20 pt-8 border-t border-white/5 text-center text-slate-600 text-xs">
-                © 2024 Gamja Network. All rights reserved.
-            </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">문의 내용</label>
+                    <textarea name="message" rows="4" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition resize-none" placeholder="궁금하신 점이나 원하시는 요금제를 적어주세요."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-lg py-4 rounded-lg transition shadow-lg shadow-blue-500/30 mt-4">
+                    도입 상담 신청하기
+                </button>
+            </form>
         </div>
+    </section>
+
+    <footer class="py-10 text-center border-t border-white/10 text-slate-500 text-sm">
+        <p>© 2026 Gamja Network. All rights reserved.</p>
+        <p class="mt-2">대표: 김성준 | 솔루션 문의: 064-746-4653</p>
     </footer>
 
-    <script>
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('mainNav');
-            const navLinks = document.getElementById('navLinks');
-            const navLogo = document.getElementById('navLogo');
-            const mobileBtn = document.getElementById('mobileMenuBtn');
-            
-            if (window.scrollY > 50) {
-                nav.classList.add('nav-scrolled');
-                navLinks.classList.replace('text-white', 'text-slate-700');
-                navLogo.classList.replace('text-white', 'text-slate-900');
-                mobileBtn.classList.replace('text-white', 'text-slate-900');
-            } else {
-                nav.classList.remove('nav-scrolled');
-                navLinks.classList.replace('text-slate-700', 'text-white');
-                navLogo.classList.replace('text-slate-900', 'text-white');
-                mobileBtn.classList.replace('text-slate-900', 'text-white');
-            }
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
-    </script>
 </body>
 </html>
