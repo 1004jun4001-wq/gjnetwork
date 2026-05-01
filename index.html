@@ -5,6 +5,11 @@
     <style>        body {            font-family: 'Pretendard', sans-serif;            scroll-behavior: smooth;            word-break: keep-all;            background: #f8fafc;        }        .gradient-text {            background: linear-gradient(to right, #60a5fa, #c084fc);            -webkit-background-clip: text;            -webkit-text-fill-color: transparent;        }        .glass-card-dark {            background: rgba(255, 255, 255, 0.05);            backdrop-filter: blur(10px);            border: 1px solid rgba(255, 255, 255, 0.1);        }        .hover-lift { transition: all .35s ease; }        .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(0,0,0,.12); }        .service-icon {            width: 62px; height: 62px; border-radius: 18px;            display: flex; align-items: center; justify-content: center;            font-size: 28px; margin-bottom: 18px;            background: linear-gradient(135deg, #e0f2fe, #dbeafe);        }        .floating-kakao {            position: fixed; right: 24px; bottom: 24px; z-index: 9999;            background: #FEE500; color: #191919;            border-radius: 999px; padding: 14px 22px;            display: flex; align-items: center; gap: 10px; font-weight: 800;            box-shadow: 0 10px 28px rgba(0,0,0,.25); transition: all .28s ease;        }        .floating-kakao:hover { transform: translateY(-3px) scale(1.02); }
         .product-swiper { padding: 20px 0 30px; }
         .swiper-button-next, .swiper-button-prev { color: #0284c7 !important; }
+        
+        /* 🔥 무한 슬라이딩(Marquee)을 부드럽게 만들기 위한 핵심 CSS */
+        .product-swiper .swiper-wrapper {
+            transition-timing-function: linear !important;
+        }
     </style></head><body class="antialiased selection:bg-blue-500 selection:text-white">
     <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="floating-kakao text-sm md:text-base">        <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>        카카오 상담    </a>
     <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">            <div class="flex items-center gap-2">                <span class="text-xl font-black tracking-tight text-sky-700">감자네트워크</span>                <span class="text-sm text-slate-400 hidden sm:block">| 통합 비즈니스 솔루션</span>            </div>            <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-600">                <a href="#local-business" class="hover:text-sky-600 transition">핵심 사업영역</a>                <a href="#gamjabuilder" class="hover:text-blue-600 transition">감자빌더 (AI SaaS)</a>                <a href="#pricing" class="hover:text-blue-600 transition">요금제</a>                <div class="flex items-center gap-3 pl-4 border-l border-slate-300">                    <a href="보안_매뉴얼.html" download="감자빌더_프리미엄_매뉴얼.html" class="px-4 py-2 border border-slate-300 hover:bg-slate-50 rounded-full transition flex items-center gap-2 text-slate-600">                        메뉴얼 다운로드                    </a>                    <a href="#contact" class="px-5 py-2 bg-gradient-to-r from-sky-600 to-blue-600 hover:opacity-90 text-white rounded-full transition shadow-lg">상담 문의</a>                </div>            </nav>        </div>    </header>
@@ -29,8 +34,6 @@
                 <div class="swiper-wrapper" id="dynamic-product-list">
                     <div class="swiper-slide p-12 text-center text-slate-400 font-bold">API 데이터를 연동 중입니다...</div>
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
             <!-- 공정위 필수 문구 -->
             <p class="text-[10px] md:text-xs text-slate-400 text-center mt-4">
@@ -52,16 +55,17 @@
     <!-- ====== 쿠팡 파트너스 팝업 시작 ====== -->
     <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center;">
         <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
-            <button onclick="closePopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; font-weight:bold; color:#888; cursor:pointer; line-height:1;">&times;</button>
+            <button onclick="closePopup()" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer; line-height:1; z-index:100;">&times;</button>
             <div style="padding:20px; text-align:center;">
-                <h3 style="margin-top:10px; color:#333; font-size:18px; font-weight:bold;">비즈니스 추천 아이템</h3>
+                <h3 style="margin-top:10px; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px;">비즈니스 추천 아이템</h3>
                 
-                <!-- 기존 텍스트 박스 대신 실제 상품 이미지로 교체 적용 -->
-                <a href="https://link.coupang.com/a/eAduSI" target="_blank" style="display:block; margin:15px 0; text-decoration:none;">
+                <a href="https://link.coupang.com/a/eAduSI" target="_blank" style="display:block; text-decoration:none;">
+                    <!-- 실제 상품 이미지 주소 및 차단 방지 코드 적용 -->
                     <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
+                         referrerpolicy="no-referrer"
                          alt="추천 상품" style="width:100%; height:auto; border-radius:8px; border:1px solid #eee;">
                     <div style="margin-top:12px; padding:12px; background:#2563eb; border-radius:8px; color:#fff; font-weight:bold; font-size:14px; box-shadow: 0 4px 10px rgba(37,99,235,0.2);">
-                        추천 상품 확인하기
+                        최저가 상세정보 확인하기
                     </div>
                 </a>
                 
@@ -86,22 +90,27 @@
 
         async function loadDynamicCoupangData() {
             try {
-                // 🛠️ [대표님 전용] 아래 변수에 Python 서버에서 제공하는 API 엔드포인트를 입력하세요.
+                // 🛠️ API 엔드포인트 설정
                 const API_URL = 'YOUR_API_ENDPOINT_HERE'; 
                 
                 let data = [];
                 
-                // API 주소가 입력되었는지 확인 후 데이터 호출
                 if(API_URL !== 'YOUR_API_ENDPOINT_HERE') {
                     const response = await fetch(API_URL);
                     data = await response.json();
                 } else {
-                    // 주소 입력 전까지 보여줄 예시 데이터 (테스트용)
+                    // 🌟 이미지 10개 삽입 (절대 깨지지 않는 고화질 Unsplash 이미지 조합)
                     data = [
-                        { name: "실버 순은 999.9 실버바 100g", price: "480,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://via.placeholder.com/200x200/f1f5f9/94a3b8?text=Silver+Bar" },
-                        { name: "고성능 사무용 노트북", price: "1,250,000원", link: "#", img: "https://via.placeholder.com/200x200/f1f5f9/94a3b8?text=Laptop" },
-                        { name: "인체공학 무선 키보드 세트", price: "59,000원", link: "#", img: "https://via.placeholder.com/200x200/f1f5f9/94a3b8?text=Keyboard" },
-                        { name: "4K 울트라 HD 모니터", price: "349,000원", link: "#", img: "https://via.placeholder.com/200x200/f1f5f9/94a3b8?text=Monitor" }
+                        { name: "실버 순은 999.9 실버바 100g", price: "480,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" },
+                        { name: "LG전자 2024 그램 16 노트북", price: "1,450,000원", link: "#", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" },
+                        { name: "인체공학 무선 키보드 세트", price: "59,000원", link: "#", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80" },
+                        { name: "4K 울트라 HD 모니터", price: "349,000원", link: "#", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&q=80" },
+                        { name: "사무용 스탠딩 모션 데스크", price: "159,000원", link: "#", img: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=400&q=80" },
+                        { name: "프리미엄 사무용 메쉬 의자", price: "359,000원", link: "#", img: "https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=400&q=80" },
+                        { name: "100W 고속 멀티 충전기", price: "49,900원", link: "#", img: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=400&q=80" },
+                        { name: "노이즈캔슬링 무선 헤드폰", price: "429,000원", link: "#", img: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=400&q=80" },
+                        { name: "외장하드 2TB 포터블", price: "119,000원", link: "#", img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=400&q=80" },
+                        { name: "C타입 멀티 허브 8 in 1", price: "35,000원", link: "#", img: "https://images.unsplash.com/photo-1647427060118-4911c9821b82?auto=format&fit=crop&w=400&q=80" }
                     ];
                 }
 
@@ -112,7 +121,8 @@
                     container.innerHTML += `
                         <div class="swiper-slide p-2">
                             <a href="${item.link}" target="_blank" class="block bg-white border border-slate-200 rounded-2xl overflow-hidden hover-lift shadow-sm">
-                                <img src="${item.img}" class="w-full h-40 object-cover" alt="${item.name}">
+                                <!-- 🛠️ 이미지 차단 방지를 위한 referrerpolicy 추가 -->
+                                <img src="${item.img}" referrerpolicy="no-referrer" class="w-full h-44 object-cover" alt="${item.name}">
                                 <div class="p-4">
                                     <div class="text-xs font-bold text-slate-400 mb-1">최저가 보장</div>
                                     <div class="text-sm font-bold text-slate-800 truncate mb-1">${item.name}</div>
@@ -123,19 +133,22 @@
                     `;
                 });
 
-                // 데이터 렌더링 후 슬라이더 초기화
+                // 🔥 끊김 없는 무한 슬라이딩 로직
                 new Swiper('.product-swiper', {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-                    breakpoints: {
-                        640: { slidesPerView: 2 },
-                        1024: { slidesPerView: 4 }
+                    slidesPerView: 1, 
+                    spaceBetween: 15,
+                    loop: true,                 // 무한 반복 설정
+                    speed: 3000,                // 부드럽게 흘러가도록 속도 조절
+                    autoplay: {
+                        delay: 0,               // 멈춤 없이 계속 이동
+                        disableOnInteraction: false, // 터치 후에도 자동 롤링 유지
+                    },
+                    breakpoints: { 
+                        640: { slidesPerView: 2 }, 
+                        1024: { slidesPerView: 4 } 
                     }
                 });
-            } catch (e) {
-                console.error("데이터 로드 중 오류 발생:", e);
-            }
+            } catch (e) { console.error("데이터 로드 중 오류:", e); }
         }
     </script>
     <https://link.coupang.com/a/eAduSI>
