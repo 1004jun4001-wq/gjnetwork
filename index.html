@@ -33,9 +33,21 @@
         
         <!-- [실시간 최저가 상품 슬라이드 + 공정위 문구] -->
         <div class="max-w-7xl mx-auto px-6 mt-20">
-            <h2 class="text-2xl font-black text-slate-900 mb-8 flex items-center gap-2">
-                <span class="text-sky-600 text-3xl">🔥</span> 실시간 비즈니스 추천 최저가
-            </h2>
+            
+            <!-- 🔥 추가요청: 배너를 타이틀 옆 & 슬라이드 위에 배치하는 flex 컨테이너 -->
+            <div class="flex flex-col lg:flex-row items-center justify-between mb-8 gap-6">
+                <!-- 좌측 타이틀 -->
+                <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2 shrink-0">
+                    <span class="text-sky-600 text-3xl">🔥</span> 실시간 비즈니스 추천 최저가
+                </h2>
+                
+                <!-- 우측/중앙 쿠팡 다이내믹 배너 (iframe) -->
+                <div class="w-full lg:max-w-[600px] flex justify-center bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shadow-sm">
+                    <iframe src="https://coupa.ng/cmFRj5" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
+                </div>
+            </div>
+
+            <!-- 슬라이더 컨테이너 -->
             <div class="swiper product-swiper overflow-hidden">
                 <div class="swiper-wrapper" id="dynamic-product-list">
                     <div class="swiper-slide p-12 text-center text-slate-400 font-bold">API 데이터를 연동 중입니다...</div>
@@ -59,17 +71,14 @@
     <footer class="py-12 text-center bg-slate-900 text-slate-500 text-sm border-t border-slate-800">        <div class="flex flex-wrap justify-center gap-3 mb-6">            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자네트워크</span>            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">GamjaBuilder</span>            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">제주 비즈니스 솔루션</span>        </div>        <p>© 2026 Gamja Network. All rights reserved.</p>        <p class="mt-2">대표: 김성준 | 솔루션 문의: 010-4653-0114</p>    </footer>
 
     <!-- ====== 1. 쿠팡 파트너스 진입 팝업 ====== -->
-    <!-- 🔥 여백 클릭 시 링크 이동 (전체 화면 적용) -->
     <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center; cursor:pointer;" onclick="window.open('https://link.coupang.com/a/eAduSI', '_blank'); closePopup();">
         <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
             
-            <!-- 🚨 X 버튼 클릭 시 링크 이동 방지 (event.stopPropagation 적용) -->
             <button onclick="event.stopPropagation(); closePopup();" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer; line-height:1; z-index:100;">&times;</button>
             
             <div style="padding:20px; text-align:center;">
                 <h3 style="margin-top:10px; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px;">비즈니스 추천 아이템</h3>
                 
-                <!-- 기존 a 태그를 div 로 변경하여 이중 클릭(오류) 방지 -->
                 <div style="display:block; margin:15px 0; text-decoration:none;">
                     <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
                          referrerpolicy="no-referrer"
@@ -87,11 +96,9 @@
     </div>
 
     <!-- ====== 2. 이탈 방지 (Exit-Intent) 타겟팅 팝업 ====== -->
-    <!-- 🔥 여백 클릭 시 링크 이동 -->
     <div id="exitPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:999999; align-items:center; justify-content:center; backdrop-filter: blur(5px); cursor:pointer;" onclick="window.open('https://link.coupang.com/a/eAduSI', '_blank'); closeExitPopup();">
         <div style="background:#fff; width:380px; border-radius:16px; overflow:hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position:relative; animation: popDropIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
             
-            <!-- 🚨 X 버튼 클릭 시 링크 이동 방지 (event.stopPropagation 적용) -->
             <button onclick="event.stopPropagation(); closeExitPopup();" style="position:absolute; top:12px; right:12px; background:#f1f5f9; border-radius:50%; width:28px; height:28px; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; line-height:1; z-index:100; display:flex; align-items:center; justify-content:center;">&times;</button>
             
             <div style="padding:30px 24px 24px; text-align:center;">
