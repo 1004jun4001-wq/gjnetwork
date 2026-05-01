@@ -1,0 +1,40 @@
+name: Auto Update Coupang Data
+
+on:
+  schedule:
+    # 매일 한국시간 기준 아침 9시, 오후 3시, 밤 9시에 자동 실행되도록 셋팅 (서버 과부하 방지)
+    - cron: '0 0,6,12 * * *' 
+  workflow_dispatch: # 깃허브 페이지에서 수동으로 '실행' 버튼을 누를 수 있게 해줍니다.
+
+permissions:
+  contents: write # 깃허브가 json 파일을 덮어쓰기 위해 필요한 권한입니다.
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 내 저장소 파일 가져오기
+        uses: actions/checkout@v4
+
+      - name: 🐍 파이썬 환경 설정
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 필요한 패키지 설치
+        run: pip install requests
+
+      - name: 🚀 파이썬 스크립트 실행 (API 호출)
+        env:
+          # 깃허브 보안 금고에서 키를 꺼내옵니다.
+          COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
+          COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
+        run: python update_coupang.py
+
+      - name: 💾 새로 만들어진 json 파일 저장소에 덮어쓰기
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add coupang_data.json
+          # 파일 변경사항이 있을 때만 커밋하도록 방어 로직 추가
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 자동 업데이트: 쿠팡 실시간 최저가 데이터 [skip ci]" && git push)
