@@ -34,7 +34,7 @@
         <!-- [실시간 최저가 상품 슬라이드 + 공정위 문구] -->
         <div class="max-w-7xl mx-auto px-6 mt-20">
             
-            <!-- 🔥 추가요청: 배너를 타이틀 옆 & 슬라이드 위에 배치하는 flex 컨테이너 -->
+            <!-- 🔥 배너를 타이틀 옆 & 슬라이드 위에 배치하는 flex 컨테이너 -->
             <div class="flex flex-col lg:flex-row items-center justify-between mb-8 gap-6">
                 <!-- 좌측 타이틀 -->
                 <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2 shrink-0">
@@ -71,19 +71,24 @@
     <footer class="py-12 text-center bg-slate-900 text-slate-500 text-sm border-t border-slate-800">        <div class="flex flex-wrap justify-center gap-3 mb-6">            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자네트워크</span>            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">GamjaBuilder</span>            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">제주 비즈니스 솔루션</span>        </div>        <p>© 2026 Gamja Network. All rights reserved.</p>        <p class="mt-2">대표: 김성준 | 솔루션 문의: 010-4653-0114</p>    </footer>
 
     <!-- ====== 1. 쿠팡 파트너스 진입 팝업 ====== -->
-    <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center; cursor:pointer;" onclick="window.open('https://link.coupang.com/a/eAduSI', '_blank'); closePopup();">
+    <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center; cursor:pointer;">
+        <!-- 팝업창 본문 (클릭 시 링크 연결 처리) -->
         <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
             
+            <!-- 🚨 'X' 버튼 클릭 시 팝업 닫기 (링크 이동 방지) -->
             <button onclick="event.stopPropagation(); closePopup();" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer; line-height:1; z-index:100;">&times;</button>
             
             <div style="padding:20px; text-align:center;">
-                <h3 style="margin-top:10px; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px;">비즈니스 추천 아이템</h3>
+                <!-- 🔥 API로 받아온 상품명 삽입 -->
+                <h3 id="entrance-title" style="margin-top:10px; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">비즈니스 추천 아이템</h3>
                 
                 <div style="display:block; margin:15px 0; text-decoration:none;">
-                    <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
+                    <!-- 🔥 API로 받아온 상품 이미지 삽입 -->
+                    <img id="entrance-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
                          referrerpolicy="no-referrer"
                          alt="추천 상품" style="width:100%; height:auto; border-radius:8px; border:1px solid #eee;">
-                    <div style="margin-top:12px; padding:12px; background:#2563eb; border-radius:8px; color:#fff; font-weight:bold; font-size:14px; box-shadow: 0 4px 10px rgba(37,99,235,0.2);">
+                    <!-- 🔥 API로 받아온 상품 가격 정보 삽입 -->
+                    <div id="entrance-btn" style="margin-top:12px; padding:12px; background:#2563eb; border-radius:8px; color:#fff; font-weight:bold; font-size:14px; box-shadow: 0 4px 10px rgba(37,99,235,0.2);">
                         최저가 상세정보 확인하기
                     </div>
                 </div>
@@ -96,23 +101,27 @@
     </div>
 
     <!-- ====== 2. 이탈 방지 (Exit-Intent) 타겟팅 팝업 ====== -->
-    <div id="exitPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:999999; align-items:center; justify-content:center; backdrop-filter: blur(5px); cursor:pointer;" onclick="window.open('https://link.coupang.com/a/eAduSI', '_blank'); closeExitPopup();">
+    <div id="exitPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:999999; align-items:center; justify-content:center; backdrop-filter: blur(5px); cursor:pointer;">
+        <!-- 팝업창 본문 (클릭 시 링크 연결 처리) -->
         <div style="background:#fff; width:380px; border-radius:16px; overflow:hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position:relative; animation: popDropIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
             
+            <!-- 🚨 'X' 버튼 클릭 시 팝업 닫기 (링크 이동 방지) -->
             <button onclick="event.stopPropagation(); closeExitPopup();" style="position:absolute; top:12px; right:12px; background:#f1f5f9; border-radius:50%; width:28px; height:28px; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; line-height:1; z-index:100; display:flex; align-items:center; justify-content:center;">&times;</button>
             
             <div style="padding:30px 24px 24px; text-align:center;">
                 <div style="font-size:40px; margin-bottom:10px;">🚨</div>
                 <h3 style="margin-top:0; color:#e11d48; font-size:24px; font-weight:900; margin-bottom:8px; letter-spacing:-0.5px;">잠깐만요!</h3>
-                <p style="color:#475569; font-size:15px; font-weight:600; line-height:1.5; margin-bottom:20px;">
+                <p id="exit-title" style="color:#475569; font-size:15px; font-weight:600; line-height:1.5; margin-bottom:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                     <span class="text-blue-600">비즈니스 필수템 최저가 혜택</span>을<br>놓치지 마세요!
                 </p>
                 
                 <div style="display:block; text-decoration:none;">
-                    <img src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
+                    <!-- 🔥 API로 받아온 상품 이미지 삽입 -->
+                    <img id="exit-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
                          referrerpolicy="no-referrer"
                          alt="추천 상품" style="width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:15px;">
-                    <div style="padding:14px; background:linear-gradient(135deg, #2563eb, #1d4ed8); border-radius:10px; color:#fff; font-weight:800; font-size:16px; box-shadow: 0 4px 15px rgba(37,99,235,0.4); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    <!-- 🔥 API로 받아온 상품 가격 정보 삽입 -->
+                    <div id="exit-btn" style="padding:14px; background:linear-gradient(135deg, #2563eb, #1d4ed8); border-radius:10px; color:#fff; font-weight:800; font-size:16px; box-shadow: 0 4px 15px rgba(37,99,235,0.4); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
                         마지막 혜택 바로 확인하기 👉
                     </div>
                 </div>
@@ -127,7 +136,6 @@
     <!-- 스크립트 영역 -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- 기존 팝업 및 슬라이드 로직 ---
         window.addEventListener('DOMContentLoaded', function() {
             document.getElementById("coupangPopup").style.display = "flex";
             loadDynamicCoupangData(); 
@@ -139,17 +147,19 @@
 
         async function loadDynamicCoupangData() {
             try {
-                // 🛠️ 나중에 GitHub Actions가 만들어줄 JSON 파일의 경로로 미리 설정
+                // 🛠️ 나중에 GitHub Actions가 만들어줄 JSON 파일의 경로
                 const API_URL = './coupang_data.json'; 
                 let data = [];
                 
-                if(API_URL !== 'YOUR_API_ENDPOINT_HERE') {
+                try {
                     const response = await fetch(API_URL);
+                    if (!response.ok) throw new Error("JSON 파일 로드 실패");
                     data = await response.json();
-                } else {
+                } catch (err) {
+                    console.log("기본 테스트 데이터를 로드합니다.");
                     data = [
+                        { name: "LG전자 2024 그램 16 노트북", price: "1,450,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" },
                         { name: "실버 순은 999.9 실버바 100g", price: "480,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" },
-                        { name: "LG전자 2024 그램 16 노트북", price: "1,450,000원", link: "#", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" },
                         { name: "인체공학 무선 키보드 세트", price: "59,000원", link: "#", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80" },
                         { name: "4K 울트라 HD 모니터", price: "349,000원", link: "#", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&q=80" },
                         { name: "사무용 스탠딩 모션 데스크", price: "159,000원", link: "#", img: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=400&q=80" },
@@ -161,6 +171,32 @@
                     ];
                 }
 
+                // 🔥 [중요] 팝업 2개에 각각 API 데이터 주입 및 안전한 전체 영역 클릭 설정
+                if (data.length > 0) {
+                    // 1. 진입 팝업 적용 (첫 번째 상품)
+                    const entranceItem = data[0];
+                    document.getElementById('entrance-title').innerText = entranceItem.name;
+                    document.getElementById('entrance-img').src = entranceItem.img;
+                    document.getElementById('entrance-btn').innerText = entranceItem.price + " - 상세정보 확인";
+                    
+                    document.getElementById('coupangPopup').onclick = function() {
+                        window.open(entranceItem.link, '_blank');
+                        closePopup();
+                    };
+
+                    // 2. 이탈 팝업 적용 (두 번째 상품 교차 노출)
+                    const exitItem = data.length > 1 ? data[1] : data[0];
+                    document.getElementById('exit-title').innerText = exitItem.name;
+                    document.getElementById('exit-img').src = exitItem.img;
+                    document.getElementById('exit-btn').innerText = exitItem.price + " - 혜택 확인하기 👉";
+
+                    document.getElementById('exitPopup').onclick = function() {
+                        window.open(exitItem.link, '_blank');
+                        closeExitPopup();
+                    };
+                }
+
+                // 슬라이더 렌더링
                 const container = document.getElementById('dynamic-product-list');
                 container.innerHTML = ''; 
 
@@ -193,7 +229,7 @@
                         1024: { slidesPerView: 4 } 
                     }
                 });
-            } catch (e) { console.error("데이터 로드 중 오류:", e); }
+            } catch (e) { console.error("크리티컬 에러:", e); }
         }
 
         // --- 🚨 이탈 방지 (Exit-Intent) 팝업 로직 ---
