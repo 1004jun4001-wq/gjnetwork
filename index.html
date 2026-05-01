@@ -139,7 +139,8 @@
 
         async function loadDynamicCoupangData() {
             try {
-                const API_URL = 'YOUR_API_ENDPOINT_HERE'; 
+                // 🛠️ 나중에 GitHub Actions가 만들어줄 JSON 파일의 경로로 미리 설정
+                const API_URL = './coupang_data.json'; 
                 let data = [];
                 
                 if(API_URL !== 'YOUR_API_ENDPOINT_HERE') {
