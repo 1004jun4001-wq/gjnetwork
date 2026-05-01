@@ -25,14 +25,17 @@
 
     <!-- ====== 쿠팡 파트너스 팝업 시작 ====== -->
     <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center;">
-        <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
+            
+            <!-- 우측 상단 X 버튼 -->
+            <button onclick="closePopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; font-weight:bold; color:#888; cursor:pointer; line-height:1;">&times;</button>
+
             <div style="padding:20px; text-align:center;">
-                <h3 style="margin-top:0; color:#333; font-size:18px; font-weight:bold;">비즈니스 추천 아이템</h3>
+                <h3 style="margin-top:10px; color:#333; font-size:18px; font-weight:bold;">비즈니스 추천 아이템</h3>
                 
-                <!-- 👉 이 아래의 <a> 태그 영역을 쿠팡파트너스에서 복사한 코드(iframe, 이미지 링크 등)로 교체하세요 -->
-                <a href="쿠팡파트너스_단축URL" target="_blank" style="display:block; margin:15px 0;">
+                <a href="https://link.coupang.com/a/eAduSI" target="_blank" style="display:block; margin:15px 0;">
                     <div style="width:100%; height:150px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; border-radius:8px; color:#94a3b8; font-size:14px; border:1px dashed #cbd5e1;">
-                        여기에 쿠팡 배너 이미지가 들어갑니다.
+                        추천 상품 확인하기
                     </div>
                 </a>
                 
@@ -41,38 +44,20 @@
                     이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
                 </p>
             </div>
-            
-            <div style="display:flex; border-top:1px solid #eee;">
-                <button onclick="closePopupToday()" style="flex:1; padding:12px; border:none; background:#f9f9f9; color:#555; cursor:pointer; font-size:13px;">
-                    오늘 하루 보지 않기
-                </button>
-                <button onclick="closePopup()" style="flex:1; padding:12px; border:none; background:#fff; color:#333; cursor:pointer; font-size:13px; font-weight:bold; border-left:1px solid #eee;">
-                    닫기
-                </button>
-            </div>
         </div>
     </div>
 
     <script>
+        // 페이지 접속 시 팝업 즉시 노출
         window.addEventListener('DOMContentLoaded', function() {
-            var hidePopup = localStorage.getItem("hideCoupangPopup");
-            var today = new Date().toDateString();
-
-            if (hidePopup !== today) {
-                document.getElementById("coupangPopup").style.display = "flex";
-            }
+            document.getElementById("coupangPopup").style.display = "flex";
         });
 
+        // 팝업 닫기
         function closePopup() {
             document.getElementById("coupangPopup").style.display = "none";
         }
-
-        function closePopupToday() {
-            var today = new Date().toDateString();
-            localStorage.setItem("hideCoupangPopup", today);
-            closePopup();
-        }
     </script>
-    <!-- ====== 쿠팡 파트너스 팝업 끝 ====== -->
+    <https://link.coupang.com/a/eAduSI>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"2b08527da6524bc098202f6b3039070d","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script></body></html>
