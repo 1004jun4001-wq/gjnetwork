@@ -1,1190 +1,860 @@
-import os, json, random, qrcode, webbrowser, urllib.request, urllib.parse, base64, re, sys, threading
-from datetime import datetime
-import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감자네트워크 & 감자빌더 | 통합 비즈니스 플랫폼</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 실시간 슬라이드 기능을 위한 Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-# 💡 QR코드 이미지 합성을 위한 PIL 라이브러리
-try:
-    from PIL import Image, ImageDraw, ImageFont
-except ImportError:
-    pass
-
-from license_manager import ensure_valid_license, check_and_increment_usage, refresh_license
-
-# --- [1. 설정] ---
-TIER_LIMITS = {"BASIC": 20, "PRO": 50, "PREMIUM": "무제한", "ULTRA": "무제한"}
-MY_TELEGRAM_TOKEN = "여기에_토큰_입력"
-MY_CHAT_ID = "7745000281"
-
-# --- [2. 전 업종 프리미엄 큐레이션 이미지 풀] ---
-IMAGE_POOLS = {
-    "음식/식당": [
-        "1414235008690-f14afe05092a", "1504674900247-0877df9cc836", "1546069901-d5bfd2cbfb8f", 
-        "1550547660-d9450f859349", "1517248135467-4c7edcad34c4", "1476224203465-ec06b46c6eba", 
-        "1559339352-11d035aa65de", "1495474472205-16284eb86bdf", "1515003197210-ce9b4f4c28a8", 
-        "1555396273-367ea4eb4db5", "1525648199074-bea69b4ff1dc", "1514933651103-005eec06c04b", 
-        "1466978913421-bac2e104d59a", "1554679665-dbd52ec444ba", "1505826759037-406b40feb4cd"
-    ],
-    "뷰티/미용": [
-        "1522337660859-02fbefce4ffc", "1560750588-73207b1ef5b8", "1616394584738-fc6e612e71b9", 
-        "1562322140-8baeececf3df", "1515377659622-4b314ab52741", "1596178065864-82822ad19dca", 
-        "1512496015851-a1fbbfcbd34d", "1516975080664-ed2fc6a32937", "1527799820374-dcf8d9d4a388", 
-        "1590159763121-8c6f44d57a91", "1604654894610-df63bc536371", "1556228578-0d85b1a4d571", 
-        "1595476108010-b4d1f10db5e5", "1487412720507-e7ab37603c6f", "1527799820374-dcf8d9d4a388"
-    ],
-    "운동/피트니스": [
-        "15344383272d6-1bb281c04f4a", "1571019613454-1cb2f99b2d8b", "1540497077202-7c8a3999166f", 
-        "1583454110551-21f2fa2ec617", "1517836357463-d25dfeac3438", "1576678927484-cc907cb5f396", 
-        "1526506118432-84149dc8deff", "1518611012118-696072aa579a", "1571388208497-71bedc66e932", 
-        "1574680096145-d05b474e2155", "1554284126-aa254e4eb2b8", "1536922246292-28a483f414fc", 
-        "1581009146145-b5ef050c2e1e", "1518611012118-696072aa579a", "1599058917200-afcfc2bb85f4"
-    ],
-    "숙박/여행": [
-        "1566073771279-639ac15197f0", "1520250497591-112f2f40a3f4", "1542314831-068cd1dbfeeb", 
-        "1571896349842-33c89424de2d", "1445013161103-f8b727616b54", "1582719478250-c89dbae4382d", 
-        "1551882547-ff40c0d9a6c7", "1564501049412-61c2a3083791", "1496417263034-38ec4f0b665a", 
-        "1512918728675-ed5a9ecdebfd", "1455587734955-0828dece27f0", "1499793983690-e29da59ef1c2", 
-        "1521783988139-893970761d85", "1501117716987-c96b5c78ddce", "1535827841776-24afc1e255ac"
-    ],
-    "반려동물": [
-        "1541364983171-612b3adc581d", "1583511653297-2511031c19b6", "1544568100-847a948585b9", 
-        "1514888286954-4621f1e77452", "1450778869180-41d0d71eaf9a", "1517849845537-4d257902454a", 
-        "1527362950785-3e2840049f7e", "1537151608804-ea3d1ba39fb0", "1583337130417-3346a1be7dee", 
-        "1548199973-03cce0bbc87b", "1553882815-5e0454bf52f1", "1563460716-03fc10f96b27", 
-        "1501820488136-72669149e0d4", "1513360371669-4adf3dd7dff8", "1541781774459-bb281ce13d2f"
-    ],
-    "생활서비스": [
-        "1581578736621-0d935400fd7a", "1584622650111-993a426fbf0a", "1621905235820-df74483a99e7", 
-        "1558384419-175982836718", "1485955900006-0dfb40810310", "1589939705384-5185137a7f0f", 
-        "1504328345606-18bbc8c9d7d1", "1416879598056-0c21354d8969", "1590424744257-8df2f328a6f4", 
-        "1603533867307-b3524b82bc0e", "1504917595497-8c34f07e59b9", "1496265738600-b61ad60a2e37", 
-        "1574762391060-6421bd34a5d8", "1585250492809-5c74299478f7", "1585108039912-19e09d1e43ed"
-    ],
-    "기타": [
-        "1497366216548-37526070297c", "1486406146926-c627a92ad1ab", "1454165833773-540a331bd1db", 
-        "1552664730-17a4e4d6a9e2", "1460925895906-21593c650ed8", "1497215171169-7bc0928f8f2b", 
-        "1497366851214-7af073efae48", "1507679623690-3444a7d767db", "1504384308090-c894fdcc538d", 
-        "1556761175-4b46a572b786", "1522071820081-009f0129c71c", "1517245386807-bb43f82c33c4", 
-        "1486406146926-c627a92ad1ab", "1521737604893-d14cc237f11d", "1554774853-719586f13350"
-    ]
-}
-
-class GamjaSaaSMasterV7:
-    def __init__(self, root, user_data):
-        self.root = root
-        self.user_data = user_data
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            scroll-behavior: smooth;
+            word-break: keep-all;
+            background: #f8fafc;
+            
+            /* 🛡️ 1차 방어막: 마우스 드래그 및 텍스트 선택 완벽 차단 */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
         
-        self.default_server = "http://gjnetwork.kr"
-        self.server_url = self.user_data.get('server_url', self.default_server)
-        
-        self.license_key = self.user_data.get('license_key', 'Unknown')
-
-        self.update_title()
-        self.root.geometry("1200x950")
-        self.root.configure(bg="#F1F5F9") 
-
-        self.vars = {k: tk.StringVar() for k in ["api_key", "name", "category", "theme", "ga_id", "naver_id", "phone", "loc", "map_url", "head", "sub", "identity_title", "intro_txt", "ops_txt", "target_id", "youtube_url", "popup_msg", "today_menu", "kakao_id", "naver_booking", "insta_code"]}
-        self.hero_img_path = tk.StringVar()
-        
-        self.qr_icon_path = tk.StringVar()
-        
-        self.vars["theme"].set("미드나잇 골드") 
-        self.vars["identity_title"].set("Our Identity")
-        self.vars["intro_txt"].set("우리는 비즈니스의 가치를 시각적으로 증명하며 혁신적인 솔루션을 제안합니다.")
-        self.vars["ops_txt"].set("철저한 전문성과 데이터 기반의 운영 시스템으로 고객사의 성장을 견인합니다.")
-
-        self.block_vars = {
-            "story": tk.BooleanVar(value=True),
-            "services": tk.BooleanVar(value=True),
-            "gallery": tk.BooleanVar(value=True),
-            "media": tk.BooleanVar(value=True),
-            "review": tk.BooleanVar(value=True),
-            "faq": tk.BooleanVar(value=True),
-            "location": tk.BooleanVar(value=True),
-            "contact": tk.BooleanVar(value=True),
-            "multilang": tk.BooleanVar(value=False),
-            "instagram": tk.BooleanVar(value=True) 
+        /* 단, 입력창(Input, Textarea)은 글을 써야 하므로 선택 허용 */
+        input, textarea {
+            -webkit-user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
         }
 
-        self.prod_vars = [{"title": tk.StringVar(value=f"핵심 서비스 {i+1}"), "img_path": tk.StringVar(), "detail_img_path": tk.StringVar()} for i in range(3)]
-        self.slider_vars = [tk.StringVar() for _ in range(10)]
-        self.review_vars = [{"author": tk.StringVar(value=f"고객 {i+1}"), "rating": tk.StringVar(value="5"), "text": tk.StringVar(value="정말 만족스러운 경험이었습니다. 강력 추천합니다!")} for i in range(4)]
-
-        self.faq_vars = [{"q": tk.StringVar(value=q), "a": tk.StringVar(value=a)} for q, a in [
-            ("제작 기간은 얼마나 걸리나요?", "평균 3~7일 이내에 완성됩니다."),
-            ("수정은 가능한가요?", "기본 2회 무상 수정을 지원합니다."),
-            ("도메인은 어떻게 하나요?", "저희 측에서 세팅을 대행합니다."),
-            ("모바일 지원 여부", "모든 기기에 최적화된 반응형입니다.")
-        ]]
-
-        self.build_ui()
-
-    def update_title(self):
-        tier = self.user_data.get('tier', 'BASIC').upper()
-        usage = self.user_data.get('usage_count', 0)
-        customer = self.user_data.get('customer_name', '사장님')
-        status = "정상" if not self.user_data.get('is_blocked') else "⚠️ 차단됨"
-        limit = TIER_LIMITS.get(tier, 20)
-        self.root.title(f"GamjaBuilder v8.0 (Premium Master) - [{customer} / {tier} / {status} (사용: {usage}/{limit})]")
-
-    def export_data(self):
-        data = {
-            "vars": {k: v.get() for k, v in self.vars.items()},
-            "hero_img": self.hero_img_path.get(),
-            "qr_icon": self.qr_icon_path.get(), 
-            "blocks": {k: v.get() for k, v in self.block_vars.items()},
-            "products": [{"title": p["title"].get(), "img": p["img_path"].get(), "detail_img": p["detail_img_path"].get()} for p in self.prod_vars],
-            "sliders": [s.get() for s in self.slider_vars],
-            "reviews": [{"author": r["author"].get(), "rating": r["rating"].get(), "text": r["text"].get()} for r in self.review_vars],
-            "faqs": [{"q": f["q"].get(), "a": f["a"].get()} for f in self.faq_vars]
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        return data
-
-    def import_data(self, data):
-        try:
-            for k, v in data.get("vars", {}).items(): 
-                if k in self.vars: self.vars[k].set(v)
-            self.hero_img_path.set(data.get("hero_img", ""))
-            self.qr_icon_path.set(data.get("qr_icon", "")) 
-            for k, v in data.get("blocks", {}).items():
-                if k in self.block_vars: self.block_vars[k].set(v)
-            for i, p in enumerate(data.get("products", [])):
-                if i < len(self.prod_vars):
-                    self.prod_vars[i]["title"].set(p.get("title", ""))
-                    self.prod_vars[i]["img_path"].set(p.get("img", ""))
-                    self.prod_vars[i]["detail_img_path"].set(p.get("detail_img", ""))
-            for i, s in enumerate(data.get("sliders", [])):
-                if i < len(self.slider_vars): self.slider_vars[i].set(s)
-            for i, r in enumerate(data.get("reviews", [])):
-                if i < len(self.review_vars):
-                    self.review_vars[i]["author"].set(r.get("author", ""))
-                    self.review_vars[i]["rating"].set(r.get("rating", ""))
-                    self.review_vars[i]["text"].set(r.get("text", ""))
-            for i, f in enumerate(data.get("faqs", [])):
-                if i < len(self.faq_vars):
-                    self.faq_vars[i]["q"].set(f["q"])
-                    self.faq_vars[i]["a"].set(f["a"])
-            return True
-        except: return False
-
-    def save_project(self, filename=None):
-        if not filename:
-            safe_name = re.sub(r'[\\/*?:"<>|]', "", self.vars['name'].get()) or "new_project"
-            filename = filedialog.asksaveasfilename(
-                initialfile=f"{safe_name}.json",
-                defaultextension=".json",
-                filetypes=[("JSON files", "*.json")]
-            )
-        if filename:
-            with open(filename, "w", encoding="utf-8") as f:
-                json.dump(self.export_data(), f, ensure_ascii=False, indent=4)
-            if not filename.endswith("latest_project.json"):
-                messagebox.showinfo("성공", "프로젝트가 안전하게 저장되었습니다! 🥔")
-
-    def load_project(self):
-        filename = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
-        if filename:
-            with open(filename, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            if self.import_data(data):
-                messagebox.showinfo("완료", "이전 프로젝트를 성공적으로 불러왔습니다!")
-            else:
-                messagebox.showerror("오류", "파일을 불러오는 중 문제가 발생했습니다.")
-
-    def on_refresh_request(self):
-        customer = self.user_data.get('customer_name', '사용자')
-        msg = f"🚨 [라이선스 갱신 요청]\n고객명: {customer}\n키: {self.license_key}\n시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        try:
-            token = MY_TELEGRAM_TOKEN.strip()
-            chat_id = MY_CHAT_ID.strip()
-            url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={urllib.parse.quote(msg)}"
-            urllib.request.urlopen(url, timeout=10)
-            fresh = refresh_license(self.user_data)
-            if fresh: self.user_data = fresh; self.update_title()
-            messagebox.showinfo("완료", "관리자에게 갱신 요청이 전송되었습니다! 🥔")
-        except: messagebox.showerror("오류", "텔레그램 전송 실패.")
-
-    def fetch_translations(self, texts_dict):
-        user_api_key = self.vars["api_key"].get().strip()
-        if not user_api_key: return {"ko": texts_dict}
-        try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={user_api_key}"
-            prompt = f"""당신은 전문 번역가입니다. 제공된 JSON 데이터의 모든 텍스트 값을 영어(en), 중국어(zh), 일본어(ja)로 자연스럽게 번역하세요.
-            [중요 조건]
-            1. 텍스트 내부에 포함된 HTML 태그(예: <span...>, <br>, &rarr; 등)는 절대로 번역하거나 훼손하지 말고 제자리에 그대로 유지할 것.
-            2. 반드시 아래 구조의 순수 JSON 문자열만 반환할 것 (마크다운 백틱 제외).
-            {{
-                "ko": (원본 데이터 그대로 복사),
-                "en": (영어 번역본),
-                "zh": (중국어 간체 번역본),
-                "ja": (일본어 번역본)
-            }}
-            원본 데이터: {json.dumps(texts_dict, ensure_ascii=False)}"""
-            data = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"response_mime_type": "application/json", "temperature": 0.2}}
-            req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req) as response:
-                res_json = json.loads(response.read().decode("utf-8"))
-                result_text = res_json["candidates"][0]["content"]["parts"][0]["text"]
-                return json.loads(result_text)
-        except Exception as e:
-            messagebox.showerror("번역 실패", f"다국어 번역 중 오류 발생: {e}\n(기본 한국어만 적용됩니다.)")
-            return {"ko": texts_dict}
-
-    def generate_ai_assistant(self, mode="BLOG"):
-        user_api_key = self.vars["api_key"].get().strip()
-        if not user_api_key:
-            messagebox.showwarning("API 키 누락", "상단에 Gemini API Key를 먼저 입력해주세요!")
-            return
-
-        brand_name = self.vars["name"].get()
-        category = self.vars["category"].get()
-        intro = self.vars["intro_txt"].get()
-
-        if mode == "REVIEW":
-            review_win = tk.Toplevel(self.root)
-            review_win.title("🤖 AI 리뷰 답글 비서")
-            review_win.geometry("550x450")
-            tk.Label(review_win, text="고객의 리뷰를 아래에 입력하세요:", font=("Malgun Gothic", 10)).pack(pady=10)
-            review_input = tk.Text(review_win, height=10, font=("Malgun Gothic", 10), padx=10, pady=10)
-            review_input.pack(fill="x", padx=20)
-            
-            def run_review_gen():
-                user_content = review_input.get("1.0", tk.END).strip()
-                if not user_content: return
-                prompt = f"당신은 [{brand_name}]이라는 {category} 업체 사장님입니다. 고객의 다음 리뷰에 대해 정중하고 감동적인 답글을 작성해주세요. 업체 컨셉은 '{intro}'입니다.\n[고객 리뷰]: {user_content}"
-                self.request_gemini_api(prompt, "리뷰 답글")
-                review_win.destroy()
-            
-            tk.Button(review_win, text="✨ 답글 생성하기", command=run_review_gen, bg="#4F46E5", fg="white", font=("Malgun Gothic", 10, "bold"), pady=10).pack(fill="x", padx=20, pady=20)
-            return
-
-        if mode == "BLOG":
-            prompt = f"[{brand_name}]이라는 {category} 업체의 블로그 포스팅 원고를 써줘. 정중하고 전문적인 톤으로, 제목 1개와 본문(서론-본론-결론)으로 구성해줘. 주요 컨셉은 '{intro}'이야."
-        elif mode == "LOCAL":
-            prompt = f"당신은 [{brand_name}]이라는 {category} 업체 사장님입니다. 당근마켓 동네생활이나 지역 맘카페에 올릴 친근하고 자연스러운 홍보 및 소식 글을 작성해주세요. 맘카페 특유의 다정하고 친절한 말투(~해요, ~했답니다)와 이웃집 같은 친근한 느낌을 살려주세요. 딱딱한 광고 느낌보다는 동네 이웃에게 기분 좋은 혜택이나 소식을 나누는 듯한 뉘앙스로 작성하며, 주요 컨셉은 '{intro}'입니다. 이모지도 적절히 섞어주세요."
-        else:
-            prompt = f"[{brand_name}]이라는 {category} 업체의 인스타그램 홍보 문구를 써줘. 감각적이고 트렌디하게, 이모지를 섞어서 작성하고 관련 해시태그 15개를 포함해줘."
+        .glass-card-dark {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hover-lift { transition: all .35s ease; }
+        .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(0,0,0,.08); }
+        .service-icon {
+            width: 62px; height: 62px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; margin-bottom: 18px;
+        }
+        .floating-kakao {
+            position: fixed; right: 24px; bottom: 24px; z-index: 9999;
+            background: #FEE500; color: #191919;
+            border-radius: 999px; padding: 14px 22px;
+            display: flex; align-items: center; gap: 10px; font-weight: 800;
+            box-shadow: 0 10px 28px rgba(0,0,0,.25); transition: all .28s ease;
+        }
+        .floating-kakao:hover { transform: translateY(-3px) scale(1.02); }
         
-        self.request_gemini_api(prompt, mode)
-
-    def request_gemini_api(self, prompt, title):
-        user_api_key = self.vars["api_key"].get().strip()
-        self.root.config(cursor="watch"); self.root.update()
-        try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={user_api_key}"
-            data = {"contents": [{"parts": [{"text": prompt}]}]}
-            req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req) as response:
-                res_json = json.loads(response.read().decode("utf-8"))
-                result = res_json["candidates"][0]["content"]["parts"][0]["text"]
-                self.show_ai_result_window(title, result)
-        except Exception as e:
-            messagebox.showerror("생성 실패", f"AI 통신 중 오류가 발생했습니다: {e}")
-        finally:
-            self.root.config(cursor="")
-
-    def show_ai_result_window(self, title, content):
-        win = tk.Toplevel(self.root)
-        win.title(f"✨ AI {title} 결과")
-        win.geometry("600x700")
-        txt = tk.Text(win, font=("Malgun Gothic", 10), padx=20, pady=20, wrap="word")
-        txt.insert("1.0", content)
-        txt.pack(fill="both", expand=True)
-        tk.Button(win, text="📋 복사하기", command=lambda: [self.root.clipboard_clear(), self.root.clipboard_append(content), messagebox.showinfo("완료", "복사되었습니다!")], bg="#0b144d", fg="white", pady=10).pack(fill="x")
-
-    def refine_text_with_ai(self, target_var, context_hint):
-        user_api_key = self.vars["api_key"].get().strip()
-        if not user_api_key:
-            messagebox.showwarning("API 키 누락", "상단에 Gemini API Key를 먼저 입력해주세요!")
-            return
+        .product-swiper { padding: 20px 0 30px; }
+        .swiper-button-next, .swiper-button-prev { color: #0284c7 !important; }
+        .product-swiper .swiper-wrapper { transition-timing-function: linear !important; }
         
-        current_text = target_var.get()
-        if not current_text: current_text = "기본 내용을 멋지게 써주세요."
-
-        self.root.config(cursor="watch"); self.root.update()
-        try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={user_api_key}"
-            prompt = f"""
-            당신은 전문 카피라이터입니다. 다음 내용을 바탕으로 웹사이트에 들어갈 세련되고 매력적인 문장을 1~2문장으로 작성해주세요.
-            상황/의도: {context_hint}
-            초안 내용: {current_text}
-            """
-            data = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.7}}
-            req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req) as response:
-                res_json = json.loads(response.read().decode("utf-8"))
-                result_text = res_json["candidates"][0]["content"]["parts"][0]["text"].strip()
-                target_var.set(result_text)
-                messagebox.showinfo("성공", "✨ AI가 문장을 성공적으로 다듬었습니다!")
-        except Exception as e: 
-            messagebox.showerror("AI 생성 실패", f"오류가 발생했습니다: {str(e)}")
-        finally: 
-            self.root.config(cursor="")
-
-    def run_ai_copywriting(self):
-        user_api_key = self.vars["api_key"].get().strip()
-        if not user_api_key:
-            messagebox.showwarning("API 키 누락", "Gemini API Key를 상단에 먼저 입력해주세요!\n(옆의 '발급받기' 버튼을 통해 무료로 생성 가능합니다.)")
-            return
-
-        brand_name = self.vars["name"].get()
-        category = self.vars["category"].get()
-        if not brand_name:
-            messagebox.showwarning("입력 오류", "업체명(상호명)을 먼저 윗칸에 입력해주세요.")
-            return
-
-        self.root.config(cursor="watch"); self.root.update()
-
-        try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={user_api_key}"
-            prompt = f"""
-            당신은 하이엔드 럭셔리 브랜드의 수석 카피라이터입니다. 
-            타겟 고객에게 신뢰감과 고급스러움을 주는 웹사이트 카피를 작성해야 합니다.
-            [입력 정보] 업체명: {brand_name} / 업종: {category}
-            [출력 조건] 반드시 아래 JSON 형식으로만 출력할 것 (마크다운 백틱 제외, 순수 JSON 텍스트만)
-            {{
-                "head": "메인 헤드라인 (짧고 강렬하게)",
-                "sub": "보조 헤드라인 (매력적인 부연 설명)",
-                "identity_title": "업종에 어울리는 짧은 영문 섹션 제목 (예: 미용실이면 MASTER'S PRIDE 등 매번 창의적으로)",
-                "intro_txt": "브랜드의 정체성을 나타내는 고급스러운 소개 문구 (2문장 이내)",
-                "services": ["{category}에 어울리는 구체적인 서비스 1", "서비스 2", "서비스 3"]
-            }}
-            """
-            data = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.8, "response_mime_type": "application/json"}}
-            req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req) as response:
-                res_json = json.loads(response.read().decode("utf-8"))
-                result_data = json.loads(res_json["candidates"][0]["content"]["parts"][0]["text"]) 
-
-                self.vars["head"].set(result_data.get("head", ""))
-                self.vars["sub"].set(result_data.get("sub", ""))
-                self.vars["identity_title"].set(result_data.get("identity_title", "OUR STORY")) 
-                self.vars["intro_txt"].set(result_data.get("intro_txt", ""))
-                for i, srv_title in enumerate(result_data.get("services", [])[:3]): self.prod_vars[i]["title"].set(srv_title)
-            messagebox.showinfo("성공", "✨ 업종 맞춤형 섹션 제목과 카피가 자동으로 생성되었습니다!")
-        except Exception as e: messagebox.showerror("AI 생성 실패", f"API 호출 중 오류가 발생했습니다: {str(e)}")
-        finally: self.root.config(cursor="")
-
-    def create_card(self, parent, title):
-        card = tk.Frame(parent, bg="white", bd=0, highlightthickness=1, highlightbackground="#E2E8F0")
-        card.pack(fill="x", pady=10, padx=20)
-        header_frame = tk.Frame(card, bg="white")
-        header_frame.pack(fill="x", padx=20, pady=(20, 10))
-        tk.Frame(header_frame, bg="#d7c29a", width=4, height=18).pack(side="left", padx=(0, 10))
-        tk.Label(header_frame, text=title, font=("Malgun Gothic", 12, "bold"), bg="white", fg="#0b144d").pack(side="left")
-        content = tk.Frame(card, bg="white")
-        content.pack(fill="x", padx=20, pady=(0, 20))
-        return content
-
-    def create_input(self, parent, label_text, var, is_password=False, btn_text=None, btn_cmd=None):
-        wrapper = tk.Frame(parent, bg="white")
-        wrapper.pack(fill="x", pady=8)
-        tk.Label(wrapper, text=label_text, font=("Malgun Gothic", 9), bg="white", fg="#64748B").pack(anchor="w", pady=(0, 2))
-        input_frame = tk.Frame(wrapper, bg="white")
-        input_frame.pack(fill="x")
-        entry = tk.Entry(input_frame, textvariable=var, font=("Malgun Gothic", 10), bg="#F8FAFC", fg="#1E293B", relief="solid", bd=1, highlightbackground="#CBD5E1")
-        if is_password: entry.config(show="*")
-        entry.pack(side="left", fill="x", expand=True, ipady=6, padx=(0, 5 if btn_text else 0))
-        if btn_text and btn_cmd:
-            tk.Button(input_frame, text=btn_text, command=btn_cmd, bg="#F1F5F9", fg="#334155", font=("Malgun Gothic", 9), relief="solid", bd=1, cursor="hand2").pack(side="right", ipady=3, padx=2)
-
-    def build_ui(self):
-        header = tk.Frame(self.root, bg="#0b144d", height=70)
-        header.pack(fill="x", side="top")
-        header.pack_propagate(False) 
-        tk.Label(header, text="GAMJA BUILDER", bg="#0b144d", fg="#d7c29a", font=("Arial Black", 14, "italic")).pack(side="left", padx=30)
+        /* 비즈니스 영역 슬라이더 페이지네이션 커스텀 */
+        .businessSwiper { padding-bottom: 50px !important; padding-top: 10px !important; }
+        .businessSwiper .swiper-pagination-bullet { background: #cbd5e1; opacity: 0.5; width: 8px; height: 8px; transition: all 0.3s ease; }
+        .businessSwiper .swiper-pagination-bullet-active { background: #0ea5e9; opacity: 1; width: 24px; border-radius: 4px; }
         
-        tk.Button(header, text="🌐 배포", bg="#d7c29a", fg="#0b144d", font=("Malgun Gothic", 9, "bold"), relief="flat", padx=10, pady=5, cursor="hand2", command=self.save_and_open).pack(side="right", padx=(5, 20))
-        tk.Button(header, text="👁️ 미리보기", bg="#4a5568", fg="white", font=("Malgun Gothic", 9, "bold"), relief="flat", padx=10, pady=5, cursor="hand2", command=lambda: self.save_and_open(is_preview=True)).pack(side="right", padx=5)
-        tk.Button(header, text="💾 저장", bg="#10B981", fg="white", font=("Malgun Gothic", 9, "bold"), relief="flat", padx=10, pady=5, cursor="hand2", command=self.save_project).pack(side="right", padx=5)
-        tk.Button(header, text="📂 불러오기", bg="#F59E0B", fg="white", font=("Malgun Gothic", 9, "bold"), relief="flat", padx=10, pady=5, cursor="hand2", command=self.load_project).pack(side="right", padx=5)
-        tk.Button(header, text="🔄 갱신", bg="#3B82F6", fg="white", font=("Malgun Gothic", 9, "bold"), relief="flat", padx=10, pady=5, cursor="hand2", command=self.on_refresh_request).pack(side="right", padx=5)
+        /* 팝업 등장 애니메이션 */
+        @keyframes popDropIn {
+            0% { transform: translateY(-30px) scale(0.95); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
 
-        self.main_canvas = tk.Canvas(self.root, bg="#F1F5F9", highlightthickness=0)
-        self.scrollbar = ttk.Scrollbar(self.root, orient="vertical", command=self.main_canvas.yview)
-        self.scroll_frame = tk.Frame(self.main_canvas, bg="#F1F5F9")
+        /* 무한 롤링 포트폴리오 띠배너 애니메이션 */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee { display: flex; width: max-content; animation: marquee 35s linear infinite; }
+        .animate-marquee:hover { animation-play-state: paused; }
 
-        self.canvas_window = self.main_canvas.create_window((0, 0), window=self.scroll_frame, anchor="n")
+        /* 1분 시뮬레이터 로딩바 애니메이션 */
+        @keyframes loadingBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white overflow-x-hidden">
 
-        def on_canvas_configure(event):
-            canvas_width = event.width
-            content_width = min(canvas_width, 1100)
-            self.main_canvas.itemconfig(self.canvas_window, width=content_width)
-            self.main_canvas.coords(self.canvas_window, canvas_width // 2, 0)
+    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="floating-kakao text-sm md:text-base">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
+        카카오 상담
+    </a>
 
-        def on_frame_configure(event):
-            self.main_canvas.configure(scrollregion=self.main_canvas.bbox("all"))
+    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-black tracking-tight text-sky-700">감자네트워크</span>
+                <span class="text-sm text-slate-400 hidden sm:block">| 프리미엄 비즈니스 솔루션</span>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-600">
+                <a href="#local-business" class="hover:text-sky-600 transition">핵심 사업영역</a>
+                <a href="#gamjabuilder" class="hover:text-blue-600 transition">감자빌더 (AI SaaS)</a>
+                <a href="#pricing" class="hover:text-blue-600 transition">파트너 요금제</a>
+                <div class="flex items-center gap-3 pl-4 border-l border-slate-300">
+                    <a href="보안_매뉴얼.html" download="감자빌더_프리미엄_매뉴얼.html" class="px-4 py-2 border border-slate-300 hover:bg-slate-50 rounded-full transition flex items-center gap-2 text-slate-600">
+                        솔루션 매뉴얼
+                    </a>
+                    <a href="#contact" class="px-5 py-2 bg-gradient-to-r from-sky-600 to-blue-600 hover:opacity-90 text-white rounded-full transition shadow-lg">구축 상담문의</a>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-        self.main_canvas.bind("<Configure>", on_canvas_configure)
-        self.scroll_frame.bind("<Configure>", on_frame_configure)
-        self.main_canvas.configure(yscrollcommand=self.scrollbar.set)
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden bg-slate-900 text-white flex items-center min-h-[90vh]">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1800')] opacity-20 bg-cover bg-center"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/30 blur-[120px] rounded-full z-0"></div>
         
-        self.main_canvas.pack(side="left", fill="both", expand=True)
-        self.scrollbar.pack(side="right", fill="y")
-        self.root.bind_all("<MouseWheel>", lambda e: self.main_canvas.yview_scroll(int(-1 * (e.delta / 120)), "units"))
+        <div class="relative max-w-7xl mx-auto z-10 w-full flex flex-col items-center text-center">
+            <div class="inline-block py-1 px-3 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-sm font-bold mb-6">
+                🚀 매장 인프라부터 AI 하이엔드 마케팅까지
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
+                로컬 비즈니스의 압도적 혁신<br>
+                <span class="gradient-text">감자네트워크 & 감자빌더</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl">
+                매장 운영을 돕는 인프라 구축부터, 단 1분 만에 완성되는 하이엔드 AI 웹사이트 솔루션까지.<br>성공적인 비즈니스를 향한 가장 확실한 파트너가 되어 드립니다.
+            </p>
 
-        content_pad = tk.Frame(self.scroll_frame, bg="#F1F5F9", pady=20)
-        content_pad.pack(fill="both")
+            <!-- 감자빌더 1분 시뮬레이터 (모바일 짤림 해결 완료버전) -->
+            <div class="w-full max-w-2xl mx-auto mb-10 relative z-20 px-2 sm:px-0">
+                <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-0 bg-transparent sm:bg-white sm:rounded-full sm:p-2 sm:pl-6 sm:shadow-[0_10px_40px_rgba(37,99,235,0.4)] sm:border border-blue-400">
+                    <input type="text" id="sim-business-name" class="w-full sm:flex-grow bg-white sm:bg-transparent text-slate-800 text-base sm:text-lg outline-none placeholder-slate-400 font-medium rounded-full sm:rounded-none px-6 py-4 sm:py-0 border border-blue-400 sm:border-none shadow-lg sm:shadow-none" placeholder="상호명 입력 (예: 매콤갈치명태촌)" onkeypress="if(event.keyCode==13) startSimulation()">
+                    <button onclick="startSimulation()" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white font-bold py-4 px-6 md:px-8 rounded-full transition-all shadow-[0_4px_15px_rgba(37,99,235,0.5)] sm:shadow-none whitespace-nowrap text-base sm:text-lg">
+                        1분 만에 생성 ✨
+                    </button>
+                </div>
+                <p class="text-sky-300 text-xs sm:text-sm mt-4 sm:mt-3 font-medium px-2 leading-relaxed">제미나이(Gemini) AI가 상호명을 분석하여 럭셔리 반응형 웹 가안을 즉시 제작합니다.</p>
+            </div>
 
-        card0 = self.create_card(content_pad, "System & Analytics Config")
-        self.create_input(card0, "Gemini API Key (보안을 위해 프로그램 종료 시 초기화됩니다)", self.vars["api_key"], is_password=True, btn_text="무료 키 발급", btn_cmd=lambda: webbrowser.open("https://aistudio.google.com/app/apikey"))
-        self.create_input(card0, "구글 애널리틱스 (GA4) 측정 ID (예: G-XXXXXXX)", self.vars["ga_id"], btn_text="GA4 접속", btn_cmd=lambda: webbrowser.open("https://analytics.google.com/"))
-        self.create_input(card0, "네이버 애널리틱스 사이트 ID (예: s_XXXXXXX)", self.vars["naver_id"], btn_text="네이버 접속", btn_cmd=lambda: webbrowser.open("https://analytics.naver.com/"))
+            <div class="flex flex-wrap gap-4 justify-center opacity-80 mt-4">
+                <a href="#local-business" class="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition text-sm">
+                    통합 인프라 솔루션 보기
+                </a>
+                <a href="#gamjabuilder" class="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition text-sm">
+                    감자빌더 V8.0 기능 보기
+                </a>
+            </div>
+        </div>
+    </section>
 
-        card_ai = self.create_card(content_pad, "AI 비즈니스 파트너 (리뷰/마케팅 자동화)")
-        tk.Label(card_ai, text="사장님의 업무 시간을 줄여주는 감자 네트워크 전용 AI 엔진입니다.", font=("Malgun Gothic", 9), fg="#64748B", bg="white").pack(anchor="w", pady=(0, 15))
-        btn_f = tk.Frame(card_ai, bg="white")
-        btn_f.pack(fill="x")
-        tk.Button(btn_f, text="⭐ AI 리뷰 답글 자동 생성", command=lambda: self.generate_ai_assistant("REVIEW"), bg="#4F46E5", fg="white", font=("Malgun Gothic", 10, "bold"), padx=15, pady=8, cursor="hand2").pack(side="left", padx=5)
-        tk.Button(btn_f, text="📝 블로그 포스팅 원고 생성", command=lambda: self.generate_ai_assistant("BLOG"), bg="#10B981", fg="white", font=("Malgun Gothic", 10, "bold"), padx=15, pady=8, cursor="hand2").pack(side="left", padx=5)
-        tk.Button(btn_f, text="📸 인스타그램 홍보글 생성", command=lambda: self.generate_ai_assistant("INSTA"), bg="#E1306C", fg="white", font=("Malgun Gothic", 10, "bold"), padx=15, pady=8, cursor="hand2").pack(side="left", padx=5)
-        tk.Button(btn_f, text="🥕 당근/맘카페 홍보글 생성", command=lambda: self.generate_ai_assistant("LOCAL"), bg="#FF8A3D", fg="white", font=("Malgun Gothic", 10, "bold"), padx=15, pady=8, cursor="hand2").pack(side="left", padx=5)
+    <!-- 핵심 사업 영역 파스텔톤 슬라이더 -->
+    <section id="local-business" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <div class="text-sm font-extrabold tracking-widest text-sky-600 mb-3">CORE BUSINESS</div>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">감자네트워크 핵심 사업 영역</h2>
+                <p class="text-slate-500 text-lg">현장 영업, 온라인 유입, 그리고 완벽한 매장 인프라를 하나로 연결합니다.</p>
+            </div>
+            
+            <div class="swiper businessSwiper px-2">
+                <div class="swiper-wrapper items-stretch">
+                    
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-orange-50/60 border border-orange-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(251,146,60,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-orange-100 to-orange-50 text-orange-500">🍽️</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">KT 하이오더 설치 및 관리</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">식당 운영 효율을 높이고 추가 주문을 유도하는 시스템 제안 및 현장 영업 사업입니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 직원 동선 감소 및 회전율 상승</li>
+                                <li>✔ 주문 실수 및 누락 원천 차단</li>
+                                <li>✔ 매장 환경 맞춤형 사후 관리</li>
+                            </ul>
+                        </div>
+                    </div>
 
-        card_blocks = self.create_card(content_pad, "홈페이지 디자인 블록 (레고식 구성)")
-        tk.Label(card_blocks, text="원하는 섹션만 체크하여 홈페이지를 구성하세요. 해제하면 웹사이트에서 해당 영역이 빠집니다.", font=("Malgun Gothic", 9), fg="#64748B", bg="white").pack(anchor="w", pady=(0, 10))
-        block_grid = tk.Frame(card_blocks, bg="white")
-        block_grid.pack(fill="x")
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-emerald-50/60 border border-emerald-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(52,211,153,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-emerald-100 to-emerald-50 text-emerald-500">📍</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">플레이스·블로그 마케팅</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">검색 노출과 신뢰 형성을 동시에 만드는 로컬 마케팅 중심 사업입니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 스마트플레이스 랭킹 최적화</li>
+                                <li>✔ 고품질 리뷰 및 기자단 운영</li>
+                                <li>✔ 지역 핵심 상권 키워드 점령</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-pink-50/60 border border-pink-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(244,114,182,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-pink-100 to-pink-50 text-pink-500">🎬</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">SNS·숏폼 마케팅</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">짧고 강렬한 트렌디 콘텐츠로 폭발적인 관심을 만들고 브랜드 유입을 극대화합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 유튜브 쇼츠 기획 및 스크립트</li>
+                                <li>✔ 인스타그램 프리미엄 피드 운영</li>
+                                <li>✔ 즉각적 상담 연결형 콘텐츠</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-sky-50/60 border border-sky-200 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(56,189,248,0.08)] relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-sky-200 text-sky-800 text-xs font-bold px-3 py-1 rounded-bl-xl">NEW</div>
+                            <div class="service-icon bg-gradient-to-br from-sky-100 to-sky-50 text-sky-500">💻</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">프리미엄 웹사이트</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">브랜드의 격을 결정짓는 트렌디하고 최적화된 하이엔드 웹사이트를 기획·제작합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 기기별 완벽한 반응형 디자인</li>
+                                <li>✔ 검색엔진 노출(SEO) 구조 세팅</li>
+                                <li>✔ 다국어 번역 및 시스템 적용</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-teal-50/60 border border-teal-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(45,212,191,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-teal-100 to-teal-50 text-teal-500">📈</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">매출 퀀텀점프 컨설팅</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">단순한 노출을 넘어 실제 유입과 매장 운영의 병목을 진단하는 실전형 컨설팅입니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 리뷰·노출·예약 전환율 점검</li>
+                                <li>✔ 상권 데이터 기반 전략 설계</li>
+                                <li>✔ 즉시 적용 가능한 실행 제안</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-indigo-50/60 border border-indigo-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(99,102,241,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-indigo-100 to-indigo-50 text-indigo-500">🛡️</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">통신·네트워크 보안</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">끊김 없는 안정적인 매장 운영을 위해 최고 수준의 인프라를 설계합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 대규모 네트워크 점검 및 설계</li>
+                                <li>✔ 전용 기업인터넷 관리 및 랜공사</li>
+                                <li>✔ 통합 방범 및 CCTV 구축</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-violet-50/60 border border-violet-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(139,92,246,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-violet-100 to-violet-50 text-violet-500">⚙️</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">B2B 영업 자동화</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">에너지가 소모되는 제안과 상담 과정을 시스템화하여 빠르고 세련되게 처리합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 웹(HTML) 기반 제안서 생성</li>
+                                <li>✔ 원클릭 이메일·메신저 발송</li>
+                                <li>✔ 상담 및 리드 수집 극대화</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-amber-50/60 border border-amber-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(245,158,11,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-amber-100 to-amber-50 text-amber-500">🔧</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">PC·포스 유지보수</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">오랜 노하우로 매장 내 모든 전자기기와 IT 환경이 중단 없이 돌아가도록 완벽 관리합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 하드웨어 장애 긴급 조치</li>
+                                <li>✔ 메인 PC·포스 시스템 점검</li>
+                                <li>✔ 중요 데이터 백업 및 복구</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-rose-50/60 border border-rose-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(244,63,94,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-rose-100 to-rose-50 text-rose-500">💡</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">AI 맞춤 솔루션 개발</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">단순 업무를 자동화하고 수익 창출 파이프라인을 만들어줄 전용 소프트웨어를 기획·개발합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 데이터 수집 크롤링 봇 제작</li>
+                                <li>✔ 강력한 라이선스 서버 구축</li>
+                                <li>✔ 비즈니스 맞춤형 SaaS 기획</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="swiper-pagination-business mt-10 flex justify-center gap-2"></div>
+            </div>
+        </div>
         
-        blocks_info = [("브랜드 스토리", "story"), ("핵심 서비스", "services"), ("갤러리 배너", "gallery"), ("유튜브 영상", "media"), ("고객 리뷰", "review"), ("자주 묻는 질문", "faq"), ("오시는 길", "location"), ("예약 및 문의", "contact"), ("인스타그램 연동", "instagram")]
-        for i, (b_name, b_key) in enumerate(blocks_info):
-            cb = tk.Checkbutton(block_grid, text=b_name, variable=self.block_vars[b_key], font=("Malgun Gothic", 10), bg="white", selectcolor="white", cursor="hand2")
-            cb.grid(row=i//4, column=i%4, sticky="w", padx=10, pady=5)
+        <div class="max-w-7xl mx-auto px-6 mt-16 pt-16 border-t border-slate-100">
+            <div class="flex flex-col lg:flex-row items-center justify-between mb-8 gap-6">
+                <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2 shrink-0">
+                    <span class="text-sky-600 text-3xl">🔥</span> 비즈니스 필수 아이템 최저가
+                </h2>
+                <div class="w-full lg:max-w-[600px] flex justify-center bg-white rounded-lg overflow-hidden border border-slate-100 shadow-sm">
+                    <iframe src="https://coupa.ng/cmFRj5" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
+                </div>
+            </div>
+
+            <div class="swiper product-swiper overflow-hidden">
+                <div class="swiper-wrapper" id="dynamic-product-list">
+                    <div class="swiper-slide p-12 text-center text-slate-400 font-bold">비즈니스 추천 상품을 연동 중입니다...</div>
+                </div>
+            </div>
+            <p class="text-[10px] md:text-xs text-slate-400 text-center mt-4">
+                이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-12 bg-white border-y border-slate-200 overflow-hidden relative">
+        <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
         
-        cb_multi = tk.Checkbutton(block_grid, text="🌐 다국어 페이지 자동 번역 적용 (저장/배포 시 자동 생성)", variable=self.block_vars["multilang"], font=("Malgun Gothic", 10, "bold"), fg="#4F46E5", bg="white", selectcolor="white", cursor="hand2")
-        cb_multi.grid(row=3, column=0, columnspan=4, sticky="w", padx=10, pady=10)
+        <div class="text-center mb-8">
+            <h3 class="text-xl md:text-2xl font-black text-slate-800">이미 수많은 비즈니스가 감자네트워크의 솔루션으로 증명하고 있습니다</h3>
+        </div>
+        
+        <div class="flex overflow-hidden">
+            <div class="animate-marquee gap-6 px-3 items-center">
+                <!-- 세트 1 -->
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1414235008690-f14afe05092a?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="화란">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-blue-300 font-bold mb-1">파인다이닝 웹 구축</div>
+                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'<br>럭셔리 브랜드 세팅</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="명태촌">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-orange-300 font-bold mb-1">테이블 오더 시스템</div>
+                        <div class="text-white font-bold text-lg leading-tight">'매콤갈치명태촌'<br>매장 자동화 인프라 도입</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="전기차">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-emerald-300 font-bold mb-1">고급형 랜딩페이지</div>
+                        <div class="text-white font-bold text-lg leading-tight">Auto Company<br>전기차 모델 풀페이지</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefce4ffc?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="뷰티">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-pink-300 font-bold mb-1">프리미엄 마케팅</div>
+                        <div class="text-white font-bold text-lg leading-tight">지역 에스테틱 샵<br>포털 리뷰 및 로컬 점령</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="기업통신">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-indigo-300 font-bold mb-1">보안 네트워크 인프라</div>
+                        <div class="text-white font-bold text-lg leading-tight">대형 복합 비즈니스<br>기업인터넷 및 랜공사</div>
+                    </div>
+                </div>
 
-        card_premium = self.create_card(content_pad, "Premium Add-ons (추가 옵션/배너/연동)")
-        tk.Label(card_premium, text="원클릭으로 적용 가능한 외부 서비스 연동 및 커스텀 배너/QR 기능입니다.", font=("Malgun Gothic", 9), fg="#64748B", bg="white").pack(anchor="w", pady=(0, 10))
-        self.create_input(card_premium, "📱 카카오톡 채널 아이디 (예: _xcLxwxl) - 실시간 채팅 버튼 생성", self.vars["kakao_id"])
-        self.create_input(card_premium, "📅 네이버 예약 URL 주소 (바로가기 버튼 생성)", self.vars["naver_booking"])
-        self.create_input(card_premium, "🖼️ 상단 고정 이벤트 띠 배너 문구 (사용하지 않으려면 빈칸)", self.vars["today_menu"])
-        self.create_input(card_premium, "🎁 접속 팝업 메세지 (오늘 하루 보지 않기 적용)", self.vars["popup_msg"])
-        self.create_input(card_premium, "📷 인스타그램 임베드 코드 (모바일 슬라이딩은 SnapWidget 'Scrolling' 위젯 권장)", self.vars["insta_code"])
-        self.create_input(card_premium, "🐯 QR코드 중앙 아이콘 (12간지 등 로고 이미지)", self.qr_icon_path, btn_text="동물 아이콘 선택", btn_cmd=lambda: self.qr_icon_path.set(filedialog.askopenfilename(filetypes=[("Image files", "*.png *.jpg *.jpeg")]) or ""))
+                <!-- 세트 2 (무한 롤링) -->
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1414235008690-f14afe05092a?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="화란">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-blue-300 font-bold mb-1">파인다이닝 웹 구축</div>
+                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'<br>럭셔리 브랜드 세팅</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="명태촌">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-orange-300 font-bold mb-1">테이블 오더 시스템</div>
+                        <div class="text-white font-bold text-lg leading-tight">'매콤갈치명태촌'<br>매장 자동화 인프라 도입</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="전기차">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-emerald-300 font-bold mb-1">고급형 랜딩페이지</div>
+                        <div class="text-white font-bold text-lg leading-tight">Auto Company<br>전기차 모델 풀페이지</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefce4ffc?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="뷰티">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-pink-300 font-bold mb-1">프리미엄 마케팅</div>
+                        <div class="text-white font-bold text-lg leading-tight">지역 에스테틱 샵<br>포털 리뷰 및 로컬 점령</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="기업통신">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-indigo-300 font-bold mb-1">보안 네트워크 인프라</div>
+                        <div class="text-white font-bold text-lg leading-tight">대형 복합 비즈니스<br>기업인터넷 및 랜공사</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        card1 = self.create_card(content_pad, "Brand Identity")
-        tk.Label(card1, text="🎨 웹사이트 프리셋 테마", font=("Malgun Gothic", 9), bg="white", fg="#64748B").pack(anchor="w", pady=(0, 2))
-        combo_theme_frame = tk.Frame(card1, bg="white")
-        combo_theme_frame.pack(fill="x", pady=(0, 10))
-        self.theme_combo = ttk.Combobox(combo_theme_frame, textvariable=self.vars["theme"], state="readonly", values=["미드나잇 골드", "모던 화이트", "오션 뷰"], font=("Malgun Gothic", 10))
-        self.theme_combo.pack(side="left", fill="x", expand=True, ipady=4)
-        tk.Label(card1, text="업종 카테고리", font=("Malgun Gothic", 9), bg="white", fg="#64748B").pack(anchor="w", pady=(10, 2))
-        combo_frame = tk.Frame(card1, bg="white")
-        combo_frame.pack(fill="x", pady=(0, 10))
-        self.cat_combo = ttk.Combobox(combo_frame, textvariable=self.vars["category"], state="readonly", values=list(IMAGE_POOLS.keys()), font=("Malgun Gothic", 10))
-        self.cat_combo.current(0); self.cat_combo.pack(side="left", fill="x", expand=True, ipady=4)
-        self.create_input(card1, "업체명 (상호)", self.vars["name"])
-        ai_btn_frame = tk.Frame(card1, bg="white", pady=15)
-        ai_btn_frame.pack(fill="x")
-        tk.Button(ai_btn_frame, text="✨ AI 프리미엄 카피라이팅 일괄 생성", bg="#0f172a", fg="#d7c29a", font=("Malgun Gothic", 10, "bold"), relief="flat", cursor="hand2", command=self.run_ai_copywriting).pack(fill="x", ipady=10)
-        self.create_input(card1, "메인 헤드라인 (웹사이트 첫 화면)", self.vars["head"])
-        self.create_input(card1, "보조 헤드라인 (상세 설명)", self.vars["sub"])
+    <section id="gamjabuilder" class="py-24 bg-[#0f172a] text-white border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-block py-1 px-3 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-sm font-bold mb-4">
+                    GamjaBuilder V8.0 Premium Studio
+                </div>
+                <h2 class="text-3xl md:text-5xl font-extrabold mb-6">웹에이전시가 필요 없는 혁신</h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">업체명과 업종만 입력하세요. 제미나이(Gemini) AI가 전문 카피라이터 수준의 텍스트와 완벽한 반응형 럭셔리 웹사이트를 1분 만에 완성해 냅니다.</p>
+            </div>
+            <div class="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] border border-white/10 glass-card-dark p-2 md:p-3 mb-20">
+                <div class="aspect-video rounded-xl overflow-hidden bg-black relative">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sdXP62CD6FA?autoplay=1&mute=1&loop=1&playlist=sdXP62CD6FA" title="GamjaBuilder Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-6">✨</div>
+                    <h3 class="text-xl font-bold mb-4">AI 수석 카피라이터 내장</h3>
+                    <p class="text-slate-400 leading-relaxed">디자인부터 텍스트, 다국어 번역, 스마트폰 리뷰 응대까지. 자체 내장된 AI 엔진이 브랜드의 품격을 올려줍니다.</p>
+                </div>
+                <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-6">📱</div>
+                    <h3 class="text-xl font-bold mb-4">실시간 텔레그램 리드 연동</h3>
+                    <p class="text-slate-400 leading-relaxed">웹사이트에서 고객이 문의를 남기는 즉시, 사장님의 스마트폰으로 다이렉트 알림이 전송되어 기회를 놓치지 않습니다.</p>
+                </div>
+                <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-6">🛡️</div>
+                    <h3 class="text-xl font-bold mb-4">철저한 중앙 라이선스 제어</h3>
+                    <p class="text-slate-400 leading-relaxed">대리점별 생성 횟수 제한, 만료일 설정, 배포 관리 등을 감자네트워크 본사 시스템을 통해 완벽하게 통제합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        card3 = self.create_card(content_pad, "Visual & Media")
-        self.create_input(card3, "메인 화보 이미지 (비워두면 AI 자동 매칭)", self.hero_img_path, btn_text="PC 사진 선택", btn_cmd=lambda: self.hero_img_path.set(filedialog.askopenfilename() or ""))
-        self.create_input(card3, "유튜브 쇼츠 링크 (예: https://youtube.com/shorts/...)", self.vars["youtube_url"])
-        tk.Frame(card3, height=1, bg="#E2E8F0").pack(fill="x", pady=15)
-        tk.Label(card3, text="자동 슬라이드 배너 추가 (최대 10장)", font=("Malgun Gothic", 10, "bold"), bg="white", fg="#0b144d").pack(anchor="w", pady=(0, 10))
-        for i in range(10):
-            f = tk.Frame(card3, bg="#F8FAFC", bd=1, relief="solid", highlightbackground="#E2E8F0", pady=5, padx=10)
-            f.pack(fill="x", pady=2)
-            tk.Label(f, text=f"배너 {i+1}", font=("Arial", 10, "bold"), fg="#d7c29a", bg="#F8FAFC").pack(side="left", padx=(0, 10))
-            tk.Entry(f, textvariable=self.slider_vars[i], font=("Malgun Gothic", 9), bg="white", relief="solid", bd=1, state='readonly').pack(side="left", fill="x", expand=True, ipady=4, padx=(0, 10))
-            tk.Button(f, text="배너 업로드", command=lambda idx=i: self.slider_vars[idx].set(filedialog.askopenfilename() or ""), bg="white", fg="#334155", font=("Malgun Gothic", 9), relief="solid", bd=1, cursor="hand2").pack(side="right", ipady=2, padx=2)
+    <section id="pricing" class="py-24 bg-slate-900 text-white border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">감자빌더 파트너 요금제</h2>
+                <p class="text-slate-400">비즈니스 규모에 맞는 라이선스를 선택하고, 프리미엄의 가치를 고객에게 직접 제안하세요.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-slate-500 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">BASIC</h3>
+                    <p class="text-slate-400 mb-6">영세 1인 대리점용</p>
+                    <div class="text-4xl font-bold mb-8">₩250,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
+                        <li>✔️ <span class="text-white font-bold">월 20회</span> 생성 한도</li>
+                        <li>✔️ Gemini AI 카피라이팅 지원</li>
+                        <li>✔️ 실시간 텔레그램 연동</li>
+                    </ul>
+                </div>
+                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-blue-500 transform md:-translate-y-4 shadow-2xl shadow-blue-500/20 relative bg-blue-900/10 flex flex-col">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold">BEST PARTNER</div>
+                    <h3 class="text-2xl font-bold mb-2">PRO</h3>
+                    <p class="text-slate-400 mb-6">일반 마케팅 에이전시</p>
+                    <div class="text-4xl font-bold mb-8 text-blue-400">₩450,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
+                        <li>✔️ <span class="text-blue-400 font-bold">월 50회</span> 생성 한도</li>
+                        <li>✔️ <span class="text-blue-400 font-bold">감자빌더 실물 패키지</span> (USB+매뉴얼) 배송</li>
+                        <li>✔️ 본사 핫라인 기술 집중 지원</li>
+                    </ul>
+                </div>
+                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-purple-500 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">ULTRA</h3>
+                    <p class="text-slate-400 mb-6">기업형 총판 및 프랜차이즈</p>
+                    <div class="text-4xl font-bold mb-8">별도 문의</div>
+                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
+                        <li>✔️ <span class="text-purple-400 font-bold">무제한</span> 생성 라이선스</li>
+                        <li>✔️ VVIP 전용 프리미엄 패키지 세트</li>
+                        <li>✔️ 마스터 관리자 커스텀 앱 제공</li>
+                        <li>✔️ 독립 서버 통합 세팅 지원</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        card4 = self.create_card(content_pad, "Services & Philosophy")
-        self.create_input(card4, "브랜드 철학 제목 (Philosophy Title)", self.vars["identity_title"])
-        self.create_input(card4, "브랜드 스토리 내용 (Description)", self.vars["intro_txt"])
-        tk.Button(card4, text="✨ 브랜드 스토리 AI 다듬기", command=lambda: self.refine_text_with_ai(self.vars["intro_txt"], "고급스러운 브랜드 철학과 스토리텔링"), bg="#F1F5F9", fg="#334155", font=("Malgun Gothic", 9), relief="solid", bd=1, cursor="hand2").pack(anchor="e", pady=(0, 15))
-        tk.Frame(card4, height=1, bg="#E2E8F0").pack(fill="x", pady=15)
-        tk.Label(card4, text="핵심 서비스 3종 (Core Services)", font=("Malgun Gothic", 10, "bold"), bg="white", fg="#0b144d").pack(anchor="w", pady=(0, 10))
-        for i in range(3):
-            f = tk.Frame(card4, bg="#F8FAFC", bd=1, relief="solid", highlightbackground="#E2E8F0", pady=10, padx=10)
-            f.pack(fill="x", pady=5)
-            tk.Label(f, text=f"0{i+1}", font=("Arial", 12, "bold"), fg="#d7c29a", bg="#F8FAFC").pack(side="left", padx=(0, 10))
-            tk.Entry(f, textvariable=self.prod_vars[i]["title"], font=("Malgun Gothic", 10), bg="white", relief="solid", bd=1).pack(side="left", fill="x", expand=True, ipady=4, padx=(0, 10))
-            tk.Button(f, text="상세페이지 등록", command=lambda idx=i: self.prod_vars[idx]["detail_img_path"].set(filedialog.askopenfilename() or ""), bg="#d7c29a", fg="#0b144d", font=("Malgun Gothic", 9, "bold"), relief="solid", bd=1, cursor="hand2").pack(side="right", ipady=2, padx=2)
-            tk.Button(f, text="썸네일 업로드", command=lambda idx=i: self.prod_vars[idx]["img_path"].set(filedialog.askopenfilename() or ""), bg="white", fg="#334155", font=("Malgun Gothic", 9), relief="solid", bd=1, cursor="hand2").pack(side="right", ipady=2, padx=2)
-
-        card_review = self.create_card(content_pad, "Customer Reviews (고객 리뷰)")
-        tk.Label(card_review, text="고객들의 실제 리뷰를 입력하세요.", font=("Malgun Gothic", 9), bg="white", fg="#64748B").pack(anchor="w", pady=(0, 10))
-        for i in range(4):
-            r_f = tk.Frame(card_review, bg="#F8FAFC", bd=1, relief="solid", highlightbackground="#E2E8F0", pady=5, padx=10)
-            r_f.pack(fill="x", pady=2)
-            tk.Label(r_f, text=f"리뷰 {i+1}", font=("Arial", 10, "bold"), fg="#d7c29a", bg="#F8FAFC").pack(side="left", padx=(0, 10))
-            tk.Entry(r_f, textvariable=self.review_vars[i]["author"], font=("Malgun Gothic", 9), width=10, bg="white", relief="solid", bd=1).pack(side="left", ipady=4, padx=(0, 5))
-            tk.Entry(r_f, textvariable=self.review_vars[i]["rating"], font=("Malgun Gothic", 9), width=5, bg="white", relief="solid", bd=1).pack(side="left", ipady=4, padx=(0, 5))
-            tk.Entry(r_f, textvariable=self.review_vars[i]["text"], font=("Malgun Gothic", 9), bg="white", relief="solid", bd=1).pack(side="left", fill="x", expand=True, ipady=4, padx=(0, 5))
-            tk.Button(r_f, text="✨ AI 다듬기", command=lambda idx=i: self.refine_text_with_ai(self.review_vars[idx]["text"], "고객의 긍정적인 방문 리뷰"), bg="#F1F5F9", fg="#334155", font=("Malgun Gothic", 8), relief="solid", bd=1, cursor="hand2").pack(side="right", padx=(5,0))
-
-        card_faq = self.create_card(content_pad, "FAQ (자주 묻는 질문)")
-        tk.Label(card_faq, text="고객들이 자주 묻는 질문과 답변 4가지를 입력하세요.", font=("Malgun Gothic", 9), bg="white", fg="#64748B").pack(anchor="w", pady=(0, 10))
-        for i in range(4):
-            q_f = tk.Frame(card_faq, bg="white")
-            q_f.pack(fill="x", pady=4)
-            tk.Label(q_f, text=f"Q{i+1}", font=("Arial", 10, "bold"), fg="#0b144d", bg="white").pack(side="left", padx=(0,5))
-            tk.Entry(q_f, textvariable=self.faq_vars[i]["q"], font=("Malgun Gothic", 9), bg="#F8FAFC", relief="solid", bd=1, width=30).pack(side="left", ipady=5, padx=(0, 10))
-            tk.Label(q_f, text="A", font=("Arial", 10, "bold"), fg="#d7c29a", bg="white").pack(side="left", padx=(0,5))
-            tk.Entry(q_f, textvariable=self.faq_vars[i]["a"], font=("Malgun Gothic", 9), bg="#F8FAFC", relief="solid", bd=1).pack(side="left", fill="x", expand=True, ipady=5)
-            tk.Button(q_f, text="✨ AI 답변", command=lambda idx=i: self.refine_text_with_ai(self.faq_vars[idx]["a"], f"질문: {self.faq_vars[idx]['q'].get()} 에 대한 친절하고 전문적인 답변"), bg="#F1F5F9", fg="#334155", font=("Malgun Gothic", 8), relief="solid", bd=1, cursor="hand2").pack(side="right", padx=(5,0))
-
-        card2 = self.create_card(content_pad, "Contact & Location")
-        self.create_input(card2, "대표번호", self.vars["phone"])
-        self.create_input(card2, "상세 주소", self.vars["loc"])
-        self.create_input(card2, "네이버/카카오 지도 공유 링크", self.vars["map_url"])
-        self.create_input(card2, "알림 수신 텔레그램 ID", self.vars["target_id"])
-
-        tk.Frame(content_pad, bg="#F1F5F9", height=40).pack()
-
-    def img_to_b64(self, path):
-        if not path or not os.path.exists(path): return ""
-        with open(path, "rb") as f: return "data:image/png;base64," + base64.b64encode(f.read()).decode()
-
-    def get_dynamic_theme(self, cat):
-        pool = IMAGE_POOLS.get(cat, IMAGE_POOLS["기타"])
-        return {"img": random.choice(pool), "navy": "#0b144d", "gold": "#d7c29a", "black": "#121212", "pool": pool}
-
-    def generate_offline_qr(self, website_url, store_name, icon_path=""):
-        try:
-            qr = qrcode.QRCode(version=4, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
-            qr.add_data(website_url)
-            qr.make(fit=True)
+    <section id="contact" class="py-24 px-6 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
             
-            user_home = os.path.expanduser("~")
-            save_dir = os.path.join(user_home, "Desktop")
-            
-            if not os.path.exists(save_dir):
-                save_dir = os.path.join(user_home, "바탕 화면")
-            
-            if not os.path.exists(save_dir):
-                save_dir = os.getcwd() 
-            
-            try:
-                qr_img = qr.make_image(fill_color="#0b144d", back_color="white").convert('RGBA')
-                
-                if icon_path and os.path.exists(icon_path):
-                    icon = Image.open(icon_path).convert("RGBA")
-                    icon_size = int(qr_img.size[0] / 4)
-                    icon = icon.resize((icon_size, icon_size), Image.LANCZOS)
-                    pos = ((qr_img.size[0] - icon_size) // 2, (qr_img.size[1] - icon_size) // 2)
-                    qr_img.paste(icon, pos, icon)
-                
-                qr_img = qr_img.convert('RGB')
-                width, height = qr_img.size
-                new_height = height + 50
-                final_img = Image.new('RGB', (width, new_height), 'white')
-                final_img.paste(qr_img, (0, 0))
-                
-                draw = ImageDraw.Draw(final_img)
-                try: font = ImageFont.truetype("malgun.ttf", 20)
-                except: font = ImageFont.load_default()
-                
-                text = f"{store_name} 공식 홈페이지"
-                bbox = draw.textbbox((0, 0), text, font=font)
-                text_width = bbox[2] - bbox[0]
-                x = (width - text_width) / 2
-                y = height + 10
-                draw.text((x, y), text, fill="black", font=font)
-                
-                file_name = f"{store_name}_커스텀QR코드.png" if icon_path else f"{store_name}_QR코드.png"
-                save_path = os.path.join(save_dir, file_name)
-                final_img.save(save_path)
-                return save_path
-            except Exception as pil_err:
-                qr_img = qrcode.make(website_url)
-                save_path = os.path.join(save_dir, f"{store_name}_QR코드_일반.png")
-                qr_img.save(save_path)
-                return save_path
-        except Exception as e:
-            return None
+            <div>
+                <div class="text-sm font-extrabold tracking-widest text-blue-600 mb-3">CONTACT US</div>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-6">
+                    솔루션 도입부터 인프라 구축까지<br>지금 바로 상의하세요.
+                </h2>
+                <p class="text-slate-600 text-lg mb-10 leading-relaxed">
+                    테이블 오더, 기업 통신 등의 로컬 컨설팅부터 감자빌더 파트너 도입에 이르기까지. 궁금하신 점을 남겨주시거나 아래 연락처로 다이렉트 문의해 주세요.
+                </p>
+                <div class="space-y-4">
+                    <a href="tel:01046530114" class="flex items-center gap-4 p-5 bg-white border border-slate-200 rounded-2xl hover-lift">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl">📞</div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-400">김성준 대표 다이렉트</div>
+                            <div class="text-2xl font-black text-slate-800">010-4653-0114</div>
+                        </div>
+                    </a>
+                    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="flex items-center gap-4 p-5 bg-[#FEE500] rounded-2xl hover-lift">
+                        <div class="w-14 h-14 bg-black/10 rounded-xl flex items-center justify-center">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-800/60">카카오톡 공식 채널</div>
+                            <div class="text-2xl font-black text-slate-900">1:1 실시간 채팅 상담</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-slate-100">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6">온라인 다이렉트 접수</h3>
+                <form action="http://gjnetwork.kr/api/leads/submit" method="POST" class="space-y-5">
+                    <input type="hidden" name="license_key" value="GAMJA_OFFICIAL_SITE">
+                    <input type="hidden" name="target_chat_id" value="7745000281"> 
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">업체명 / 성함</label>
+                        <input type="text" name="name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition" placeholder="예: 감자네트워크 김성준" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">연락처</label>
+                        <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition" placeholder="010-0000-0000" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">상담 내용</label>
+                        <textarea name="message" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition resize-none" placeholder="로컬 인프라 세팅 컨설팅 또는 감자빌더 도입 등 궁금하신 점을 자유롭게 적어주세요."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg py-4 rounded-xl transition shadow-lg mt-2">
+                        문의 접수하기
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-    def save_and_open(self, is_preview=False):
-        try:
-            self.save_project(filename="latest_project.json")
+    <footer class="py-12 text-center bg-slate-900 text-slate-500 text-sm border-t border-slate-800">
+        <div class="flex flex-wrap justify-center gap-3 mb-6">
+            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자네트워크</span>
+            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">GamjaBuilder</span>
+            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">제주 비즈니스 솔루션</span>
+        </div>
+        <p>© 2026 Gamja Network. All rights reserved.</p>
+        <p class="mt-2">대표: 김성준 | 솔루션 문의: 010-4653-0114</p>
+    </footer>
+
+    <!-- 1분 시뮬레이터 로딩 모달 -->
+    <div id="simLoadingModal" class="fixed inset-0 z-[100000] hidden bg-slate-900/95 flex flex-col items-center justify-center text-white backdrop-blur-sm">
+        <div class="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-8"></div>
+        <h3 id="simLoadingText" class="text-2xl md:text-3xl font-bold mb-6 text-center px-4">AI가 브랜드 스토리를 분석 중입니다...</h3>
+        <div class="w-64 h-2 bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 animate-[loadingBar_3s_ease-in-out_forwards]"></div>
+        </div>
+    </div>
+
+    <!-- 1분 시뮬레이터 결과(리드 수집) 모달 -->
+    <div id="simResultModal" class="fixed inset-0 z-[100000] hidden bg-black/80 flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white text-slate-800 p-10 rounded-3xl max-w-md w-full mx-4 relative shadow-2xl animate-[popDropIn_0.3s_forwards]">
+            <button onclick="closeSimResult()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-500 rounded-full font-bold hover:bg-slate-200 transition">&times;</button>
+            <div class="text-center mb-6">
+                <div class="text-5xl mb-4">🎉</div>
+                <h3 class="text-2xl font-black text-slate-900 mb-2">가안이 완성되었습니다!</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">입력해주신 <span id="sim-display-name" class="font-bold text-blue-600 text-base"></span>의 럭셔리 AI 웹사이트 시안이 준비되었습니다.<br>링크를 받아보실 연락처를 남겨주세요.</p>
+            </div>
+            <form action="http://gjnetwork.kr/api/leads/submit" method="POST" class="space-y-4">
+                <input type="hidden" name="license_key" value="GAMJA_SIMULATOR">
+                <input type="hidden" name="target_chat_id" value="7745000281"> 
+                <input type="hidden" id="sim-hidden-name" name="message" value="">
+                <div>
+                    <input type="text" name="name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" placeholder="담당자 성함" required>
+                </div>
+                <div>
+                    <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" placeholder="연락처 (010-0000-0000)" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition mt-2">
+                    무료 시안 링크 받기 🚀
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====== 1. 쿠팡 파트너스 진입 팝업 ====== -->
+    <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center; cursor:pointer;">
+        <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
+            <button onclick="event.stopPropagation(); closePopup();" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer; line-height:1; z-index:100;">&times;</button>
+            <div style="padding:20px; text-align:center;">
+                <h3 id="entrance-title" style="margin-top:10px; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">비즈니스 추천 아이템</h3>
+                <div style="display:block; margin:15px 0; text-decoration:none;">
+                    <img id="entrance-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
+                         referrerpolicy="no-referrer"
+                         alt="추천 상품" style="width:100%; height:auto; border-radius:8px; border:1px solid #eee;">
+                    <div id="entrance-btn" style="margin-top:12px; padding:12px; background:#2563eb; border-radius:8px; color:#fff; font-weight:bold; font-size:14px; box-shadow: 0 4px 10px rgba(37,99,235,0.2);">
+                        최저가 상세정보 확인하기
+                    </div>
+                </div>
+                <p style="font-size:11px; color:#888; margin-top:15px;">
+                    이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 2. 이탈 방지 (Exit-Intent) 타겟팅 팝업 ====== -->
+    <div id="exitPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:999999; align-items:center; justify-content:center; backdrop-filter: blur(5px); cursor:pointer;">
+        <div style="background:#fff; width:380px; border-radius:16px; overflow:hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position:relative; animation: popDropIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
+            <button onclick="event.stopPropagation(); closeExitPopup();" style="position:absolute; top:12px; right:12px; background:#f1f5f9; border-radius:50%; width:28px; height:28px; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; line-height:1; z-index:100; display:flex; align-items:center; justify-content:center;">&times;</button>
+            <div style="padding:30px 24px 24px; text-align:center;">
+                <div style="font-size:40px; margin-bottom:10px;">🚨</div>
+                <h3 style="margin-top:0; color:#e11d48; font-size:24px; font-weight:900; margin-bottom:8px; letter-spacing:-0.5px;">잠깐만요!</h3>
+                <p id="exit-title" style="color:#475569; font-size:15px; font-weight:600; line-height:1.5; margin-bottom:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    <span class="text-blue-600">비즈니스 필수템 최저가 혜택</span>을<br>놓치지 마세요!
+                </p>
+                <div style="display:block; text-decoration:none;">
+                    <img id="exit-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
+                         referrerpolicy="no-referrer"
+                         alt="추천 상품" style="width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:15px;">
+                    <div id="exit-btn" style="padding:14px; background:linear-gradient(135deg, #2563eb, #1d4ed8); border-radius:10px; color:#fff; font-weight:800; font-size:16px; box-shadow: 0 4px 15px rgba(37,99,235,0.4); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        마지막 혜택 바로 확인하기 👉
+                    </div>
+                </div>
+                <p style="font-size:11px; color:#94a3b8; margin-top:16px; line-height:1.4;">
+                    이 포스팅은 쿠팡 파트너스 활동의 일환으로,<br>이에 따른 일정액의 수수료를 제공받습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 실시간 소셜 푸루프 토스트 알림 -->
+    <div id="social-toast" class="fixed left-6 bottom-6 z-[9998] bg-white border border-slate-200 shadow-[0_10px_40px_rgba(0,0,0,0.12)] rounded-2xl p-4 flex items-center gap-4 transition-all duration-500 opacity-0 translate-y-8 pointer-events-none w-max max-w-[320px]">
+        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl shrink-0 border border-blue-100">
+            🔔
+        </div>
+        <div class="pr-2">
+            <p id="toast-msg" class="text-[13px] font-bold text-slate-800 leading-snug word-break-keep">알림을 불러오는 중입니다.</p>
+            <p id="toast-time" class="text-[11px] text-slate-400 mt-1 font-medium">방금 전</p>
+        </div>
+    </div>
+
+    <!-- 스크립트 영역 -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // 🛡️ [불펌 방지 로직] 우클릭 및 개발자 도구 차단
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode == 123) { event.preventDefault(); }
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { event.preventDefault(); }
+            if (event.ctrlKey && event.keyCode == 85) { event.preventDefault(); }
+        });
+
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("coupangPopup").style.display = "flex";
+            loadDynamicCoupangData(); 
             
-            if not is_preview:
-                fresh = refresh_license(self.user_data)
-                if not fresh or fresh.get('is_blocked'): messagebox.showerror("차단", "라이선스가 차단되었습니다."); return
-                if not check_and_increment_usage(self.user_data): return
-                self.user_data = refresh_license(self.user_data); self.update_title()
-
-            v = {k: self.vars[k].get() for k in self.vars}
-            t = self.get_dynamic_theme(v["category"])
-
-            theme_sel = v.get("theme", "미드나잇 골드")
-            if theme_sel == "모던 화이트":
-                t["navy"], t["gold"], t["black"], bg_main = "#2d3748", "#8A9A5B", "#1a202c", "#ffffff"
-            elif theme_sel == "오션 뷰":
-                t["navy"], t["gold"], t["black"], bg_main = "#0A2463", "#3E92CC", "#000000", "#F0F8FF"
-            else: 
-                t["navy"], t["gold"], t["black"], bg_main = "#0b144d", "#d7c29a", "#121212", "#FAFAFA"
-            
-            hero_b64 = self.img_to_b64(self.hero_img_path.get())
-            if hero_b64: hero_bg_url = f"url('{hero_b64}')"
-            else: hero_bg_url = f"url('https://images.unsplash.com/photo-{t['img']}?q=80&w=2000&auto=format&fit=crop')"
-
-            safe_name = re.sub(r'[\\/*?:"<>|]', "", v['name']) or "Gamja"
-
-            translations_js = "const i18nData = {};"
-            lang_selector_html = ""
-            if self.block_vars["multilang"].get():
-                texts_dict = {
-                    "head": v["head"], "sub": v["sub"], "id_title": v["identity_title"],
-                    "intro": v["intro_txt"], "ops": v["ops_txt"],
-                    "nav_story": "Story", "nav_services": "Services", "nav_contact": "Reservation",
-                    "ui_story_h": "<span class='font-bold'>당연했던 기준</span>을 넘어,<br> 당신만의 <span class='text-[var(--gold)] font-bold text-playfair italic'>Premium</span>을 완성합니다.",
-                    "ui_detail_btn": "자세히 보기 &rarr;",
-                    "ui_gal_h": "시선을 사로잡는<br><span class='font-bold'>하이라이트</span>",
-                    "ui_media_h": "움직임으로 증명하는<br><span class='font-bold'>압도적 디테일</span>",
-                    "ui_rev_h": "고객들의 생생한 리뷰",
-                    "ui_faq_h": "자주 묻는 질문",
-                    "ui_loc_h": "오시는 길",
-                    "ui_loc_p": f"대표번호 : {v['phone']}",
-                    "ui_map_btn": "🗺️ 지도 앱으로 길찾기",
-                    "ui_ph_name": "성함을 남겨주세요",
-                    "ui_ph_phone": "연락처를 남겨주세요",
-                    "ui_ph_msg": "문의하실 내용을 간단히 적어주세요 (선택)",
-                    "ui_form_btn": "Submit Request"
+            var businessSwiper = new Swiper(".businessSwiper", {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: { delay: 3500, disableOnInteraction: false },
+                pagination: { el: ".swiper-pagination-business", clickable: true },
+                breakpoints: {
+                    768: { slidesPerView: 2, spaceBetween: 24 },
+                    1024: { slidesPerView: 3, spaceBetween: 30 }
                 }
-                
-                if v.get("popup_msg"): texts_dict["ui_popup"] = v["popup_msg"]
-                if v.get("today_menu"): texts_dict["ui_today"] = f"🔥 오늘의 알림 : {v['today_menu']}"
+            });
+        });
 
-                for i in range(3): texts_dict[f"s{i}"] = self.prod_vars[i]["title"].get()
-                for i in range(4):
-                    texts_dict[f"ra{i}"] = self.review_vars[i]["author"].get()
-                    texts_dict[f"rt{i}"] = self.review_vars[i]["text"].get()
-                    texts_dict[f"fq{i}"] = self.faq_vars[i]["q"].get()
-                    texts_dict[f"fa{i}"] = self.faq_vars[i]["a"].get()
-
-                if not is_preview and v.get("api_key"):
-                    self.root.config(cursor="watch"); self.root.update()
-                    i18n_dict = self.fetch_translations(texts_dict)
-                    self.root.config(cursor="")
-                else:
-                    i18n_dict = {"ko": texts_dict}
-
-                translations_js = f"const i18nData = {json.dumps(i18n_dict, ensure_ascii=False)};"
-                lang_selector_html = """
-                <div class="fixed top-24 right-6 z-[160] flex gap-2">
-                    <select id="langSwitch" onchange="changeLang(this.value)" class="bg-black/50 text-white text-xs px-2 py-1 rounded border border-white/20 outline-none cursor-pointer">
-                        <option value="ko">KR</option><option value="en">EN</option><option value="zh">CN</option><option value="ja">JP</option>
-                    </select>
-                </div>
-                <script>
-                    function changeLang(lang) {
-                        if(!i18nData[lang]) return;
-                        document.querySelectorAll('[data-i18n]').forEach(el => {
-                            const key = el.getAttribute('data-i18n');
-                            if(i18nData[lang][key]) {
-                                if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                                    el.placeholder = i18nData[lang][key];
-                                } else {
-                                    el.innerHTML = i18nData[lang][key];
-                                }
-                            }
-                        });
-                    }
-                </script>
-                """
-
-            ga_script = f'<script async src="https://www.googletagmanager.com/gtag/js?id={v["ga_id"]}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag("js",new Date());gtag("config","{v["ga_id"]}");</script>' if v.get("ga_id") else ""
-            naver_script = f'<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script><script type="text/javascript">if(!wcs_add) var wcs_add = {{}}; wcs_add["wa"] = "{v["naver_id"]}"; if(window.wcs) {{ wcs_do(); }}</script>' if v.get("naver_id") else ""
+        function startSimulation() {
+            const bizName = document.getElementById('sim-business-name').value.trim();
+            if (!bizName) {
+                alert("사장님의 상호명을 입력해주세요!");
+                return;
+            }
             
-            p_html = ""
-            for i in range(3):
-                user_img_b64 = self.img_to_b64(self.prod_vars[i]["img_path"].get())
-                detail_img_b64 = self.img_to_b64(self.prod_vars[i]["detail_img_path"].get())
+            document.getElementById('simLoadingModal').style.display = 'flex';
+            const loadingText = document.getElementById('simLoadingText');
+            
+            loadingText.innerText = "AI가 '" + bizName + "'의 브랜드 스토리를 분석 중입니다...";
+            
+            setTimeout(() => {
+                loadingText.innerText = "업종 맞춤형 럭셔리 디자인을 세팅 중입니다...";
+            }, 1000);
+            
+            setTimeout(() => {
+                loadingText.innerText = "마케팅 카피라이팅 적용 및 최종 렌더링 중...";
+            }, 2000);
+            
+            setTimeout(() => {
+                document.getElementById('simLoadingModal').style.display = 'none';
+                document.getElementById('sim-display-name').innerText = bizName;
+                document.getElementById('sim-hidden-name').value = "[시뮬레이터 시안 요청] 상호명: " + bizName;
+                document.getElementById('simResultModal').style.display = 'flex';
+            }, 3000);
+        }
+
+        function closeSimResult() {
+            document.getElementById('simResultModal').style.display = 'none';
+        }
+
+        function closePopup() {
+            document.getElementById("coupangPopup").style.display = "none";
+        }
+
+        async function loadDynamicCoupangData() {
+            try {
+                const API_URL = './coupang_data.json'; 
+                let data = [];
                 
-                random_sub_img = random.choice(t["pool"])
-                if user_img_b64:
-                    img_content = f'<img src="{user_img_b64}" class="w-full h-[28rem] object-contain bg-black transition-transform duration-700 group-hover:scale-110">'
-                else:
-                    img_content = f'<img src="https://images.unsplash.com/photo-{random_sub_img}?q=80&w=600&auto=format&fit=crop" class="w-full h-[28rem] object-cover transition-transform duration-700 group-hover:scale-110 opacity-70">'
-                
-                if detail_img_b64:
-                    onclick_action = f'onclick="openServiceModal(this.getAttribute(\'data-img\'))" data-img="{detail_img_b64}"'
-                    detail_text = '<span class="block mt-4 text-[var(--gold)] font-semibold group-hover:translate-x-2 transition-all duration-300 opacity-0 group-hover:opacity-100" data-i18n="ui_detail_btn">자세히 보기 &rarr;</span>'
-                    cursor_class = "cursor-pointer"
-                else:
-                    onclick_action = ""
-                    detail_text = ""
-                    cursor_class = ""
-                
-                p_html += f"""
-                <div {onclick_action} class="group relative overflow-hidden reveal reveal-delay-{i+1} {cursor_class} bg-black">
-                    <div class="overflow-hidden bg-black">{img_content}</div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-                    <div class="absolute bottom-0 left-0 p-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 w-full">
-                        <p class="text-white/70 font-light uppercase tracking-[0.3em] text-xs mb-3">Service 0{i+1}</p>
-                        <h3 class="text-3xl font-bold text-white mb-4" data-i18n="s{i}">{self.prod_vars[i]["title"].get()}</h3>
-                        <div class="w-0 h-0.5 bg-[var(--gold)] group-hover:w-16 transition-all duration-700 ease-out mb-4"></div>
-                        {detail_text}
-                    </div>
-                </div>"""
+                try {
+                    const response = await fetch(API_URL);
+                    if (!response.ok) throw new Error("JSON 파일 로드 실패");
+                    data = await response.json();
+                } catch (err) {
+                    data = [
+                        { name: "LG전자 2024 그램 16 노트북", price: "1,450,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" },
+                        { name: "실버 순은 999.9 실버바 100g", price: "480,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" },
+                        { name: "인체공학 무선 키보드 세트", price: "59,000원", link: "#", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80" },
+                        { name: "4K 울트라 HD 모니터", price: "349,000원", link: "#", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&q=80" }
+                    ];
+                }
 
-            slider_html = ""
-            uploaded_sliders = [self.img_to_b64(var.get()) for var in self.slider_vars if var.get()]
-            if not uploaded_sliders:
-                random_imgs = random.sample(t["pool"], min(10, len(t["pool"])))
-                for img_id in random_imgs:
-                    uploaded_sliders.append(f"https://images.unsplash.com/photo-{img_id}?q=80&w=800&auto=format&fit=crop")
-
-            for img_src in uploaded_sliders:
-                slider_html += f"""
-                <div class="swiper-slide" style="width: 80%; max-width: 500px;">
-                    <div class="rounded-[2rem] overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] border border-white/10 relative aspect-[4/3] md:aspect-[16/9] bg-black">
-                        <img src="{img_src}" class="w-full h-full object-contain">
-                    </div>
-                </div>"""
-
-            slider_section = f"""
-            <section id="gallery" class="py-40 overflow-hidden relative" style="background:var(--black)">
-                <div class="max-w-5xl mx-auto px-6 mb-16 text-center reveal">
-                    <h2 class="text-xs font-bold mb-6 uppercase tracking-[0.5em] text-[var(--gold)]">Gallery / Event</h2>
-                    <h3 class="text-3xl md:text-5xl font-light text-white leading-tight" data-i18n="ui_gal_h">시선을 사로잡는<br><span class="font-bold">하이라이트</span></h3>
-                </div>
-                <div class="swiper mySwiper reveal reveal-delay-1 pb-16">
-                    <div class="swiper-wrapper">
-                        {slider_html}
-                    </div>
-                    <div class="swiper-pagination mt-10"></div>
-                </div>
-            </section>"""
-
-            review_html = ""
-            for i in range(4):
-                r_author = self.review_vars[i]["author"].get()
-                r_text = self.review_vars[i]["text"].get()
-                r_rating = self.review_vars[i]["rating"].get()
-                if r_author and r_text:
-                    try: stars = "⭐" * int(r_rating)
-                    except: stars = r_rating if r_rating else "⭐⭐⭐⭐⭐"
+                if (data.length > 0) {
+                    const entranceItem = data[0];
+                    document.getElementById('entrance-title').innerText = entranceItem.name;
+                    document.getElementById('entrance-img').src = entranceItem.img;
+                    document.getElementById('entrance-btn').innerText = entranceItem.price + " - 상세정보 확인";
                     
-                    review_html += f"""
-                    <div class="swiper-slide">
-                        <div class="bg-white p-8 md:p-10 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-zinc-100 h-full flex flex-col justify-between">
-                            <div>
-                                <div class="text-[var(--gold)] text-xl mb-4">{stars}</div>
-                                <p class="text-zinc-600 font-light leading-relaxed mb-8" data-i18n="rt{i}">"{r_text}"</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-[var(--navy)] text-white flex items-center justify-center font-bold">{r_author[0] if r_author else "C"}</div>
-                                <div>
-                                    <p class="font-bold text-[var(--navy)]" data-i18n="ra{i}">{r_author}</p>
-                                    <p class="text-xs text-zinc-400">Verified Customer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>"""
-
-            review_section = f"""
-            <section id="reviews" class="py-32 px-6" style="background:var(--bg-main)">
-                <div class="max-w-5xl mx-auto">
-                    <div class="text-center mb-16 reveal">
-                        <h2 class="text-xs font-bold mb-4 uppercase tracking-[0.4em] text-[var(--gold)]">Reviews</h2>
-                        <h3 class="text-3xl md:text-5xl font-light text-[var(--navy)]" data-i18n="ui_rev_h">고객들의 생생한 리뷰</h3>
-                    </div>
-                    <div class="swiper reviewSwiper reveal reveal-delay-1 pb-16 px-4">
-                        <div class="swiper-wrapper">
-                            {review_html}
-                        </div>
-                        <div class="swiper-pagination-review mt-8 flex justify-center gap-2"></div>
-                    </div>
-                </div>
-            </section>"""
-
-            faq_html = ""
-            for i in range(4):
-                q_txt = self.faq_vars[i]["q"].get()
-                a_txt = self.faq_vars[i]["a"].get()
-                if q_txt and a_txt:
-                    faq_html += f"""
-                    <div class="border-b border-zinc-200 pb-6 reveal">
-                        <h4 class="text-xl font-bold text-[var(--navy)] mb-3 flex items-center"><span class="text-[var(--gold)] mr-4 text-2xl">Q.</span> <span data-i18n="fq{i}">{q_txt}</span></h4>
-                        <p class="text-zinc-500 font-light pl-11 leading-relaxed" data-i18n="fa{i}">{a_txt}</p>
-                    </div>"""
-
-            yt_url = v["youtube_url"].strip()
-            yt_id = ""
-            match = re.search(r'(?:v=|youtu\.be/|shorts/)([^&?/\s]{11})', yt_url)
-            if match: yt_id = match.group(1)
-
-            video_html = ""
-            if yt_id:
-                video_html = f"""
-                <section id="media" class="py-40 text-white px-10 text-center relative overflow-hidden" style="background:var(--black)">
-                    <div class="container mx-auto max-w-5xl relative z-10 reveal">
-                        <h2 class="text-xs font-bold mb-8 uppercase tracking-[0.5em] text-[var(--gold)]">Brand Film</h2>
-                        <h3 class="text-3xl md:text-5xl font-light mb-16 leading-tight" data-i18n="ui_media_h">움직임으로 증명하는<br><span class="font-bold">압도적 디테일</span></h3>
-                        <div class="flex justify-center">
-                            <div class="w-full max-w-sm aspect-[9/16] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 bg-black transform transition hover:scale-[1.02] duration-500">
-                                <iframe width="100%" height="100%" 
-                                        src="https://www.youtube.com/embed/{yt_id}?autoplay=1&mute=1&loop=1&playlist={yt_id}" 
-                                        title="YouTube video player" frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                </section>"""
-
-            wysiwyg_script = ""
-            if is_preview:
-                wysiwyg_script = """
-                <script>
-                    window.onload = function() {
-                        const style = document.createElement('style');
-                        style.innerHTML = `
-                            [contenteditable="true"]:hover { outline: 2px dashed var(--gold); background: rgba(215,194,154,0.1); cursor: text; }
-                            img:hover { outline: 3px dashed var(--navy); cursor: pointer; opacity: 0.8; }
-                            #wysiwyg-banner { position:fixed; top:0; left:0; width:100%; background:#0b144d; color:#d7c29a; text-align:center; padding:10px; font-weight:bold; z-index:9999; }
-                        `;
-                        document.head.appendChild(style);
-                        document.body.insertAdjacentHTML('afterbegin', '<div id="wysiwyg-banner">🛠️ [관리자 모드] 글씨를 클릭하면 수정할 수 있습니다. 이미지를 드래그 앤 드롭하면 교체됩니다.</div>');
-                        document.querySelectorAll('h1, h2, h3, h4, h5, p, a, span').forEach(el => {
-                            if(!el.id.includes('wysiwyg')) el.setAttribute('contenteditable', 'true');
-                        });
-                        document.querySelectorAll('img').forEach(img => {
-                            img.title = "새 이미지를 이곳에 드래그 앤 드롭 하세요";
-                            img.addEventListener('dragover', e => e.preventDefault());
-                            img.addEventListener('drop', e => {
-                                e.preventDefault();
-                                const file = e.dataTransfer.files[0];
-                                if(file) {
-                                    const reader = new FileReader();
-                                    reader.onload = ev => img.src = ev.target.result;
-                                    reader.readAsDataURL(file);
-                                }
-                            });
-                        });
+                    document.getElementById('coupangPopup').onclick = function() {
+                        window.open(entranceItem.link, '_blank');
+                        closePopup();
                     };
-                </script>"""
 
-            # 💡 파이썬 f-string 내부에 들어가는 HTML이므로 CSS 중괄호는 {{ }}로 처리
-            html_template = f"""
-            <!DOCTYPE html>
-            <html lang="ko">
-            <head>
-                <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-                <title>{v['name']} | Premium Identity</title>
-                {ga_script}
-                {naver_script}
-                <script src="https://cdn.tailwindcss.com"></script>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-                <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700;900&family=Playfair+Display:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
-                <style>
-                    :root {{ --navy:{t['navy']}; --gold:{t['gold']}; --black:{t['black']}; --bg-main:{bg_main}; }}
-                    body {{ 
-                        font-family:'Noto Sans KR', sans-serif; color:var(--black); line-height:1.6; background-color:var(--bg-main); overflow-x:hidden; 
-                        /* 🛡️ 1차 방어막: 마우스 드래그 및 텍스트 선택 완벽 차단 */
-                        -webkit-user-select: none;
-                        -moz-user-select: none;
-                        -ms-user-select: none;
-                        user-select: none;
-                    }}
-                    /* 단, 입력창(Input, Textarea)은 글을 써야 하므로 선택 허용 */
-                    input, textarea {{
-                        -webkit-user-select: auto;
-                        -moz-user-select: auto;
-                        -ms-user-select: auto;
-                        user-select: auto;
-                    }}
-                    html {{ scroll-behavior: smooth; }}
-                    header {{ position:fixed; top:0; width:100%; z-index:100; background:rgba(255,255,255,0.0); backdrop-filter:blur(0px); border-bottom:1px solid rgba(255,255,255,0.1); transition: all 0.5s ease; }}
-                    header.scrolled {{ background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid rgba(0,0,0,0.05); box-shadow:0 10px 30px -10px rgba(0,0,0,0.1); }}
-                    header.scrolled .logo, header.scrolled nav a {{ color:var(--black); }}
-                    header .logo, header nav a {{ color:#fff; transition: color 0.5s; }}
-                    .hero-container {{ position:relative; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; text-align:center; }}
-                    .hero-bg {{ position:absolute; top:0; left:0; width:100%; height:120%; background-image:{hero_bg_url}; background-size:cover; background-position:center; z-index:-2; will-change:transform; }}
-                    .hero-overlay {{ position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(11,20,77,0.7)); z-index:-1; }}
-                    .reveal {{ opacity:0; transform:translateY(60px); transition: 1.5s cubic-bezier(0.16, 1, 0.3, 1); }}
-                    .reveal.active {{ opacity:1; transform:translateY(0); }}
-                    .reveal-delay-1 {{ transition-delay: 0.1s; }}
-                    .reveal-delay-2 {{ transition-delay: 0.2s; }}
-                    .reveal-delay-3 {{ transition-delay: 0.3s; }}
-                    .btn-gold {{ background:var(--gold); color:#fff; padding:22px 55px; border-radius:2px; font-weight:600; letter-spacing:0.1em; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); display:inline-block; }}
-                    .btn-gold:hover {{ transform: translateY(-5px); box-shadow: 0 20px 40px rgba(215,194,154,0.4); background:#c4af86; }}
-                    .text-playfair {{ font-family: 'Playfair Display', serif; }}
-                    .mySwiper .swiper-slide {{ transition: transform 0.5s ease; opacity: 0.5; transform: scale(0.9); }}
-                    .mySwiper .swiper-slide-active {{ opacity: 1; transform: scale(1); }}
-                    .mySwiper .swiper-pagination-bullet {{ background: white !important; opacity: 0.3; }}
-                    .mySwiper .swiper-pagination-bullet-active {{ background: var(--gold) !important; opacity: 1; }}
-                    .reviewSwiper .swiper-pagination-bullet {{ background: var(--navy) !important; opacity: 0.2; width: 8px; height: 8px; }}
-                    .reviewSwiper .swiper-pagination-bullet-active {{ background: var(--gold) !important; opacity: 1; }}
-                    .hide-scrollbar::-webkit-scrollbar {{ display: none; }}
-                    .hide-scrollbar {{ -ms-overflow-style: none; scrollbar-width: none; }}
-                </style>
-                <script>{translations_js}</script>
-            </head>
-            <body class="overflow-x-hidden">
-                {lang_selector_html}
-                
-                {f'<div class="fixed top-0 w-full bg-transparent text-white text-center py-3 font-bold tracking-widest text-sm z-[150] pointer-events-none" data-i18n="ui_today">🔥 오늘의 알림 : {v["today_menu"]}</div>' if v.get("today_menu") else ""}
-                
-                {f'''
-                <div id="promoPopup" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 transition-opacity duration-300">
-                    <div class="bg-white rounded-2xl text-center shadow-2xl w-11/12 max-w-md overflow-hidden relative">
-                        <div class="bg-[var(--navy)] text-white p-6">
-                            <h2 class="text-2xl font-bold">🎉 특별 공지사항</h2>
+                    const exitItem = data.length > 1 ? data[1] : data[0];
+                    document.getElementById('exit-title').innerText = exitItem.name;
+                    document.getElementById('exit-img').src = exitItem.img;
+                    document.getElementById('exit-btn').innerText = exitItem.price + " - 혜택 확인하기 👉";
+
+                    document.getElementById('exitPopup').onclick = function() {
+                        window.open(exitItem.link, '_blank');
+                        closeExitPopup();
+                    };
+                }
+
+                const container = document.getElementById('dynamic-product-list');
+                container.innerHTML = ''; 
+
+                data.forEach(item => {
+                    container.innerHTML += `
+                        <div class="swiper-slide p-2">
+                            <a href="${item.link}" target="_blank" class="block bg-white border border-slate-200 rounded-2xl overflow-hidden hover-lift shadow-sm">
+                                <img src="${item.img}" referrerpolicy="no-referrer" class="w-full h-44 object-cover" alt="${item.name}">
+                                <div class="p-4">
+                                    <div class="text-xs font-bold text-slate-400 mb-1">최저가 보장</div>
+                                    <div class="text-sm font-bold text-slate-800 truncate mb-1">${item.name}</div>
+                                    <div class="text-blue-600 font-black">${item.price}</div>
+                                </div>
+                            </a>
                         </div>
-                        <div class="p-8">
-                            <p class="text-xl text-gray-800" data-i18n="ui_popup">{v["popup_msg"]}</p>
-                        </div>
-                        <div class="bg-gray-50 p-4 flex justify-between items-center border-t">
-                            <label class="flex items-center text-sm text-gray-600 cursor-pointer">
-                                <input type="checkbox" id="closeForDay" class="mr-2"> 오늘 하루 보지 않기
-                            </label>
-                            <button onclick="closePromoPopup()" class="font-bold text-gray-800 hover:text-[var(--gold)]">닫기</button>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                function setPopupCookie(name, value, expiredays) {{
-                    var todayDate = new Date();
-                    todayDate.setDate(todayDate.getDate() + expiredays);
-                    document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";";
-                }}
-                function getPopupCookie(name) {{
-                    var nameOfCookie = name + "=";
-                    var x = 0;
-                    while (x <= document.cookie.length) {{
-                        var y = (x + nameOfCookie.length);
-                        if (document.cookie.substring(x, y) == nameOfCookie) return unescape(document.cookie.substring(y, document.cookie.indexOf(";", y) == -1 ? document.cookie.length : document.cookie.indexOf(";", y)));
-                        x = document.cookie.indexOf(" ", x) + 1;
-                        if (x == 0) break;
-                    }}
-                    return "";
-                }}
-                function closePromoPopup() {{
-                    if (document.getElementById("closeForDay").checked) setPopupCookie("promoPopupDone", "yes", 1);
-                    document.getElementById("promoPopup").style.display = "none";
-                }}
-                window.addEventListener('DOMContentLoaded', function() {{
-                    if (getPopupCookie("promoPopupDone") === "yes") document.getElementById("promoPopup").style.display = "none";
-                }});
-                </script>
-                ''' if v.get("popup_msg") else ""}
+                    `;
+                });
 
-                <header class="h-24 flex items-center px-12 justify-between" id="navbar">
-                    <div class="logo text-2xl font-black tracking-tighter uppercase">{v['name']}</div>
-                    <nav class="hidden md:flex gap-10 font-bold text-xs uppercase tracking-[0.2em]">
-                        <a href="#about" class="hover:text-[var(--gold)]" data-i18n="nav_story">Story</a>
-                        <a href="#services" class="hover:text-[var(--gold)]" data-i18n="nav_services">Services</a>
-                        <a href="#contact" class="text-[var(--gold)]" data-i18n="nav_contact">Reservation</a>
-                    </nav>
-                </header>
+                new Swiper('.product-swiper', {
+                    slidesPerView: 1, 
+                    spaceBetween: 15,
+                    loop: true,                 
+                    speed: 3000,                
+                    autoplay: { delay: 0, disableOnInteraction: false },
+                    breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } }
+                });
+            } catch (e) { console.error("크리티컬 에러:", e); }
+        }
 
-                <section class="hero-container">
-                    <div class="hero-bg" id="hero-bg"></div>
-                    <div class="hero-overlay"></div>
-                    <div class="relative z-10 px-6 w-full max-w-5xl">
-                        <p class="reveal active text-white/70 tracking-[0.5em] text-xs mb-8 uppercase font-light">{v['category']} Collection</p>
-                        <h1 class="reveal active reveal-delay-1 mb-10 leading-tight">
-                            <span class="block text-6xl md:text-8xl font-black mb-4 text-white tracking-tighter">{v['name']}</span>
-                            <span class="block text-3xl md:text-5xl font-light text-[var(--gold)] text-playfair italic" data-i18n="head">{v['head']}</span>
-                        </h1>
-                        <p class="reveal active reveal-delay-2 text-lg md:text-xl text-white/80 mb-16 font-extralight max-w-2xl mx-auto leading-relaxed" data-i18n="sub">{v['sub']}</p>
-                        <div class="reveal active reveal-delay-3"><a href="#contact" class="btn-gold uppercase text-sm">Discover More</a></div>
-                    </div>
-                </section>
+        // 이탈 방지 (Exit-Intent) 팝업 로직
+        let exitPopupShown = false; 
 
-                {f'''<section id="about" class="py-40 px-10 text-center relative" style="background:var(--bg-main)">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-zinc-200"></div>
-                    <div class="container mx-auto max-w-4xl reveal mt-12">
-                        <h2 class="text-xs font-bold mb-10 uppercase tracking-[0.4em] text-zinc-400" data-i18n="id_title">{v['identity_title']}</h2>
-                        <p class="text-3xl md:text-5xl font-light text-[var(--navy)] leading-snug mb-16 break-keep" data-i18n="ui_story_h">
-                            <span class="font-bold">당연했던 기준</span>을 넘어,<br> 당신만의 <span class="text-[var(--gold)] font-bold text-playfair italic">Premium</span>을 완성합니다.
-                        </p>
-                        <p class="text-lg md:text-xl font-extralight leading-loose text-zinc-500 break-keep" data-i18n="intro">{v['intro_txt']}</p>
-                    </div>
-                </section>''' if self.block_vars["story"].get() else ""}
+        document.addEventListener("mouseleave", function(e) {
+            if (e.clientY <= 0 && !exitPopupShown) {
+                if (document.getElementById("coupangPopup").style.display === "none") {
+                    document.getElementById("exitPopup").style.display = "flex";
+                    exitPopupShown = true; 
+                }
+            }
+        });
 
-                {f'''<section id="services" class="py-1">
-                    <div class="w-full">
-                        <div class="grid md:grid-cols-3 gap-0">{p_html}</div>
-                    </div>
-                </section>''' if self.block_vars["services"].get() else ""}
+        function closeExitPopup() {
+            document.getElementById("exitPopup").style.display = "none";
+        }
 
-                {slider_section if self.block_vars["gallery"].get() else ""}
-                {video_html if self.block_vars["media"].get() else ""}
-                
-                {f'''<section id="instagram" class="py-32 px-10" style="background:var(--bg-main)">
-                    <div class="max-w-5xl mx-auto">
-                        <div class="text-center mb-16 reveal">
-                            <h2 class="text-xs font-bold mb-4 uppercase tracking-[0.4em] text-[var(--gold)]">Social Feed</h2>
-                            <h3 class="text-3xl md:text-5xl font-light text-[var(--navy)]">인스타그램 갤러리</h3>
-                        </div>
-                        <div class="reveal reveal-delay-1 overflow-x-auto hide-scrollbar rounded-2xl w-full flex justify-center mx-auto" style="-webkit-overflow-scrolling: touch;">
-                            {v['insta_code']}
-                        </div>
-                    </div>
-                </section>''' if self.block_vars["instagram"].get() and v.get("insta_code") else ""}
+        // 실시간 소셜 푸루프(Social Proof) 토스트 알림 37개 확장
+        const toastMessages = [
+            "방금 전 제주시 연동 식당에서 감자빌더 PRO를 문의하셨습니다.",
+            "어제 마케팅 컨설팅 예약이 3건 완료되었습니다.",
+            "제주 파인다이닝 '화란'에서 웹사이트 구축을 완료했습니다.",
+            "방금 전 '매콤갈치명태촌'에서 테이블 오더 구축을 신청했습니다.",
+            "오토컴퍼니 전기차 랜딩페이지가 성공적으로 배포되었습니다.",
+            "신규 기업 네트워크 및 보안 점검이 접수되었습니다.",
+            "제주 노형동 뷰티샵에서 감자빌더 BASIC을 결제하셨습니다.",
+            "제주시 애월읍 카페에서 감자빌더 PRO 솔루션을 도입했습니다.",
+            "서귀포시 펜션에서 감자빌더 다국어 웹사이트 제작을 문의하셨습니다.",
+            "방금 전 서울 강남구 피트니스 센터에서 감자빌더 ULTRA를 결제하셨습니다.",
+            "감자빌더를 통한 신규 랜딩페이지 배포가 5건 완료되었습니다.",
+            "제주 구좌읍 베이커리에서 AI 카피라이팅 기능 사용을 시작했습니다.",
+            "감자빌더 BASIC 구독자가 오늘 12명 돌파했습니다.",
+            "서귀포 요가 스튜디오에서 프리미엄 웹사이트 시안을 요청하셨습니다.",
+            "방금 전 감자빌더 실물 패키지(USB+매뉴얼) 3세트가 발송되었습니다.",
+            "제주시청 인근 흑돼지 전문점에서 네이버 플레이스 상위노출 컨설팅을 시작했습니다.",
+            "어제 진행한 마케팅 컨설팅으로 OOO업체의 문의량이 200% 증가했습니다.",
+            "제주 인플루언서 마케팅 패키지 당월 TO가 2자리 남았습니다.",
+            "방금 전 서귀포 횟집에서 인스타그램 숏폼 제작 대행을 문의하셨습니다.",
+            "제주 연동 네일샵에서 당근마켓 단골 모으기 캠페인을 세팅했습니다.",
+            "매출 퀀텀점프 컨설팅 신규 예약이 접수되었습니다.",
+            "제주 첨단과학기술단지 입주 기업에서 사내 네트워크 보안 점검을 요청하셨습니다.",
+            "방금 전 제주 시내 대형 병원에서 기업인터넷 및 랜공사 견적을 받아보셨습니다.",
+            "서귀포 신축 호텔에서 전 객실 무선 AP 구축 계약을 체결했습니다.",
+            "방금 전 매장용 고화질 CCTV 4채널 설치가 완료되었습니다.",
+            "제주시 대형 마트에서 포스(POS) 시스템 정기 유지보수를 갱신하셨습니다.",
+            "랜섬웨어 대비 사내 데이터 백업 시스템 구축이 완료되었습니다.",
+            "제주 한림읍 해물탕집에서 KT 하이오더 15대 설치를 완료했습니다.",
+            "방금 전 서귀포 흑돼지 전문점에서 테이블 오더 시스템 도입 문의를 남기셨습니다.",
+            "도두동 이자카야에서 테이블 오더 메뉴판 세팅을 요청하셨습니다.",
+            "하이오더 도입 후 인건비 절감 사례가 신규 업데이트 되었습니다.",
+            "제주 도내 부동산 중개업소에서 B2B 영업 제안 자동화 시스템을 도입하셨습니다.",
+            "방금 전 서울 마케팅 대리점에서 감자빌더 파트너(총판) 문의를 주셨습니다.",
+            "맞춤형 고객 데이터 크롤링 봇 개발이 성공적으로 납품되었습니다.",
+            "제주 렌터카 업체에서 예약 관리 자동화 솔루션 개발을 의뢰하셨습니다.",
+            "방금 전 B2B 영업 제안서 자동 생성 세팅이 완료되었습니다.",
+            "이번 달 감자네트워크 VIP 컨설팅 잔여 TO가 1자리 남았습니다."
+        ];
 
-                {review_section if self.block_vars["review"].get() else ""}
-
-                {f'''<section id="faq" class="py-32 px-10" style="background:var(--bg-main)">
-                    <div class="max-w-4xl mx-auto">
-                        <h2 class="text-xs font-bold mb-4 uppercase tracking-[0.4em] text-[var(--gold)] text-center reveal">FAQ</h2>
-                        <h3 class="text-3xl md:text-5xl font-light text-[var(--navy)] text-center mb-20 reveal" data-i18n="ui_faq_h">자주 묻는 질문</h3>
-                        <div class="space-y-8">
-                            {faq_html}
-                        </div>
-                    </div>
-                </section>''' if self.block_vars["faq"].get() else ""}
-
-                {f'''<section id="location" class="py-32 px-10 relative" style="background:var(--bg-main)">
-                    <div class="max-w-5xl mx-auto reveal text-center">
-                        <h2 class="text-xs font-bold mb-4 uppercase tracking-[0.4em] text-[var(--gold)]">Location</h2>
-                        <h3 class="text-3xl md:text-5xl font-light text-[var(--navy)] mb-12" data-i18n="ui_loc_h">오시는 길</h3>
-                        <div class="bg-black/5 p-10 md:p-16 rounded-2xl mb-10">
-                            <p class="text-2xl font-bold text-[var(--navy)] mb-4">{v['loc']}</p>
-                            <p class="text-zinc-500 mb-8 text-lg" data-i18n="ui_loc_p">대표번호 : {v['phone']}</p>
-                            <a href="{v['map_url']}" target="_blank" class="inline-block bg-[var(--navy)] text-white font-bold py-4 px-10 rounded-full hover:bg-[var(--gold)] hover:text-white transition-colors duration-300" data-i18n="ui_map_btn">🗺️ 지도 앱으로 길찾기</a>
-                        </div>
-                    </div>
-                </section>''' if self.block_vars["location"].get() else ""}
-
-                {f'''<section id="contact" class="py-40 px-10" style="background:var(--navy); color:#fff;">
-                    <div class="max-w-4xl mx-auto">
-                        <div class="text-center mb-24 reveal">
-                            <h2 class="text-5xl md:text-7xl font-light text-playfair italic mb-6">Reservation</h2>
-                            <div class="w-12 h-px bg-[var(--gold)] mx-auto mb-6"></div>
-                            <p class="text-white/50 font-extralight text-lg tracking-wide" data-i18n="ops">{v['ops_txt']}</p>
-                        </div>
-                        <form action="http://gjnetwork.kr/api/leads/submit" method="POST" class="space-y-16 reveal reveal-delay-1">
-                            <input type="hidden" name="license_key" value="{self.license_key}"><input type="hidden" name="target_chat_id" value="{v['target_id']}">
-                            <div class="group border-b border-white/20 pb-4 focus-within:border-[var(--gold)] transition-colors duration-500 relative">
-                                <label class="block text-white/40 text-xs mb-2 uppercase tracking-[0.2em] transition-colors group-focus-within:text-[var(--gold)]">Name</label>
-                                <input type="text" name="name" class="w-full bg-transparent outline-none text-2xl font-light text-white placeholder-white/10" placeholder="성함을 남겨주세요" data-i18n="ui_ph_name" required>
-                            </div>
-                            <div class="group border-b border-white/20 pb-4 focus-within:border-[var(--gold)] transition-colors duration-500 relative">
-                                <label class="block text-white/40 text-xs mb-2 uppercase tracking-[0.2em] transition-colors group-focus-within:text-[var(--gold)]">Contact</label>
-                                <input type="tel" name="phone" class="w-full bg-transparent outline-none text-2xl font-light text-white placeholder-white/10" placeholder="연락처를 남겨주세요" data-i18n="ui_ph_phone" required>
-                            </div>
-                            <div class="group border-b border-white/20 pb-4 focus-within:border-[var(--gold)] transition-colors duration-500 relative">
-                                <label class="block text-white/40 text-xs mb-2 uppercase tracking-[0.2em] transition-colors group-focus-within:text-[var(--gold)]">Message</label>
-                                <textarea name="message" rows="3" class="w-full bg-transparent outline-none text-xl font-light text-white placeholder-white/10 resize-none" placeholder="문의하실 내용을 간단히 적어주세요 (선택)" data-i18n="ui_ph_msg"></textarea>
-                            </div>
-                            <button class="w-full py-6 mt-8 bg-[var(--gold)] text-white hover:bg-white hover:text-[var(--navy)] font-bold text-lg tracking-widest uppercase transition-all duration-500" data-i18n="ui_form_btn">Submit Request</button>
-                        </form>
-                    </div>
-                </section>''' if self.block_vars["contact"].get() else ""}
-
-                <footer class="py-20 text-center border-t border-black/5" style="background:var(--bg-main)">
-                    <div class="text-[var(--navy)] font-black text-2xl mb-6 tracking-tighter">{v['name']}</div>
-                    <div class="mt-8 text-zinc-400 text-[10px] uppercase tracking-[0.2em]">© 2026 Crafted by GamjaBuilder V8.0</div>
-                </footer>
-                
-                <div id="service-modal" class="fixed inset-0 z-[200] hidden bg-black/80 flex justify-center overflow-y-auto opacity-0 transition-opacity duration-300">
-                    <div class="fixed inset-0 cursor-pointer" onclick="closeServiceModal()"></div>
-                    <div class="relative w-full max-w-[860px] bg-white min-h-screen my-0 md:my-10 shadow-2xl z-10 transition-transform duration-300 transform translate-y-10">
-                        <button onclick="closeServiceModal()" class="sticky top-4 float-right mr-4 z-20 bg-[var(--navy)] hover:bg-[var(--gold)] text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                        <div id="modal-dynamic-content" class="w-full pb-20"></div>
-                    </div>
-                </div>
-
-                {f'''
-                <a href="http://pf.kakao.com/{v['kakao_id']}/chat" target="_blank" class="fixed bottom-[100px] right-6 z-[9999] hover:scale-110 transition-transform duration-300">
-                    <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 상담" class="w-14 h-14 rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.2)]">
-                </a>
-                ''' if v.get("kakao_id") else ""}
-
-                {f'''
-                <a href="{v['naver_booking']}" target="_blank" class="fixed bottom-6 right-6 z-[9999] flex items-center bg-[#03C75A] text-white rounded-lg px-5 py-3 shadow-[0_10px_20px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-300">
-                    <span class="font-black text-xl mr-2">N</span>
-                    <span class="font-bold">네이버 예약</span>
-                </a>
-                ''' if v.get("naver_booking") else ""}
-                
-                <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-                <script>
-                    // 🛡️ [불펌 방지 로직] 우클릭 및 개발자 도구 차단
-                    document.addEventListener('contextmenu', event => event.preventDefault()); // 우클릭 방지
-                    document.addEventListener('keydown', function(event) {{
-                        // F12 방지
-                        if (event.keyCode == 123) {{ event.preventDefault(); }}
-                        // Ctrl+Shift+I (개발자 도구) 방지
-                        if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {{ event.preventDefault(); }}
-                        // Ctrl+U (소스 보기) 방지
-                        if (event.ctrlKey && event.keyCode == 85) {{ event.preventDefault(); }}
-                    }});
-
-                    const obs = new IntersectionObserver((es) => es.forEach(e => {{ if(e.isIntersecting) e.target.classList.add('active'); }}), {{threshold: 0.1}}); 
-                    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-                    window.addEventListener('scroll', () => {{
-                        const scrolled = window.pageYOffset;
-                        const heroBg = document.getElementById('hero-bg');
-                        const navbar = document.getElementById('navbar');
-                        if(heroBg) heroBg.style.transform = `translateY(${{scrolled * 0.4}}px)`;
-                        if(scrolled > 50) navbar.classList.add('scrolled');
-                        else navbar.classList.remove('scrolled');
-                    }});
-                    
-                    var swiper = new Swiper(".mySwiper", {{ slidesPerView: "auto", centeredSlides: true, spaceBetween: 30, loop: true, autoplay: {{ delay: 2500, disableOnInteraction: false }}, pagination: {{ el: ".swiper-pagination", clickable: true }} }});
-                    var reviewSwiper = new Swiper(".reviewSwiper", {{ slidesPerView: 1, spaceBetween: 20, loop: true, autoplay: {{ delay: 4000, disableOnInteraction: false }}, pagination: {{ el: ".swiper-pagination-review", clickable: true }}, breakpoints: {{ 768: {{ slidesPerView: 2, spaceBetween: 30 }}, 1024: {{ slidesPerView: 3, spaceBetween: 30 }} }} }});
-                    
-                    function openServiceModal(imgSrc) {{
-                        const modal = document.getElementById('service-modal');
-                        const content = document.getElementById('modal-dynamic-content');
-                        content.innerHTML = `<img src="${{imgSrc}}" class="w-full block">`;
-                        modal.classList.remove('hidden');
-                        setTimeout(() => {{
-                            modal.classList.remove('opacity-0');
-                            modal.querySelector('.relative').classList.remove('translate-y-10');
-                        }}, 10);
-                        document.body.style.overflow = 'hidden';
-                    }}
-                    function closeServiceModal() {{
-                        const modal = document.getElementById('service-modal');
-                        modal.classList.add('opacity-0');
-                        modal.querySelector('.relative').classList.add('translate-y-10');
-                        setTimeout(() => {{
-                            modal.classList.add('hidden');
-                            document.getElementById('modal-dynamic-content').innerHTML = '';
-                            document.body.style.overflow = 'auto';
-                        }}, 300);
-                    }}
-                </script>
-                {wysiwyg_script}
-            </body>
-            </html>
-            """
+        function showSocialToast() {
+            const toast = document.getElementById('social-toast');
+            const msgEl = document.getElementById('toast-msg');
+            const timeEl = document.getElementById('toast-time');
             
-            if is_preview:
-                b64_html = base64.b64encode(html_template.encode('utf-8')).decode('utf-8')
-                html_template = f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Preview</title><script>window.onload=function(){{var encoded="{b64_html}";var decoded=decodeURIComponent(escape(window.atob(encoded)));document.open();document.write(decoded);document.close();}};</script></head><body></body></html>"""
-                save_path = os.path.join(os.environ.get("TEMP", os.getcwd()), "preview.html")
-                with open(save_path, "w", encoding="utf-8") as f: f.write(html_template)
-                webbrowser.open(f"file:///{os.path.abspath(save_path).replace('\\', '/')}")
-            else:
-                deploy_url = f"{self.server_url}/api/deploy"
-                req_data = urllib.parse.urlencode({"license_key": self.license_key, "safe_name": urllib.parse.quote(v['name']), "html_content": html_template}).encode("utf-8")
-                req = urllib.request.Request(deploy_url, data=req_data)
-                with urllib.request.urlopen(req) as response:
-                    res_json = json.loads(response.read().decode('utf-8'))
-                    if res_json.get("success"):
-                        deploy_url_str = res_json.get("url")
-                        
-                        qr_path = self.generate_offline_qr(deploy_url_str, v['name'], self.qr_icon_path.get())
-                        
-                        msg = "🎉 성공적으로 서버에 등록되었습니다!\n"
-                        if qr_path:
-                            msg += f"\n✅ 매장용 QR코드 저장 위치:\n{qr_path}"
-                            
-                        webbrowser.open(deploy_url_str)
-                        messagebox.showinfo("배포 완료!", msg)
+            const randomMsg = toastMessages[Math.floor(Math.random() * toastMessages.length)];
+            const times = ["방금 전", "1분 전", "2분 전", "3분 전", "5분 전"];
+            const randomTime = times[Math.floor(Math.random() * times.length)];
 
-        except Exception as e:
-            messagebox.showerror("오류", f"작업 중 문제가 발생했습니다: {str(e)}")
+            msgEl.innerText = randomMsg;
+            timeEl.innerText = randomTime;
 
-if __name__ == "__main__":
-    root = tk.Tk(); root.withdraw()
-    data = ensure_valid_license(root)
-    if data: root.deiconify(); app = GamjaSaaSMasterV7(root, data); root.mainloop()
+            toast.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 5000); 
+
+            const nextTime = Math.floor(Math.random() * 13000) + 12000;
+            setTimeout(showSocialToast, nextTime);
+        }
+
+        setTimeout(showSocialToast, 4000);
+    </script>
+</body>
+</html>
