@@ -17,14 +17,14 @@
             word-break: keep-all;
             background: #f8fafc;
             
-            /* 🛡️ 1차 방어막: 마우스 드래그 및 텍스트 선택 차단 */
+            /* 🛡️ 1차 방어막: 마우스 드래그 및 텍스트 선택 완벽 차단 */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
         
-        /* 입력창은 선택 허용 */
+        /* 단, 입력창(Input, Textarea)은 글을 써야 하므로 선택 허용 */
         input, textarea {
             -webkit-user-select: auto;
             -moz-user-select: auto;
@@ -62,15 +62,18 @@
         .swiper-button-next, .swiper-button-prev { color: #0284c7 !important; }
         .product-swiper .swiper-wrapper { transition-timing-function: linear !important; }
         
+        /* 비즈니스 영역 슬라이더 페이지네이션 커스텀 */
         .businessSwiper { padding-bottom: 50px !important; padding-top: 10px !important; }
         .businessSwiper .swiper-pagination-bullet { background: #cbd5e1; opacity: 0.5; width: 8px; height: 8px; transition: all 0.3s ease; }
         .businessSwiper .swiper-pagination-bullet-active { background: #0ea5e9; opacity: 1; width: 24px; border-radius: 4px; }
         
+        /* 팝업 등장 애니메이션 */
         @keyframes popDropIn {
             0% { transform: translateY(-30px) scale(0.95); opacity: 0; }
             100% { transform: translateY(0) scale(1); opacity: 1; }
         }
 
+        /* 무한 롤링 포트폴리오 띠배너 애니메이션 */
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -78,6 +81,7 @@
         .animate-marquee { display: flex; width: max-content; animation: marquee 35s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
 
+        /* 1분 시뮬레이터 로딩바 애니메이션 */
         @keyframes loadingBar {
             0% { width: 0%; }
             100% { width: 100%; }
@@ -127,6 +131,7 @@
                 매장 운영을 돕는 인프라 구축부터, 단 1분 만에 완성되는 하이엔드 AI 웹사이트 솔루션까지.<br>성공적인 비즈니스를 향한 가장 확실한 파트너가 되어 드립니다.
             </p>
 
+            <!-- 감자빌더 1분 시뮬레이터 (모바일 짤림 해결 완료버전) -->
             <div class="w-full max-w-2xl mx-auto mb-10 relative z-20 px-2 sm:px-0">
                 <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-0 bg-transparent sm:bg-white sm:rounded-full sm:p-2 sm:pl-6 sm:shadow-[0_10px_40px_rgba(37,99,235,0.4)] sm:border border-blue-400">
                     <input type="text" id="sim-business-name" class="w-full sm:flex-grow bg-white sm:bg-transparent text-slate-800 text-base sm:text-lg outline-none placeholder-slate-400 font-medium rounded-full sm:rounded-none px-6 py-4 sm:py-0 border border-blue-400 sm:border-none shadow-lg sm:shadow-none" placeholder="상호명 입력 (예: 감자네트워크)" onkeypress="if(event.keyCode==13) startSimulation()">
@@ -148,7 +153,7 @@
         </div>
     </section>
 
-    <!-- 핵심 사업 영역 -->
+    <!-- 핵심 사업 영역 파스텔톤 슬라이더 -->
     <section id="local-business" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
@@ -159,7 +164,7 @@
             
             <div class="swiper businessSwiper px-2">
                 <div class="swiper-wrapper items-stretch">
-                    <!-- 서비스 슬라이드들 (동일 유지) -->
+                    
                     <div class="swiper-slide h-auto">
                         <div class="bg-orange-50/60 border border-orange-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(251,146,60,0.05)]">
                             <div class="service-icon bg-gradient-to-br from-orange-100 to-orange-50 text-orange-500">🍽️</div>
@@ -172,7 +177,7 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- ... 중략 (기타 슬라이드 동일 유지) ... -->
+
                     <div class="swiper-slide h-auto">
                         <div class="bg-emerald-50/60 border border-emerald-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(52,211,153,0.05)]">
                             <div class="service-icon bg-gradient-to-br from-emerald-100 to-emerald-50 text-emerald-500">📍</div>
@@ -185,6 +190,20 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-pink-50/60 border border-pink-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(244,114,182,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-pink-100 to-pink-50 text-pink-500">🎬</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">SNS·숏폼 마케팅</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">짧고 강렬한 트렌디 콘텐츠로 폭발적인 관심을 만들고 브랜드 유입을 극대화합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 유튜브 쇼츠 기획 및 스크립트</li>
+                                <li>✔ 인스타그램 프리미엄 피드 운영</li>
+                                <li>✔ 즉각적 상담 연결형 콘텐츠</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="swiper-slide h-auto">
                         <div class="bg-sky-50/60 border border-sky-200 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(56,189,248,0.08)] relative overflow-hidden">
                             <div class="absolute top-0 right-0 bg-sky-200 text-sky-800 text-xs font-bold px-3 py-1 rounded-bl-xl">NEW</div>
@@ -198,6 +217,20 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-teal-50/60 border border-teal-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(45,212,191,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-teal-100 to-teal-50 text-teal-500">📈</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">매출 퀀텀점프 컨설팅</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">단순한 노출을 넘어 실제 유입과 매장 운영의 병목을 진단하는 실전형 컨설팅입니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 리뷰·노출·예약 전환율 점검</li>
+                                <li>✔ 상권 데이터 기반 전략 설계</li>
+                                <li>✔ 즉시 적용 가능한 실행 제안</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="swiper-slide h-auto">
                         <div class="bg-indigo-50/60 border border-indigo-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(99,102,241,0.05)]">
                             <div class="service-icon bg-gradient-to-br from-indigo-100 to-indigo-50 text-indigo-500">🛡️</div>
@@ -205,17 +238,56 @@
                             <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">끊김 없는 안정적인 매장 운영을 위해 최고 수준의 인프라를 설계합니다.</p>
                             <ul class="space-y-2 text-sm text-slate-700 font-medium">
                                 <li>✔ 대규모 네트워크 점검 및 설계</li>
-                                <li>✔ 기업인터넷 관리 및 랜공사</li>
+                                <li>✔ 전용 기업인터넷 관리 및 랜공사</li>
                                 <li>✔ 통합 방범 및 CCTV 구축</li>
                             </ul>
                         </div>
                     </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-violet-50/60 border border-violet-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(139,92,246,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-violet-100 to-violet-50 text-violet-500">⚙️</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">B2B 영업 자동화</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">에너지가 소모되는 제안과 상담 과정을 시스템화하여 빠르고 세련되게 처리합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 웹(HTML) 기반 제안서 생성</li>
+                                <li>✔ 원클릭 이메일·메신저 발송</li>
+                                <li>✔ 상담 및 리드 수집 극대화</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-amber-50/60 border border-amber-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(245,158,11,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-amber-100 to-amber-50 text-amber-500">🔧</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">PC·키폰 유지보수</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">오랜 노하우로 매장 내 모든 전자기기와 IT 환경이 중단 없이 돌아가도록 완벽 관리합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 하드웨어 장애 긴급 조치</li>
+                                <li>✔ 메인 PC·키폰 시스템 점검</li>
+                                <li>✔ 중요 데이터 백업 및 복구</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-rose-50/60 border border-rose-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(244,63,94,0.05)]">
+                            <div class="service-icon bg-gradient-to-br from-rose-100 to-rose-50 text-rose-500">💡</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">AI 맞춤 솔루션 개발</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">단순 업무를 자동화하고 수익 창출 파이프라인을 만들어줄 전용 소프트웨어를 기획·개발합니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 데이터 수집 크롤링 봇 제작</li>
+                                <li>✔ 강력한 라이선스 서버 구축</li>
+                                <li>✔ 비즈니스 맞춤형 SaaS 기획</li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="swiper-pagination-business mt-10 flex justify-center gap-2"></div>
             </div>
         </div>
         
-        <!-- 하단 띠배너 영역 (문구 강조 수정) -->
         <div class="max-w-7xl mx-auto px-6 mt-16 pt-16 border-t border-slate-100">
             <div class="flex flex-col lg:flex-row items-center justify-between mb-8 gap-6">
                 <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2 shrink-0">
@@ -231,120 +303,249 @@
                     <div class="swiper-slide p-12 text-center text-slate-400 font-bold">비즈니스 추천 상품을 연동 중입니다...</div>
                 </div>
             </div>
-            <!-- ✅ [수정] 띠배너 대가성 문구 식별성 강화 (폰트 굵게 및 검은색) -->
-            <p class="text-[11px] md:text-xs text-slate-900 font-bold text-center mt-4">
-                ※ 광고: 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+            
+            <!-- [가이드라인 준수 수정] 하단 띠배너 수수료 문구 강조 및 확정적 표현 적용 -->
+            <p class="text-[11px] md:text-xs text-slate-800 font-bold text-center mt-4">
+                <span class="text-red-600 font-black">[광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
             </p>
         </div>
     </section>
 
-    <!-- 포트폴리오 마키 슬라이드 -->
     <section class="py-12 bg-white border-y border-slate-200 overflow-hidden relative">
         <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
         <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-        <div class="text-center mb-8"><h3 class="text-xl md:text-2xl font-black text-slate-800">이미 수많은 비즈니스가 증명하고 있습니다</h3></div>
+        
+        <div class="text-center mb-8">
+            <h3 class="text-xl md:text-2xl font-black text-slate-800">이미 수많은 비즈니스가 감자네트워크의 솔루션으로 증명하고 있습니다</h3>
+        </div>
+        
         <div class="flex overflow-hidden">
             <div class="animate-marquee gap-6 px-3 items-center">
-                <!-- 포트폴리오 아이템 (반복) -->
+                <!-- 세트 1 -->
                 <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
                     <img src="https://images.unsplash.com/photo-1414235008690-f14afe05092a?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="화란">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     <div class="absolute bottom-4 left-4 right-4">
                         <div class="text-xs text-blue-300 font-bold mb-1">파인다이닝 웹 구축</div>
-                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'</div>
+                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'<br>럭셔리 브랜드 세팅</div>
                     </div>
                 </div>
-                <!-- ... 추가 포트폴리오 생략 (동일 구조) ... -->
                 <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
                     <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="명태촌">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-orange-300 font-bold mb-1">테이블 오더</div>
-                        <div class="text-white font-bold text-lg leading-tight">매콤갈치명태촌 자동화</div>
+                        <div class="text-xs text-orange-300 font-bold mb-1">테이블 오더 시스템</div>
+                        <div class="text-white font-bold text-lg leading-tight">'매콤갈치명태촌'<br>매장 자동화 인프라 도입</div>
                     </div>
                 </div>
-                <!-- 무한 롤링을 위한 복제본들 -->
-                 <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="전기차">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-emerald-300 font-bold mb-1">고급형 랜딩페이지</div>
+                        <div class="text-white font-bold text-lg leading-tight">Auto Company<br>전기차 모델 풀페이지</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefce4ffc?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="뷰티">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-pink-300 font-bold mb-1">프리미엄 마케팅</div>
+                        <div class="text-white font-bold text-lg leading-tight">지역 에스테틱 샵<br>포털 리뷰 및 로컬 점령</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="기업통신">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-indigo-300 font-bold mb-1">보안 네트워크 인프라</div>
+                        <div class="text-white font-bold text-lg leading-tight">대형 복합 비즈니스<br>기업인터넷 및 랜공사</div>
+                    </div>
+                </div>
+
+                <!-- 세트 2 (무한 롤링) -->
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
                     <img src="https://images.unsplash.com/photo-1414235008690-f14afe05092a?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="화란">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     <div class="absolute bottom-4 left-4 right-4">
                         <div class="text-xs text-blue-300 font-bold mb-1">파인다이닝 웹 구축</div>
-                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'</div>
+                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'<br>럭셔리 브랜드 세팅</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="명태촌">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-orange-300 font-bold mb-1">테이블 오더 시스템</div>
+                        <div class="text-white font-bold text-lg leading-tight">'매콤갈치명태촌'<br>매장 자동화 인프라 도입</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="전기차">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-emerald-300 font-bold mb-1">고급형 랜딩페이지</div>
+                        <div class="text-white font-bold text-lg leading-tight">Auto Company<br>전기차 모델 풀페이지</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefce4ffc?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="뷰티">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-pink-300 font-bold mb-1">프리미엄 마케팅</div>
+                        <div class="text-white font-bold text-lg leading-tight">지역 에스테틱 샵<br>포털 리뷰 및 로컬 점령</div>
+                    </div>
+                </div>
+                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="기업통신">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-indigo-300 font-bold mb-1">보안 네트워크 인프라</div>
+                        <div class="text-white font-bold text-lg leading-tight">대형 복합 비즈니스<br>기업인터넷 및 랜공사</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 감자빌더 섹션 -->
     <section id="gamjabuilder" class="py-24 bg-[#0f172a] text-white border-t border-white/10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <div class="inline-block py-1 px-3 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-sm font-bold mb-4">GamjaBuilder V8.0 Premium Studio</div>
+                <div class="inline-block py-1 px-3 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-sm font-bold mb-4">
+                    GamjaBuilder V8.0 Premium Studio
+                </div>
                 <h2 class="text-3xl md:text-5xl font-extrabold mb-6">웹에이전시가 필요 없는 혁신</h2>
-                <p class="text-slate-400 text-lg max-w-2xl mx-auto">업체명과 업종만 입력하세요. 제미나이(Gemini) AI가 전문 카피라이터 수준의 텍스트와 완벽한 반응형 웹사이트를 완성합니다.</p>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">업체명과 업종만 입력하세요. 제미나이(Gemini) AI가 전문 카피라이터 수준의 텍스트와 완벽한 반응형 럭셔리 웹사이트를 1분 만에 완성해 냅니다.</p>
             </div>
             <div class="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] border border-white/10 glass-card-dark p-2 md:p-3 mb-20">
                 <div class="aspect-video rounded-xl overflow-hidden bg-black relative">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sdXP62CD6FA?autoplay=1&mute=1&loop=1&playlist=sdXP62CD6FA" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sdXP62CD6FA?autoplay=1&mute=1&loop=1&playlist=sdXP62CD6FA" title="GamjaBuilder Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
                     <div class="text-4xl mb-6">✨</div>
-                    <h3 class="text-xl font-bold mb-4">AI 수석 카피라이터</h3>
-                    <p class="text-slate-400 leading-relaxed">디자인부터 텍스트, 다국어 번역까지 AI가 브랜드의 품격을 올려줍니다.</p>
+                    <h3 class="text-xl font-bold mb-4">AI 수석 카피라이터 내장</h3>
+                    <p class="text-slate-400 leading-relaxed">디자인부터 텍스트, 다국어 번역, 스마트폰 리뷰 응대까지. 자체 내장된 AI 엔진이 브랜드의 품격을 올려줍니다.</p>
                 </div>
                 <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
                     <div class="text-4xl mb-6">📱</div>
-                    <h3 class="text-xl font-bold mb-4">텔레그램 리드 연동</h3>
-                    <p class="text-slate-400 leading-relaxed">고객 문의 즉시 사장님의 스마트폰으로 알림이 전송되어 기회를 놓치지 않습니다.</p>
+                    <h3 class="text-xl font-bold mb-4">실시간 텔레그램 리드 연동</h3>
+                    <p class="text-slate-400 leading-relaxed">웹사이트에서 고객이 문의를 남기는 즉시, 사장님의 스마트폰으로 다이렉트 알림이 전송되어 기회를 놓치지 않습니다.</p>
                 </div>
                 <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
                     <div class="text-4xl mb-6">🛡️</div>
-                    <h3 class="text-xl font-bold mb-4">중앙 제어 시스템</h3>
-                    <p class="text-slate-400 leading-relaxed">대리점별 생성 횟수 및 만료일 설정을 완벽하게 통제합니다.</p>
+                    <h3 class="text-xl font-bold mb-4">철저한 중앙 라이선스 제어</h3>
+                    <p class="text-slate-400 leading-relaxed">대리점별 생성 횟수 제한, 만료일 설정, 배포 관리 등을 감자네트워크 본사 시스템을 통해 완벽하게 통제합니다.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 요금제 -->
-    <section id="pricing" class="py-24 bg-slate-900 text-white">
-        <div class="max-w-7xl mx-auto px-6 text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold mb-4">감자빌더 파트너 요금제</h2>
-            <p class="text-slate-400">비즈니스 규모에 맞는 라이선스를 선택하세요.</p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto px-6">
-            <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-slate-500 flex flex-col">
-                <h3 class="text-2xl font-bold mb-2">BASIC</h3>
-                <div class="text-4xl font-bold mb-8">₩250,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
-                <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
-                    <li>✔️ 월 20회 생성</li>
-                    <li>✔️ Gemini AI 지원</li>
-                </ul>
+    <section id="pricing" class="py-24 bg-slate-900 text-white border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">감자빌더 파트너 요금제</h2>
+                <p class="text-slate-400">비즈니스 규모에 맞는 라이선스를 선택하고, 프리미엄의 가치를 고객에게 직접 제안하세요.</p>
             </div>
-            <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-blue-500 transform md:-translate-y-4 bg-blue-900/10 flex flex-col">
-                <h3 class="text-2xl font-bold mb-2 text-blue-400">PRO</h3>
-                <div class="text-4xl font-bold mb-8">₩450,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
-                <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
-                    <li>✔️ 월 50회 생성</li>
-                    <li>✔️ 실물 패키지 배송</li>
-                </ul>
-            </div>
-            <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-purple-500 flex flex-col">
-                <h3 class="text-2xl font-bold mb-2">ULTRA</h3>
-                <div class="text-4xl font-bold mb-8">별도 문의</div>
-                <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
-                    <li>✔️ 무제한 라이선스</li>
-                    <li>✔️ 독립 서버 세팅</li>
-                </ul>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-slate-500 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">BASIC</h3>
+                    <p class="text-slate-400 mb-6">영세 1인 대리점용</p>
+                    <div class="text-4xl font-bold mb-8">₩250,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
+                        <li>✔️ <span class="text-white font-bold">월 20회</span> 생성 한도</li>
+                        <li>✔️ Gemini AI 카피라이팅 지원</li>
+                        <li>✔️ 실시간 텔레그램 연동</li>
+                    </ul>
+                </div>
+                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-blue-500 transform md:-translate-y-4 shadow-2xl shadow-blue-500/20 relative bg-blue-900/10 flex flex-col">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold">BEST PARTNER</div>
+                    <h3 class="text-2xl font-bold mb-2">PRO</h3>
+                    <p class="text-slate-400 mb-6">일반 마케팅 에이전시</p>
+                    <div class="text-4xl font-bold mb-8 text-blue-400">₩450,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
+                        <li>✔️ <span class="text-blue-400 font-bold">월 50회</span> 생성 한도</li>
+                        <li>✔️ <span class="text-blue-400 font-bold">감자빌더 실물 패키지</span> (USB+매뉴얼) 배송</li>
+                        <li>✔️ 본사 핫라인 기술 집중 지원</li>
+                    </ul>
+                </div>
+                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-purple-500 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">ULTRA</h3>
+                    <p class="text-slate-400 mb-6">기업형 총판 및 프랜차이즈</p>
+                    <div class="text-4xl font-bold mb-8">별도 문의</div>
+                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
+                        <li>✔️ <span class="text-purple-400 font-bold">무제한</span> 생성 라이선스</li>
+                        <li>✔️ VVIP 전용 프리미엄 패키지 세트</li>
+                        <li>✔️ 마스터 관리자 커스텀 앱 제공</li>
+                        <li>✔️ 독립 서버 통합 세팅 지원</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 하단 푸터 -->
+    <section id="contact" class="py-24 px-6 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            
+            <div>
+                <div class="text-sm font-extrabold tracking-widest text-blue-600 mb-3">CONTACT US</div>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-6">
+                    솔루션 도입부터 인프라 구축까지<br>지금 바로 상의하세요.
+                </h2>
+                <p class="text-slate-600 text-lg mb-10 leading-relaxed">
+                    테이블 오더, 기업 통신 등의 로컬 컨설팅부터 감자빌더 파트너 도입에 이르기까지. 궁금하신 점을 남겨주시거나 아래 연락처로 다이렉트 문의해 주세요.
+                </p>
+                <div class="space-y-4">
+                    <a href="tel:01046530114" class="flex items-center gap-4 p-5 bg-white border border-slate-200 rounded-2xl hover-lift">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl">📞</div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-400">김성준 대표 다이렉트</div>
+                            <div class="text-2xl font-black text-slate-800">010-4653-0114</div>
+                        </div>
+                    </a>
+                    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="flex items-center gap-4 p-5 bg-[#FEE500] rounded-2xl hover-lift">
+                        <div class="w-14 h-14 bg-black/10 rounded-xl flex items-center justify-center">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-800/60">카카오톡 공식 채널</div>
+                            <div class="text-2xl font-black text-slate-900">1:1 실시간 채팅 상담</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-slate-100">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6">온라인 다이렉트 접수</h3>
+                <form action="http://gjnetwork.kr/api/leads/submit" method="POST" class="space-y-5">
+                    <input type="hidden" name="license_key" value="GAMJA_OFFICIAL_SITE">
+                    <input type="hidden" name="target_chat_id" value="7745000281"> 
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">업체명 / 성함</label>
+                        <input type="text" name="name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition" placeholder="예: 감자네트워크 김성준" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">연락처</label>
+                        <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition" placeholder="010-0000-0000" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">상담 내용</label>
+                        <textarea name="message" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition resize-none" placeholder="로컬 인프라 세팅 컨설팅 또는 감자빌더 도입 등 궁금하신 점을 자유롭게 적어주세요."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg py-4 rounded-xl transition shadow-lg mt-2">
+                        문의 접수하기
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <footer class="py-12 text-center bg-slate-900 text-slate-500 text-sm border-t border-slate-800">
+        <div class="flex flex-wrap justify-center gap-3 mb-6">
+            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자네트워크</span>
+            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">GamjaBuilder</span>
+            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">제주 비즈니스 솔루션</span>
+        </div>
         <p>© 2026 Gamja Network. All rights reserved.</p>
         <p class="mt-2">대표: 김성준 | 솔루션 문의: 010-4653-0114</p>
     </footer>
@@ -352,182 +553,317 @@
     <!-- 1분 시뮬레이터 로딩 모달 -->
     <div id="simLoadingModal" class="fixed inset-0 z-[100000] hidden bg-slate-900/95 flex flex-col items-center justify-center text-white backdrop-blur-sm">
         <div class="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-8"></div>
-        <h3 id="simLoadingText" class="text-2xl md:text-3xl font-bold mb-6 text-center px-4">AI가 분석 중입니다...</h3>
+        <h3 id="simLoadingText" class="text-2xl md:text-3xl font-bold mb-6 text-center px-4">AI가 브랜드 스토리를 분석 중입니다...</h3>
         <div class="w-64 h-2 bg-slate-700 rounded-full overflow-hidden">
             <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 animate-[loadingBar_3s_ease-in-out_forwards]"></div>
         </div>
     </div>
 
-    <!-- 1분 시뮬레이터 결과 모달 -->
+    <!-- 1분 시뮬레이터 결과(리드 수집) 모달 -->
     <div id="simResultModal" class="fixed inset-0 z-[100000] hidden bg-black/80 flex items-center justify-center backdrop-blur-sm">
         <div class="bg-white text-slate-800 p-10 rounded-3xl max-w-md w-full mx-4 relative shadow-2xl animate-[popDropIn_0.3s_forwards]">
-            <button onclick="closeSimResult()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-500 rounded-full">&times;</button>
+            <button onclick="closeSimResult()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-500 rounded-full font-bold hover:bg-slate-200 transition">&times;</button>
             <div class="text-center mb-6">
                 <div class="text-5xl mb-4">🎉</div>
-                <h3 class="text-2xl font-black text-slate-900 mb-2">시안이 완성되었습니다!</h3>
-                <p class="text-slate-500 text-sm"><span id="sim-display-name" class="font-bold text-blue-600"></span>의 럭셔리 웹사이트가 준비되었습니다.</p>
+                <h3 class="text-2xl font-black text-slate-900 mb-2">가안이 완성되었습니다!</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">입력해주신 <span id="sim-display-name" class="font-bold text-blue-600 text-base"></span>의 럭셔리 AI 웹사이트 시안이 준비되었습니다.<br>링크를 받아보실 연락처를 남겨주세요.</p>
             </div>
             <form action="http://gjnetwork.kr/api/leads/submit" method="POST" class="space-y-4">
                 <input type="hidden" name="license_key" value="GAMJA_SIMULATOR">
                 <input type="hidden" name="target_chat_id" value="7745000281"> 
                 <input type="hidden" id="sim-hidden-name" name="message" value="">
-                <input type="text" name="name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" placeholder="담당자 성함" required>
-                <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" placeholder="연락처" required>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg">무료 시안 링크 받기 🚀</button>
+                <div>
+                    <input type="text" name="name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" placeholder="담당자 성함" required>
+                </div>
+                <div>
+                    <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" placeholder="연락처 (010-0000-0000)" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition mt-2">
+                    무료 시안 링크 받기 🚀
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- ✅ [수정] 1. 쿠팡 파트너스 진입 팝업 (식별성 대폭 강화) -->
+    <!-- [가이드라인 준수 수정] 1. 쿠팡 파트너스 진입 팝업 -->
     <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center; cursor:pointer;">
         <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
-            <button onclick="event.stopPropagation(); closePopup();" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer;">&times;</button>
+            <button onclick="event.stopPropagation(); closePopup();" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer; line-height:1; z-index:100;">&times;</button>
             <div style="padding:20px; text-align:center;">
-                <!-- 최상단 대가성 문구 추가로 식별성 확보 -->
-                <p style="font-size:13px; color:#d32f2f; font-weight:bold; margin-bottom:10px;">[유료 광고] 쿠팡 파트너스 추천 상품</p>
-                <h3 id="entrance-title" style="color:#333; font-size:17px; font-weight:bold; margin-bottom:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">추천 아이템</h3>
-                <img id="entrance-img" src="" referrerpolicy="no-referrer" style="width:100%; height:auto; border-radius:8px; border:1px solid #eee;">
-                <div id="entrance-btn" style="margin-top:12px; padding:12px; background:#2563eb; border-radius:8px; color:#fff; font-weight:bold; font-size:15px;">상세정보 확인하기</div>
-                <!-- 확정적 표현으로 수정 -->
-                <p style="font-size:11px; color:#333; font-weight:bold; margin-top:15px; line-height:1.4;">
-                    ※ 이 포스팅은 쿠팡 파트너스 활동의 일환으로,<br>이에 따른 일정액의 수수료를 제공받습니다.
+                <!-- 추가된 [유료 광고] 표기 -->
+                <p style="font-size:13px; color:#d32f2f; font-weight:bold; margin-bottom:5px;">[유료 광고] 쿠팡 파트너스 추천 상품</p>
+                
+                <h3 id="entrance-title" style="margin-top:10px; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">비즈니스 추천 아이템</h3>
+                <div style="display:block; margin:15px 0; text-decoration:none;">
+                    <img id="entrance-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
+                         referrerpolicy="no-referrer"
+                         alt="추천 상품" style="width:100%; height:auto; border-radius:8px; border:1px solid #eee;">
+                    <div id="entrance-btn" style="margin-top:12px; padding:12px; background:#2563eb; border-radius:8px; color:#fff; font-weight:bold; font-size:14px; box-shadow: 0 4px 10px rgba(37,99,235,0.2);">
+                        최저가 상세정보 확인하기
+                    </div>
+                </div>
+                <!-- 문구 시인성 강화 및 확정적 표현 적용 -->
+                <p style="font-size:12px; color:#111; font-weight:bold; margin-top:15px; line-height:1.4;">
+                    ※ 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- ✅ [수정] 2. 이탈 방지 팝업 (식별성 대폭 강화) -->
+    <!-- [가이드라인 준수 수정] 2. 이탈 방지 (Exit-Intent) 타겟팅 팝업 -->
     <div id="exitPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:999999; align-items:center; justify-content:center; backdrop-filter: blur(5px); cursor:pointer;">
-        <div style="background:#fff; width:380px; border-radius:16px; overflow:hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position:relative; animation: popDropIn 0.3s forwards;">
-            <button onclick="event.stopPropagation(); closeExitPopup();" style="position:absolute; top:12px; right:12px; background:#f1f5f9; border-radius:50%; width:28px; height:28px; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer;">&times;</button>
+        <div style="background:#fff; width:380px; border-radius:16px; overflow:hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position:relative; animation: popDropIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
+            <button onclick="event.stopPropagation(); closeExitPopup();" style="position:absolute; top:12px; right:12px; background:#f1f5f9; border-radius:50%; width:28px; height:28px; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; line-height:1; z-index:100; display:flex; align-items:center; justify-content:center;">&times;</button>
             <div style="padding:30px 24px 24px; text-align:center;">
                 <div style="font-size:40px; margin-bottom:10px;">🚨</div>
-                <h3 style="color:#e11d48; font-size:24px; font-weight:900; margin-bottom:8px;">잠깐만요!</h3>
+                <h3 style="margin-top:0; color:#e11d48; font-size:24px; font-weight:900; margin-bottom:8px; letter-spacing:-0.5px;">잠깐만요!</h3>
+                <!-- 추가된 [광고] 표기 -->
                 <p style="font-size:14px; color:#d32f2f; font-weight:bold; margin-bottom:10px;">[광고] 비즈니스 필수템 최저가 혜택</p>
-                <img id="exit-img" src="" referrerpolicy="no-referrer" style="width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:15px;">
-                <div id="exit-btn" style="padding:14px; background:linear-gradient(135deg, #2563eb, #1d4ed8); border-radius:10px; color:#fff; font-weight:800; font-size:16px;">마지막 혜택 바로 확인하기 👉</div>
-                <!-- 확정적 표현으로 수정 -->
-                <p style="font-size:11px; color:#333; font-weight:bold; margin-top:16px; line-height:1.4;">
+                
+                <p id="exit-title" style="color:#475569; font-size:15px; font-weight:600; line-height:1.5; margin-bottom:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    <span class="text-blue-600">이 혜택</span>을 놓치지 마세요!
+                </p>
+                <div style="display:block; text-decoration:none;">
+                    <img id="exit-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
+                         referrerpolicy="no-referrer"
+                         alt="추천 상품" style="width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:15px;">
+                    <div id="exit-btn" style="padding:14px; background:linear-gradient(135deg, #2563eb, #1d4ed8); border-radius:10px; color:#fff; font-weight:800; font-size:16px; box-shadow: 0 4px 15px rgba(37,99,235,0.4); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        마지막 혜택 바로 확인하기 👉
+                    </div>
+                </div>
+                <!-- 문구 시인성 강화 및 확정적 표현 적용 -->
+                <p style="font-size:12px; color:#111; font-weight:bold; margin-top:16px; line-height:1.4;">
                     ※ 이 포스팅은 쿠팡 파트너스 활동의 일환으로,<br>이에 따른 일정액의 수수료를 제공받습니다.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- 토스트 알림 -->
-    <div id="social-toast" class="fixed left-6 bottom-6 z-[9998] bg-white border border-slate-200 shadow-xl rounded-2xl p-4 flex items-center gap-4 transition-all duration-500 opacity-0 translate-y-8 pointer-events-none w-max max-w-[320px]">
-        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl shrink-0">🔔</div>
-        <div>
-            <p id="toast-msg" class="text-[13px] font-bold text-slate-800 leading-snug">알림 불러오는 중...</p>
-            <p id="toast-time" class="text-[11px] text-slate-400 mt-1">방금 전</p>
+    <!-- 실시간 소셜 푸루프 토스트 알림 -->
+    <div id="social-toast" class="fixed left-6 bottom-6 z-[9998] bg-white border border-slate-200 shadow-[0_10px_40px_rgba(0,0,0,0.12)] rounded-2xl p-4 flex items-center gap-4 transition-all duration-500 opacity-0 translate-y-8 pointer-events-none w-max max-w-[320px]">
+        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl shrink-0 border border-blue-100">
+            🔔
+        </div>
+        <div class="pr-2">
+            <p id="toast-msg" class="text-[13px] font-bold text-slate-800 leading-snug word-break-keep">알림을 불러오는 중입니다.</p>
+            <p id="toast-time" class="text-[11px] text-slate-400 mt-1 font-medium">방금 전</p>
         </div>
     </div>
 
+    <!-- 스크립트 영역 -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 불펌 방지
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) e.preventDefault();
+        // 🛡️ [불펌 방지 로직] 우클릭 및 개발자 도구 차단
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode == 123) { event.preventDefault(); }
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { event.preventDefault(); }
+            if (event.ctrlKey && event.keyCode == 85) { event.preventDefault(); }
         });
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', function() {
             document.getElementById("coupangPopup").style.display = "flex";
-            loadDynamicCoupangData();
+            loadDynamicCoupangData(); 
             
-            new Swiper(".businessSwiper", {
-                slidesPerView: 1, spaceBetween: 20, loop: true,
-                autoplay: { delay: 3500 },
+            var businessSwiper = new Swiper(".businessSwiper", {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: { delay: 3500, disableOnInteraction: false },
                 pagination: { el: ".swiper-pagination-business", clickable: true },
-                breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+                breakpoints: {
+                    768: { slidesPerView: 2, spaceBetween: 24 },
+                    1024: { slidesPerView: 3, spaceBetween: 30 }
+                }
             });
         });
 
         function startSimulation() {
             const bizName = document.getElementById('sim-business-name').value.trim();
-            if (!bizName) { alert("상호명을 입력해주세요!"); return; }
+            if (!bizName) {
+                alert("사장님의 상호명을 입력해주세요!");
+                return;
+            }
+            
             document.getElementById('simLoadingModal').style.display = 'flex';
+            const loadingText = document.getElementById('simLoadingText');
+            
+            loadingText.innerText = "AI가 '" + bizName + "'의 브랜드 스토리를 분석 중입니다...";
+            
+            setTimeout(() => {
+                loadingText.innerText = "업종 맞춤형 럭셔리 디자인을 세팅 중입니다...";
+            }, 1000);
+            
+            setTimeout(() => {
+                loadingText.innerText = "마케팅 카피라이팅 적용 및 최종 렌더링 중...";
+            }, 2000);
+            
             setTimeout(() => {
                 document.getElementById('simLoadingModal').style.display = 'none';
                 document.getElementById('sim-display-name').innerText = bizName;
-                document.getElementById('sim-hidden-name').value = "[시뮬레이터] " + bizName;
+                document.getElementById('sim-hidden-name').value = "[시뮬레이터 시안 요청] 상호명: " + bizName;
                 document.getElementById('simResultModal').style.display = 'flex';
             }, 3000);
         }
 
-        function closeSimResult() { document.getElementById('simResultModal').style.display = 'none'; }
-        function closePopup() { document.getElementById("coupangPopup").style.display = "none"; }
-        function closeExitPopup() { document.getElementById("exitPopup").style.display = "none"; }
+        function closeSimResult() {
+            document.getElementById('simResultModal').style.display = 'none';
+        }
+
+        function closePopup() {
+            document.getElementById("coupangPopup").style.display = "none";
+        }
 
         async function loadDynamicCoupangData() {
             try {
-                let data = [
-                    { name: "LG전자 2024 그램 16 노트북", price: "1,450,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" },
-                    { name: "실버 순은 999.9 실버바 100g", price: "480,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" }
-                ];
+                const API_URL = './coupang_data.json'; 
+                let data = [];
+                
+                try {
+                    const response = await fetch(API_URL);
+                    if (!response.ok) throw new Error("JSON 파일 로드 실패");
+                    data = await response.json();
+                } catch (err) {
+                    data = [
+                        { name: "LG전자 2024 그램 16 노트북", price: "1,450,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" },
+                        { name: "실버 순은 999.9 실버바 100g", price: "480,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" },
+                        { name: "인체공학 무선 키보드 세트", price: "59,000원", link: "#", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80" },
+                        { name: "4K 울트라 HD 모니터", price: "349,000원", link: "#", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&q=80" }
+                    ];
+                }
 
-                const entranceItem = data[0];
-                document.getElementById('entrance-title').innerText = entranceItem.name;
-                document.getElementById('entrance-img').src = entranceItem.img;
-                document.getElementById('entrance-btn').innerText = entranceItem.price + " - 상세정보 확인";
-                document.getElementById('coupangPopup').onclick = () => { window.open(entranceItem.link, '_blank'); closePopup(); };
+                if (data.length > 0) {
+                    const entranceItem = data[0];
+                    document.getElementById('entrance-title').innerText = entranceItem.name;
+                    document.getElementById('entrance-img').src = entranceItem.img;
+                    document.getElementById('entrance-btn').innerText = entranceItem.price + " - 상세정보 확인";
+                    
+                    document.getElementById('coupangPopup').onclick = function() {
+                        window.open(entranceItem.link, '_blank');
+                        closePopup();
+                    };
 
-                const exitItem = data[1];
-                document.getElementById('exit-img').src = exitItem.img;
-                document.getElementById('exit-btn').innerText = exitItem.price + " - 혜택 확인하기 👉";
-                document.getElementById('exitPopup').onclick = () => { window.open(exitItem.link, '_blank'); closeExitPopup(); };
+                    const exitItem = data.length > 1 ? data[1] : data[0];
+                    document.getElementById('exit-title').innerText = exitItem.name;
+                    document.getElementById('exit-img').src = exitItem.img;
+                    document.getElementById('exit-btn').innerText = exitItem.price + " - 혜택 확인하기 👉";
+
+                    document.getElementById('exitPopup').onclick = function() {
+                        window.open(exitItem.link, '_blank');
+                        closeExitPopup();
+                    };
+                }
 
                 const container = document.getElementById('dynamic-product-list');
-                container.innerHTML = data.map(item => `
-                    <div class="swiper-slide p-2">
-                        <a href="${item.link}" target="_blank" class="block bg-white border rounded-2xl overflow-hidden hover-lift">
-                            <img src="${item.img}" class="w-full h-44 object-cover">
-                            <div class="p-4">
-                                <div class="text-xs font-bold text-slate-400">최저가 보장</div>
-                                <div class="text-sm font-bold text-slate-800 truncate">${item.name}</div>
-                                <div class="text-blue-600 font-black">${item.price}</div>
-                            </div>
-                        </a>
-                    </div>
-                `).join('');
+                container.innerHTML = ''; 
+
+                data.forEach(item => {
+                    container.innerHTML += `
+                        <div class="swiper-slide p-2">
+                            <a href="${item.link}" target="_blank" class="block bg-white border border-slate-200 rounded-2xl overflow-hidden hover-lift shadow-sm">
+                                <img src="${item.img}" referrerpolicy="no-referrer" class="w-full h-44 object-cover" alt="${item.name}">
+                                <div class="p-4">
+                                    <div class="text-xs font-bold text-slate-400 mb-1">최저가 보장</div>
+                                    <div class="text-sm font-bold text-slate-800 truncate mb-1">${item.name}</div>
+                                    <div class="text-blue-600 font-black">${item.price}</div>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
 
                 new Swiper('.product-swiper', {
-                    slidesPerView: 1, spaceBetween: 15, loop: true,
-                    autoplay: { delay: 1, disableOnInteraction: false },
-                    speed: 3000,
+                    slidesPerView: 1, 
+                    spaceBetween: 15,
+                    loop: true,                 
+                    speed: 3000,                
+                    autoplay: { delay: 0, disableOnInteraction: false },
                     breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } }
                 });
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("크리티컬 에러:", e); }
         }
 
-        let exitPopupShown = false;
-        document.addEventListener("mouseleave", e => {
+        // 이탈 방지 (Exit-Intent) 팝업 로직
+        let exitPopupShown = false; 
+
+        document.addEventListener("mouseleave", function(e) {
             if (e.clientY <= 0 && !exitPopupShown) {
                 if (document.getElementById("coupangPopup").style.display === "none") {
                     document.getElementById("exitPopup").style.display = "flex";
-                    exitPopupShown = true;
+                    exitPopupShown = true; 
                 }
             }
         });
 
+        function closeExitPopup() {
+            document.getElementById("exitPopup").style.display = "none";
+        }
+
+        // 실시간 소셜 푸루프(Social Proof) 토스트 알림 37개 확장
         const toastMessages = [
             "방금 전 제주시 연동 식당에서 감자빌더 PRO를 문의하셨습니다.",
+            "어제 마케팅 컨설팅 예약이 3건 완료되었습니다.",
             "제주 파인다이닝 '화란'에서 웹사이트 구축을 완료했습니다.",
             "방금 전 '매콤갈치명태촌'에서 테이블 오더 구축을 신청했습니다.",
-            "제주 노형동 뷰티샵에서 감자빌더 BASIC을 결제하셨습니다."
+            "오토컴퍼니 전기차 랜딩페이지가 성공적으로 배포되었습니다.",
+            "신규 기업 네트워크 및 보안 점검이 접수되었습니다.",
+            "제주 노형동 뷰티샵에서 감자빌더 BASIC을 결제하셨습니다.",
+            "제주시 애월읍 카페에서 감자빌더 PRO 솔루션을 도입했습니다.",
+            "서귀포시 펜션에서 감자빌더 다국어 웹사이트 제작을 문의하셨습니다.",
+            "방금 전 서울 강남구 피트니스 센터에서 감자빌더 ULTRA를 결제하셨습니다.",
+            "감자빌더를 통한 신규 랜딩페이지 배포가 5건 완료되었습니다.",
+            "제주 구좌읍 베이커리에서 AI 카피라이팅 기능 사용을 시작했습니다.",
+            "감자빌더 BASIC 구독자가 오늘 12명 돌파했습니다.",
+            "서귀포 요가 스튜디오에서 프리미엄 웹사이트 시안을 요청하셨습니다.",
+            "방금 전 감자빌더 실물 패키지(USB+매뉴얼) 3세트가 발송되었습니다.",
+            "제주시청 인근 흑돼지 전문점에서 네이버 플레이스 상위노출 컨설팅을 시작했습니다.",
+            "어제 진행한 마케팅 컨설팅으로 OOO업체의 문의량이 200% 증가했습니다.",
+            "제주 인플루언서 마케팅 패키지 당월 TO가 2자리 남았습니다.",
+            "방금 전 서귀포 횟집에서 인스타그램 숏폼 제작 대행을 문의하셨습니다.",
+            "제주 연동 네일샵에서 당근마켓 단골 모으기 캠페인을 세팅했습니다.",
+            "매출 퀀텀점프 컨설팅 신규 예약이 접수되었습니다.",
+            "제주 첨단과학기술단지 입주 기업에서 사내 네트워크 보안 점검을 요청하셨습니다.",
+            "방금 전 제주 시내 대형 병원에서 기업인터넷 및 랜공사 견적을 받아보셨습니다.",
+            "서귀포 신축 호텔에서 전 객실 무선 AP 구축 계약을 체결했습니다.",
+            "방금 전 매장용 고화질 CCTV 4채널 설치가 완료되었습니다.",
+            "제주시 대형 마트에서 보안장비(방화벽) 시스템 정기 유지보수를 갱신하셨습니다.",
+            "랜섬웨어 대비 사내 데이터 백업 시스템 구축이 완료되었습니다.",
+            "제주 한림읍 해물탕집에서 KT 하이오더 15대 설치를 완료했습니다.",
+            "방금 전 서귀포 흑돼지 전문점에서 테이블 오더 시스템 도입 문의를 남기셨습니다.",
+            "도두동 이자카야에서 테이블 오더 메뉴판 세팅을 요청하셨습니다.",
+            "하이오더 도입 후 인건비 절감 사례가 신규 업데이트 되었습니다.",
+            "제주 도내 부동산 중개업소에서 B2B 영업 제안 자동화 시스템을 도입하셨습니다.",
+            "방금 전 서울 마케팅 대리점에서 감자빌더 파트너(총판) 문의를 주셨습니다.",
+            "맞춤형 고객 데이터 크롤링 봇 개발이 성공적으로 납품되었습니다.",
+            "제주 렌터카 업체에서 예약 관리 자동화 솔루션 개발을 의뢰하셨습니다.",
+            "방금 전 B2B 영업 제안서 자동 생성 세팅이 완료되었습니다.",
+            "이번 달 감자네트워크 VIP 컨설팅 잔여 TO가 1자리 남았습니다."
         ];
 
         function showSocialToast() {
             const toast = document.getElementById('social-toast');
-            document.getElementById('toast-msg').innerText = toastMessages[Math.floor(Math.random() * toastMessages.length)];
+            const msgEl = document.getElementById('toast-msg');
+            const timeEl = document.getElementById('toast-time');
+            
+            const randomMsg = toastMessages[Math.floor(Math.random() * toastMessages.length)];
+            const times = ["방금 전", "1분 전", "2분 전", "3분 전", "5분 전"];
+            const randomTime = times[Math.floor(Math.random() * times.length)];
+
+            msgEl.innerText = randomMsg;
+            timeEl.innerText = randomTime;
+
             toast.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
             toast.classList.add('opacity-100', 'translate-y-0');
+
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
                 toast.classList.remove('opacity-100', 'translate-y-0');
-            }, 5000);
-            setTimeout(showSocialToast, Math.random() * 10000 + 10000);
+            }, 5000); 
+
+            const nextTime = Math.floor(Math.random() * 13000) + 12000;
+            setTimeout(showSocialToast, nextTime);
         }
+
         setTimeout(showSocialToast, 4000);
     </script>
 </body>
