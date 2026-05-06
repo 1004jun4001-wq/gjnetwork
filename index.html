@@ -288,6 +288,13 @@
         </div>
         
         <div class="max-w-7xl mx-auto px-6 mt-16 pt-16 border-t border-slate-100">
+            <!-- [가이드라인 준수 완벽 수정] 띠배너 수수료 문구를 상단으로 이동 -->
+            <div class="mb-8 p-4 bg-slate-100 rounded-xl text-center border border-slate-200">
+                <p class="text-sm md:text-base text-slate-900 font-black">
+                    <span class="text-red-600">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+                </p>
+            </div>
+
             <div class="flex flex-col lg:flex-row items-center justify-between mb-8 gap-6">
                 <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2 shrink-0">
                     <span class="text-sky-600 text-3xl">🔥</span> 비즈니스 필수 아이템 최저가
@@ -301,13 +308,6 @@
                 <div class="swiper-wrapper" id="dynamic-product-list">
                     <div class="swiper-slide p-12 text-center text-slate-400 font-bold">비즈니스 추천 상품을 연동 중입니다...</div>
                 </div>
-            </div>
-            
-            <!-- [가이드라인 준수 완벽 수정] 하단 띠배너 수수료 문구 폰트 키움 + 박스 배경 처리 -->
-            <div class="mt-6 p-4 bg-slate-100 rounded-xl text-center border border-slate-200">
-                <p class="text-sm md:text-base text-slate-900 font-black">
-                    <span class="text-red-600">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-                </p>
             </div>
         </div>
     </section>
@@ -591,7 +591,11 @@
         <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
             <button onclick="event.stopPropagation(); closePopup();" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer; line-height:1; z-index:100;">&times;</button>
             <div style="padding:20px; text-align:center;">
-                <h3 id="entrance-title" style="margin-top:10px; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">비즈니스 추천 아이템</h3>
+                <!-- ✅ 상단으로 이동된 유료광고 문구 -->
+                <p style="font-size:14px; color:#111; font-weight:900; margin-bottom:15px; line-height:1.4; background:#f1f5f9; padding:10px; border-radius:8px;">
+                    <span style="color:#d32f2f;">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+                </p>
+                <h3 id="entrance-title" style="margin-top:0; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">비즈니스 추천 아이템</h3>
                 <div style="display:block; margin:15px 0; text-decoration:none;">
                     <img id="entrance-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
                          referrerpolicy="no-referrer"
@@ -600,11 +604,6 @@
                         최저가 상세정보 확인하기
                     </div>
                 </div>
-                
-                <!-- ✅ 문구 폰트 키움(14px) 및 배경 박스(bg-slate-50) 처리로 시인성 극대화 -->
-                <p style="font-size:14px; color:#111; font-weight:900; margin-top:15px; line-height:1.4; background:#f1f5f9; padding:10px; border-radius:8px;">
-                    <span style="color:#d32f2f;">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-                </p>
             </div>
         </div>
     </div>
@@ -614,6 +613,10 @@
         <div style="background:#fff; width:380px; border-radius:16px; overflow:hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position:relative; animation: popDropIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
             <button onclick="event.stopPropagation(); closeExitPopup();" style="position:absolute; top:12px; right:12px; background:#f1f5f9; border-radius:50%; width:28px; height:28px; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; line-height:1; z-index:100; display:flex; align-items:center; justify-content:center;">&times;</button>
             <div style="padding:30px 24px 24px; text-align:center;">
+                <!-- ✅ 상단으로 이동된 유료광고 문구 -->
+                <p style="font-size:14px; color:#111; font-weight:900; margin-bottom:15px; line-height:1.4; background:#f1f5f9; padding:10px; border-radius:8px;">
+                    <span style="color:#d32f2f;">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+                </p>
                 <div style="font-size:40px; margin-bottom:10px;">🚨</div>
                 <h3 style="margin-top:0; color:#e11d48; font-size:24px; font-weight:900; margin-bottom:8px; letter-spacing:-0.5px;">잠깐만요!</h3>
                 <p id="exit-title" style="color:#475569; font-size:15px; font-weight:600; line-height:1.5; margin-bottom:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
@@ -627,11 +630,6 @@
                         마지막 혜택 바로 확인하기 👉
                     </div>
                 </div>
-                
-                <!-- ✅ 문구 폰트 키움(14px) 및 배경 박스(bg-slate-50) 처리로 시인성 극대화 -->
-                <p style="font-size:14px; color:#111; font-weight:900; margin-top:16px; line-height:1.4; background:#f1f5f9; padding:10px; border-radius:8px;">
-                    <span style="color:#d32f2f;">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-                </p>
             </div>
         </div>
     </div>
