@@ -5,7 +5,7 @@ import json
 import requests
 from time import gmtime, strftime
 
-# 1. 깃허브 보안 비밀고(Secrets)에서 나중에 입력할 키를 불러옵니다.
+# 🛡️ 깃허브 Secrets에서 안전하게 키를 불러옵니다! (여기에 키를 직접 적지 마세요)
 ACCESS_KEY = os.environ.get('COUPANG_ACCESS_KEY', '')
 SECRET_KEY = os.environ.get('COUPANG_SECRET_KEY', '')
 
@@ -19,10 +19,10 @@ def generate_hmac(method, url, secret_key, access_key):
 
 def fetch_coupang_data():
     if not ACCESS_KEY or not SECRET_KEY:
-        print("🚨 API 키가 아직 설정되지 않았습니다. 깃허브 Secrets를 확인하세요.")
+        print("🚨 API 키가 설정되지 않았습니다. 깃허브 Secrets를 확인하세요.")
         return
 
-    # 2. 💡 여기에 검색하고 싶은 키워드를 입력하시면 됩니다! (예: 사무용품, 노트북, 식당포스기 등)
+    # 💡 검색할 키워드
     keyword = "사무용품" 
     
     method = "GET"
@@ -41,7 +41,7 @@ def fetch_coupang_data():
         response.raise_for_status()
         data = response.json()
         
-        # 3. 홈페이지에 바로 뿌릴 수 있도록 예쁘게 데이터 가공
+        # 홈페이지에 뿌릴 수 있도록 데이터 가공
         product_list = []
         for item in data.get('data', {}).get('productData', []):
             product_list.append({
@@ -51,7 +51,7 @@ def fetch_coupang_data():
                 "img": item.get('productImage')
             })
             
-        # 4. 가공된 데이터를 JSON 파일로 저장
+        # 가공된 데이터를 JSON 파일로 저장
         with open('coupang_data.json', 'w', encoding='utf-8') as f:
             json.dump(product_list, f, ensure_ascii=False, indent=4)
             
