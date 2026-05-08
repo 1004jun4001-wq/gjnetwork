@@ -4,8 +4,9 @@ import hashlib
 import json
 import requests
 from time import gmtime, strftime
+import urllib.parse  # 👈 한글 변환을 위한 마법의 주문 추가!
 
-# 🛡️ 깃허브 Secrets에서 안전하게 키를 불러옵니다! (여기에 키를 직접 적지 마세요)
+# 🛡️ 깃허브 Secrets에서 안전하게 키를 불러옵니다!
 ACCESS_KEY = os.environ.get('COUPANG_ACCESS_KEY', '')
 SECRET_KEY = os.environ.get('COUPANG_SECRET_KEY', '')
 
@@ -22,8 +23,8 @@ def fetch_coupang_data():
         print("🚨 API 키가 설정되지 않았습니다. 깃허브 Secrets를 확인하세요.")
         return
 
-    # 💡 검색할 키워드
-    keyword = "사무용품" 
+    # 💡 한글 키워드를 인터넷 주소용으로 안전하게 변환해 줍니다!
+    keyword = urllib.parse.quote("사무용품") 
     
     method = "GET"
     url = f"/v2/providers/affiliate_open_api/apis/openapi/products/search?keyword={keyword}&limit=10"
@@ -41,7 +42,7 @@ def fetch_coupang_data():
         response.raise_for_status()
         data = response.json()
         
-        # 홈페이지에 뿌릴 수 있도록 데이터 가공
+        # 홈페이지에 바로 뿌릴 수 있도록 예쁘게 데이터 가공
         product_list = []
         for item in data.get('data', {}).get('productData', []):
             product_list.append({
