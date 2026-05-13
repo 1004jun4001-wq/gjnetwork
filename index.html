@@ -586,54 +586,6 @@
         </div>
     </div>
 
-    <!-- [가이드라인 준수 완벽 수정] 1. 쿠팡 파트너스 진입 팝업 -->
-    <div id="coupangPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; align-items:center; justify-content:center; cursor:pointer;">
-        <div style="background:#fff; width:350px; border-radius:10px; overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position:relative;">
-            <button onclick="event.stopPropagation(); closePopup();" style="position:absolute; top:10px; right:10px; background:white; border-radius:50%; width:24px; height:24px; border:none; font-size:18px; font-weight:bold; color:#888; cursor:pointer; line-height:1; z-index:100;">&times;</button>
-            <div style="padding:20px; text-align:center;">
-                <!-- ✅ 상단으로 이동된 유료광고 문구 -->
-                <p style="font-size:14px; color:#111; font-weight:900; margin-bottom:15px; line-height:1.4; background:#f1f5f9; padding:10px; border-radius:8px;">
-                    <span style="color:#d32f2f;">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-                </p>
-                <h3 id="entrance-title" style="margin-top:0; color:#333; font-size:18px; font-weight:bold; margin-bottom:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">비즈니스 추천 아이템</h3>
-                <div style="display:block; margin:15px 0; text-decoration:none;">
-                    <img id="entrance-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
-                         referrerpolicy="no-referrer"
-                         alt="추천 상품" style="width:100%; height:auto; border-radius:8px; border:1px solid #eee;">
-                    <div id="entrance-btn" style="margin-top:12px; padding:12px; background:#2563eb; border-radius:8px; color:#fff; font-weight:bold; font-size:14px; box-shadow: 0 4px 10px rgba(37,99,235,0.2);">
-                        최저가 상세정보 확인하기
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- [가이드라인 준수 완벽 수정] 2. 이탈 방지 (Exit-Intent) 타겟팅 팝업 -->
-    <div id="exitPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:999999; align-items:center; justify-content:center; backdrop-filter: blur(5px); cursor:pointer;">
-        <div style="background:#fff; width:380px; border-radius:16px; overflow:hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position:relative; animation: popDropIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
-            <button onclick="event.stopPropagation(); closeExitPopup();" style="position:absolute; top:12px; right:12px; background:#f1f5f9; border-radius:50%; width:28px; height:28px; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; line-height:1; z-index:100; display:flex; align-items:center; justify-content:center;">&times;</button>
-            <div style="padding:30px 24px 24px; text-align:center;">
-                <!-- ✅ 상단으로 이동된 유료광고 문구 -->
-                <p style="font-size:14px; color:#111; font-weight:900; margin-bottom:15px; line-height:1.4; background:#f1f5f9; padding:10px; border-radius:8px;">
-                    <span style="color:#d32f2f;">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-                </p>
-                <div style="font-size:40px; margin-bottom:10px;">🚨</div>
-                <h3 style="margin-top:0; color:#e11d48; font-size:24px; font-weight:900; margin-bottom:8px; letter-spacing:-0.5px;">잠깐만요!</h3>
-                <p id="exit-title" style="color:#475569; font-size:15px; font-weight:600; line-height:1.5; margin-bottom:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                    <span class="text-blue-600">이 혜택</span>을 놓치지 마세요!
-                </p>
-                <div style="display:block; text-decoration:none;">
-                    <img id="exit-img" src="https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" 
-                         referrerpolicy="no-referrer"
-                         alt="추천 상품" style="width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:15px;">
-                    <div id="exit-btn" style="padding:14px; background:linear-gradient(135deg, #2563eb, #1d4ed8); border-radius:10px; color:#fff; font-weight:800; font-size:16px; box-shadow: 0 4px 15px rgba(37,99,235,0.4); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                        마지막 혜택 바로 확인하기 👉
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- 실시간 소셜 푸루프 토스트 알림 -->
     <div id="social-toast" class="fixed left-6 bottom-6 z-[9998] bg-white border border-slate-200 shadow-[0_10px_40px_rgba(0,0,0,0.12)] rounded-2xl p-4 flex items-center gap-4 transition-all duration-500 opacity-0 translate-y-8 pointer-events-none w-max max-w-[320px]">
         <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl shrink-0 border border-blue-100">
@@ -657,7 +609,6 @@
         });
 
         window.addEventListener('DOMContentLoaded', function() {
-            document.getElementById("coupangPopup").style.display = "flex";
             loadDynamicCoupangData(); 
             
             var businessSwiper = new Swiper(".businessSwiper", {
@@ -705,10 +656,6 @@
             document.getElementById('simResultModal').style.display = 'none';
         }
 
-        function closePopup() {
-            document.getElementById("coupangPopup").style.display = "none";
-        }
-
         async function loadDynamicCoupangData() {
             try {
                 const API_URL = './coupang_data.json'; 
@@ -725,28 +672,6 @@
                         { name: "인체공학 무선 키보드 세트", price: "59,000원", link: "#", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80" },
                         { name: "4K 울트라 HD 모니터", price: "349,000원", link: "#", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&q=80" }
                     ];
-                }
-
-                if (data.length > 0) {
-                    const entranceItem = data[0];
-                    document.getElementById('entrance-title').innerText = entranceItem.name;
-                    document.getElementById('entrance-img').src = entranceItem.img;
-                    document.getElementById('entrance-btn').innerText = entranceItem.price + " - 상세정보 확인";
-                    
-                    document.getElementById('coupangPopup').onclick = function() {
-                        window.open(entranceItem.link, '_blank');
-                        closePopup();
-                    };
-
-                    const exitItem = data.length > 1 ? data[1] : data[0];
-                    document.getElementById('exit-title').innerText = exitItem.name;
-                    document.getElementById('exit-img').src = exitItem.img;
-                    document.getElementById('exit-btn').innerText = exitItem.price + " - 혜택 확인하기 👉";
-
-                    document.getElementById('exitPopup').onclick = function() {
-                        window.open(exitItem.link, '_blank');
-                        closeExitPopup();
-                    };
                 }
 
                 const container = document.getElementById('dynamic-product-list');
@@ -781,22 +706,6 @@
                     breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } }
                 });
             } catch (e) { console.error("크리티컬 에러:", e); }
-        }
-
-        // 이탈 방지 (Exit-Intent) 팝업 로직
-        let exitPopupShown = false; 
-
-        document.addEventListener("mouseleave", function(e) {
-            if (e.clientY <= 0 && !exitPopupShown) {
-                if (document.getElementById("coupangPopup").style.display === "none") {
-                    document.getElementById("exitPopup").style.display = "flex";
-                    exitPopupShown = true; 
-                }
-            }
-        });
-
-        function closeExitPopup() {
-            document.getElementById("exitPopup").style.display = "none";
         }
 
         // 실시간 소셜 푸루프(Social Proof) 토스트 알림 37개 확장
