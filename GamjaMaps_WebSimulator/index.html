@@ -18,7 +18,7 @@
         <div class="ad-panel" id="adPanel">
             <div class="ad-header">
                 <div class="logo">
-                    <span class="logo-icon">🥔</span>
+                    <img src="icon.png" alt="Icon" class="logo-icon-img" style="width: 28px; height: 28px; border-radius: 6px; box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); vertical-align: middle; margin-right: 4px;">
                     <span class="logo-text">GAMJA <span>MAPS</span></span>
                 </div>
                 <!-- Mode Selector Toggle -->
@@ -34,49 +34,7 @@
                     <div class="hologram-ring"></div>
                     <div class="hologram-ring ring-2"></div>
                     
-                    <svg viewBox="0 0 100 100" class="anchor-svg" id="anchorSvg">
-                        <defs>
-                            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#ff9900" stop-opacity="0.3"/>
-                                <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
-                            </radialGradient>
-                            <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#f43f5e" />
-                                <stop offset="100%" stop-color="#ec4899" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="50%" cy="50%" r="48" fill="url(#glow)"/>
-                        
-                        <path d="M25,90 C25,75 35,65 50,65 C65,65 75,75 75,90 Z" fill="url(#suitGrad)" />
-                        <path d="M43,65 L50,75 L57,65 Z" fill="#f8fafc" />
-                        <line x1="50" y1="75" x2="50" y2="82" stroke="#1e293b" stroke-width="1.5" />
-                        <circle cx="50" cy="82" r="2.5" fill="#0f172a" />
-                        
-                        <rect x="44" y="55" width="12" height="12" rx="3" fill="#fed7aa" />
-                        <ellipse cx="50" cy="42" rx="17" ry="20" fill="#fed7aa" />
-                        <path d="M30,42 C30,22 40,16 50,16 C60,16 70,22 70,42 C70,47 68,54 67,56 C62,40 38,40 33,56 C32,54 30,47 30,42 Z" fill="#1e1b4b" />
-                        <path d="M30,35 C28,45 29,55 31,60 C32,60 33,55 33,45 Z" fill="#1b153f" />
-                        <path d="M70,35 C72,45 71,55 69,60 C68,60 67,55 67,45 Z" fill="#1b153f" />
-                        
-                        <ellipse cx="43" cy="38" rx="2.5" ry="1.5" fill="#1e1b4b" />
-                        <circle cx="43.5" cy="37.5" r="0.7" fill="#ffffff" />
-                        <path d="M40,34 Q43,33 46,35" stroke="#1e1b4b" stroke-width="1.2" fill="none" />
-                        
-                        <ellipse cx="57" cy="38" rx="2.5" ry="1.5" fill="#1e1b4b" />
-                        <circle cx="57.5" cy="37.5" r="0.7" fill="#ffffff" />
-                        <path d="M54,34 Q57,33 60,35" stroke="#1e1b4b" stroke-width="1.2" fill="none" />
-                        
-                        <path d="M41,37 Q43,36 45,37" stroke="#1e1b4b" stroke-width="0.8" fill="none" />
-                        <path d="M55,37 Q57,36 59,37" stroke="#1e1b4b" stroke-width="0.8" fill="none" />
-                        
-                        <circle cx="38" cy="44" r="2" fill="#f43f5e" opacity="0.3" />
-                        <circle cx="62" cy="44" r="2" fill="#f43f5e" opacity="0.3" />
-                        
-                        <path id="mouth" d="M44,48 Q50,49 56,48 Q50,50 44,48" fill="#e11d48" stroke="#be123c" stroke-width="0.5" />
-                        
-                        <path id="left-blink" d="M40.5,38 L45.5,38" stroke="#1e1b4b" stroke-width="1.5" stroke-linecap="round" display="none" />
-                        <path id="right-blink" d="M54.5,38 L59.5,38" stroke="#1e1b4b" stroke-width="1.5" stroke-linecap="round" display="none" />
-                    </svg>
+                    <img src="anchor.png" alt="AI Anchor" class="anchor-img" id="anchorImg">
 
                     <div class="voice-wave" id="voiceWave">
                         <span class="bar"></span>
@@ -197,7 +155,7 @@
                     <!-- App Header -->
                     <div class="app-header" id="appHeader">
                         <div class="app-logo">
-                            <span class="potato-emoji">🥔</span>
+                            <img src="icon.png" alt="Icon" class="potato-emoji-img" style="width: 18px; height: 18px; border-radius: 4px; vertical-align: middle; margin-right: 4px;">
                             <span>감자맵스</span>
                             <span class="vip-badge">VIP</span>
                         </div>
@@ -406,13 +364,13 @@
                                     <!-- Boss Select Dropdown -->
                                     <div class="boss-select-container">
                                         <select class="boss-select-dropdown" id="bossSelect">
-                                            <option value="0">👨‍🍳 박길동 사장님 (돈가스집 - 난이도: ★★★★☆)</option>
-                                            <option value="1">👩‍🍳 이영희 사장님 (카페 - 난이도: ★★★☆☆)</option>
-                                            <option value="2">👨‍🍳 최성진 사장님 (횟집 - 난이도: ★★★★★)</option>
+                                            <option value="0">👨🍳 박길동 사장님 (돈가스집 - 난이도: ★★★★☆)</option>
+                                            <option value="1">👩🍳 이영희 사장님 (카페 - 난이도: ★★★☆☆)</option>
+                                            <option value="2">👨🍳 최성진 사장님 (횟집 - 난이도: ★★★★★)</option>
                                         </select>
                                     </div>
                                     <div class="boss-profile" style="margin-top: 10px;">
-                                        <span class="boss-avatar" id="bossAvatarDisp">👨‍🍳</span>
+                                        <span class="boss-avatar" id="bossAvatarDisp">👨🍳</span>
                                         <div class="boss-info">
                                             <strong id="bossNameDisp">박길동 사장님 (돈가스 전문점)</strong>
                                             <span id="bossDescDisp">성격: 깐깐함, 광고 불신 심함</span>
@@ -425,7 +383,7 @@
                             <div class="roleplay-chat-container" id="roleplayChatContainer" style="display: none;">
                                 <div class="chat-header">
                                     <div class="boss-mini">
-                                        <span id="chatBossAvatar">👨‍🍳</span>
+                                        <span id="chatBossAvatar">👨🍳</span>
                                         <div>
                                             <strong id="chatBossName">박길동 사장님 (AI)</strong>
                                             <span class="status">● 실시간 대화 중</span>
@@ -487,7 +445,7 @@
                                 
                                 <div class="ps-app-card">
                                     <div class="app-info-row">
-                                        <div class="app-logo-box">🥔</div>
+                                        <div class="app-logo-box" style="padding:0; overflow:hidden;"><img src="icon.png" alt="Logo" style="width:100%; height:100%; object-fit:cover; border-radius:12px;"></div>
                                         <div class="app-details">
                                             <h1>감자맵스</h1>
                                             <p class="developer">Gamja Network Ltd.</p>
@@ -564,7 +522,7 @@
 
                     <!-- Push Notification Banner Overlay (FCM Alert popup) -->
                     <div class="fcm-push-banner" id="fcmPushBanner">
-                        <div class="fcm-icon">🥔</div>
+                        <div class="fcm-icon" style="padding:0; overflow:hidden; display:flex; justify-content:center; align-items:center;"><img src="icon.png" alt="FCM" style="width:100%; height:100%; object-fit:cover; border-radius:6px;"></div>
                         <div class="fcm-text-box">
                             <h5 id="fcmTitle">감자맵스 푸시 알림</h5>
                             <p id="fcmMessage">알림 메시지 본문이 들어갑니다.</p>
@@ -581,7 +539,7 @@
     <!-- Floating Sound Chime Pre-loader / Help Modal -->
     <div id="welcomeOverlay" class="welcome-overlay">
         <div class="welcome-card">
-            <h2>🥔 감자맵스 웹 시뮬레이터</h2>
+            <h2><img src="icon.png" alt="Logo" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 8px; box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);">감자맵스 웹 시뮬레이터</h2>
             <p>마케팅 영업의 치트키, 감자맵스의 신규 광고 대본을 시연하고 실제로 앱을 조작할 수 있는 고급 프로토타입 시뮬레이터입니다.</p>
             
             <div class="features-summary">
