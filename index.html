@@ -3,832 +3,587 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>감자네트워크 & 감자빌더 | 통합 비즈니스 플랫폼</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- 실시간 슬라이드 기능을 위한 Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <style>
-        body {
-            font-family: 'Pretendard', sans-serif;
-            scroll-behavior: smooth;
-            word-break: keep-all;
-            background: #f8fafc;
-            
-            /* 🛡️ 1차 방어막: 마우스 드래그 및 텍스트 선택 완벽 차단 */
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        
-        /* 단, 입력창(Input, Textarea)은 글을 써야 하므로 선택 허용 */
-        input, textarea {
-            -webkit-user-select: auto;
-            -moz-user-select: auto;
-            -ms-user-select: auto;
-            user-select: auto;
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, #60a5fa, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gradient-text-gold {
-            background: linear-gradient(to right, #f59e0b, #fbbf24);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .glass-card-dark {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .hover-lift { transition: all .35s ease; }
-        .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(0,0,0,.08); }
-        .service-icon {
-            width: 62px; height: 62px; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; margin-bottom: 18px;
-        }
-        .floating-kakao {
-            position: fixed; right: 24px; bottom: 24px; z-index: 9999;
-            background: #FEE500; color: #191919;
-            border-radius: 999px; padding: 14px 22px;
-            display: flex; align-items: center; gap: 10px; font-weight: 800;
-            box-shadow: 0 10px 28px rgba(0,0,0,.25); transition: all .28s ease;
-        }
-        .floating-kakao:hover { transform: translateY(-3px) scale(1.02); }
-        
-        .product-swiper { padding: 20px 0 30px; }
-        .swiper-button-next, .swiper-button-prev { color: #0284c7 !important; }
-        .product-swiper .swiper-wrapper { transition-timing-function: linear !important; }
-        
-        /* 비즈니스 영역 슬라이더 페이지네이션 커스텀 */
-        .businessSwiper { padding-bottom: 50px !important; padding-top: 10px !important; }
-        .businessSwiper .swiper-pagination-bullet { background: #cbd5e1; opacity: 0.5; width: 8px; height: 8px; transition: all 0.3s ease; }
-        .businessSwiper .swiper-pagination-bullet-active { background: #0ea5e9; opacity: 1; width: 24px; border-radius: 4px; }
-        
-        /* 팝업 등장 애니메이션 */
-        @keyframes popDropIn {
-            0% { transform: translateY(-30px) scale(0.95); opacity: 0; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
-        }
-
-        /* 무한 롤링 포트폴리오 띠배너 애니메이션 */
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-marquee { display: flex; width: max-content; animation: marquee 35s linear infinite; }
-        .animate-marquee:hover { animation-play-state: paused; }
-
-        /* 1분 시뮬레이터 로딩바 애니메이션 */
-        @keyframes loadingBar {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        /* 호버 맥북/폰 목업 광채 애니메이션 */
-        .glow-effect {
-            position: relative;
-        }
-        .glow-effect::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-        .glow-effect:hover::after {
-            opacity: 1;
-        }
-    </style>
+    <title>감자맵스 - 마케팅 영업의 치트키 시뮬레이터</title>
+    <!-- KakaoTalk In-App Browser Breakout Script -->
+    <script>
+        (function() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf('kakaotalk') > -1) {
+                var currentUrl = window.location.href;
+                if (ua.indexOf('android') > -1) {
+                    window.location.href = 'intent://' + currentUrl.replace(/https?:\/\//, '') + '#Intent;scheme=https;end';
+                } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
+                    window.location.href = 'kakaotalk://web/openExternalApp?url=' + encodeURIComponent(currentUrl);
+                }
+            }
+        })();
+    </script>
+    <!-- Google Fonts: Inter, Outfit, and Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=4.1">
 </head>
-<body class="antialiased selection:bg-blue-500 selection:text-white overflow-x-hidden">
+<body>
 
-    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="floating-kakao text-sm md:text-base">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
-        카카오 상담
-    </a>
-
-    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <span class="text-xl font-black tracking-tight text-sky-700">감자네트워크</span>
-                <span class="text-sm text-slate-400 hidden sm:block">| 프리미엄 비즈니스 솔루션</span>
-            </div>
-            <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-600">
-                <a href="#local-business" class="hover:text-sky-600 transition">핵심 사업영역</a>
-                <a href="#gamjamaps" class="hover:text-amber-600 transition">감자맵스 (AI 영업)</a>
-                <a href="#gamjabuilder" class="hover:text-blue-600 transition">감자빌더 (AI SaaS)</a>
-                <a href="#pricing" class="hover:text-blue-600 transition">파트너 요금제</a>
-                <div class="flex items-center gap-3 pl-4 border-l border-slate-300">
-                    <a href="보안_매뉴얼.html" download="감자빌더_프리미엄_매뉴얼.html" class="px-4 py-2 border border-slate-300 hover:bg-slate-50 rounded-full transition flex items-center gap-2 text-slate-600">
-                        솔루션 매뉴얼
-                    </a>
-                    <a href="#contact" class="px-5 py-2 bg-gradient-to-r from-sky-600 to-blue-600 hover:opacity-90 text-white rounded-full transition shadow-lg">구축 상담문의</a>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <section class="relative pt-32 pb-20 px-6 overflow-hidden bg-slate-900 text-white flex items-center min-h-[90vh]">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1800')] opacity-20 bg-cover bg-center"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/30 blur-[120px] rounded-full z-0"></div>
+    <div class="app-layout">
         
-        <div class="relative max-w-7xl mx-auto z-10 w-full flex flex-col items-center text-center">
-            <div class="inline-block py-1 px-3 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-sm font-bold mb-6">
-                🚀 매장 인프라부터 AI 하이엔드 마케팅까지
-            </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
-                로컬 비즈니스의 압도적 혁신<br>
-                <span class="gradient-text">감자네트워크 & 감자빌더</span>
-            </h1>
-            <p class="text-lg md:text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl">
-                매장 운영을 돕는 인프라 구축부터, 단 1분 만에 완성되는 하이엔드 AI 웹사이트 솔루션까지.<br>성공적인 비즈니스를 향한 가장 확실한 파트너가 되어 드립니다.
-            </p>
-
-            <div class="w-full max-w-2xl mx-auto mb-10 relative z-20 px-2 sm:px-0">
-                <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-0 bg-transparent sm:bg-white sm:rounded-full sm:p-2 sm:pl-6 sm:shadow-[0_10px_40px_rgba(37,99,235,0.4)] sm:border border-blue-400">
-                    <input type="text" id="sim-business-name" class="w-full sm:flex-grow bg-white sm:bg-transparent text-slate-800 text-base sm:text-lg outline-none placeholder-slate-400 font-medium rounded-full sm:rounded-none px-6 py-4 sm:py-0 border border-blue-400 sm:border-none shadow-lg sm:shadow-none" placeholder="상호명 입력 (예: 감자네트워크)" onkeypress="if(event.keyCode==13) startSimulation()">
-                    <button onclick="startSimulation()" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white font-bold py-4 px-6 md:px-8 rounded-full transition-all shadow-[0_4px_15px_rgba(37,99,235,0.5)] sm:shadow-none whitespace-nowrap text-base sm:text-lg">
-                        1분 만에 생성 ✨
-                    </button>
+        <!-- Left Side: Advertising Video Presentation / Demo Instruction Panel -->
+        <div class="ad-panel" id="adPanel">
+            <div class="ad-header">
+                <div class="logo">
+                    <img src="icon.png" alt="Icon" class="logo-icon-img" style="width: 28px; height: 28px; border-radius: 6px; box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); vertical-align: middle; margin-right: 4px;">
+                    <span class="logo-text">GAMJA <span>MAPS</span></span>
                 </div>
-                <p class="text-sky-300 text-xs sm:text-sm mt-4 sm:mt-3 font-medium px-2 leading-relaxed">AI가 상호명을 분석하여 럭셔리 반응형 웹 가안을 즉시 제작합니다.</p>
+                <!-- Mode Selector Toggle -->
+                <div class="mode-selector-tabs">
+                    <button class="mode-tab active" id="modeTimeline" title="대본 낭독에 맞춰 자동으로 연동되는 화면">광고 시연</button>
+                    <button class="mode-tab" id="modeFree" title="직접 검색하고 영업일지를 남기는 자유 테스트 모드">자유 데모</button>
+                </div>
             </div>
 
-            <div class="flex flex-wrap gap-4 justify-center opacity-80 mt-4">
-                <a href="#local-business" class="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition text-sm">
-                    통합 인프라 솔루션 보기
-                </a>
-                <a href="#gamjamaps" class="px-6 py-3 bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/30 text-amber-400 font-bold rounded-xl transition text-sm">
-                    감자맵스 (AI 영업) 보기
-                </a>
-                <a href="#gamjabuilder" class="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition text-sm">
-                    감자빌더 V8.0 기능 보기
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 핵심 사업 영역 파스텔톤 슬라이더 -->
-    <section id="local-business" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <div class="text-sm font-extrabold tracking-widest text-sky-600 mb-3">CORE BUSINESS</div>
-                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">감자네트워크 핵심 사업 영역</h2>
-                <p class="text-slate-500 text-lg">현장 영업, 온라인 유입, 그리고 완벽한 매장 인프라를 하나로 연결합니다.</p>
-            </div>
-            
-            <div class="swiper businessSwiper px-2">
-                <div class="swiper-wrapper items-stretch">
+            <!-- AI Video Anchor Face / Avatar -->
+            <div class="avatar-container">
+                <div class="avatar-box" id="avatarBox">
+                    <div class="hologram-ring"></div>
+                    <div class="hologram-ring ring-2"></div>
                     
-                    <!-- [추가] 감자맵스 슬라이드 -->
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-amber-50/60 border border-amber-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(245,158,11,0.05)] relative overflow-hidden">
-                            <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">HOT</div>
-                            <div class="service-icon bg-gradient-to-br from-amber-100 to-amber-50 text-amber-600">🥔</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">감자맵스 (AI 영업 솔루션)</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">인허가 데이터 기반 상권 스캔과 AI 거절 대응 모의 훈련을 통해 대행 계약 성공률을 극대화하는 세일즈 지원 툴입니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 신규 개업 및 브레이크 타임 스캔</li>
-                                <li>✔ 제안서 열람 감지 실시간 FCM 알림</li>
-                                <li>✔ AI 가상 사장님 거절 극복 롤플레잉</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <img src="anchor.png" alt="AI Anchor" class="anchor-img" id="anchorImg">
 
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-orange-50/60 border border-orange-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(251,146,60,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-orange-100 to-orange-50 text-orange-500">🍽️</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">KT 하이오더 설치 및 관리</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">식당 운영 효율을 높이고 추가 주문을 유도하는 시스템 제안 및 현장 영업 사업입니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 직원 동선 감소 및 회전율 상승</li>
-                                <li>✔ 주문 실수 및 누락 원천 차단</li>
-                                <li>✔ 매장 환경 맞춤형 사후 관리</li>
-                            </ul>
-                        </div>
+                    <div class="voice-wave" id="voiceWave">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
                     </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-emerald-50/60 border border-emerald-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(52,211,153,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-emerald-100 to-emerald-50 text-emerald-500">📍</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">플레이스·블로그 마케팅</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">검색 노출과 신뢰 형성을 동시에 만드는 로컬 마케팅 중심 사업입니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 스마트플레이스 랭킹 최적화</li>
-                                <li>✔ 고품질 리뷰 및 기자단 운영</li>
-                                <li>✔ 지역 핵심 상권 키워드 점령</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-pink-50/60 border border-pink-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(244,114,182,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-pink-100 to-pink-50 text-pink-500">🎬</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">SNS·숏폼 마케팅</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">짧고 강렬한 트렌디 콘텐츠로 폭발적인 관심을 만들고 브랜드 유입을 극대화합니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 유튜브 쇼츠 기획 및 스크립트</li>
-                                <li>✔ 인스타그램 프리미엄 피드 운영</li>
-                                <li>✔ 즉각적 상담 연결형 콘텐츠</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-sky-50/60 border border-sky-200 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(56,189,248,0.08)] relative overflow-hidden">
-                            <div class="absolute top-0 right-0 bg-sky-200 text-sky-800 text-xs font-bold px-3 py-1 rounded-bl-xl">NEW</div>
-                            <div class="service-icon bg-gradient-to-br from-sky-100 to-sky-50 text-sky-500">💻</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">프리미엄 웹사이트</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">브랜드의 격을 결정짓는 트렌디하고 최적화된 하이엔드 웹사이트를 기획·제작합니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 기기별 완벽한 반응형 디자인</li>
-                                <li>✔ 검색엔진 노출(SEO) 구조 세팅</li>
-                                <li>✔ 다국어 번역 및 시스템 적용</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-teal-50/60 border border-teal-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(45,212,191,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-teal-100 to-teal-50 text-teal-500">📈</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">매출 퀀텀점프 컨설팅</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">단순한 노출을 넘어 실제 유입과 매장 운영의 병목을 진단하는 실전형 컨설팅입니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 리뷰·노출·예약 전환율 점검</li>
-                                <li>✔ 상권 데이터 기반 전략 설계</li>
-                                <li>✔ 즉시 적용 가능한 실행 제안</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-indigo-50/60 border border-indigo-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(99,102,241,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-indigo-100 to-indigo-50 text-indigo-500">🛡️</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">통신·네트워크 보안</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">끊김 없는 안정적인 매장 운영을 위해 최고 수준의 인프라를 설계합니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 대규모 네트워크 점검 및 설계</li>
-                                <li>✔ 전용 기업인터넷 관리 및 랜공사</li>
-                                <li>✔ 통합 방범 및 CCTV 구축</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-violet-50/60 border border-violet-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(139,92,246,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-violet-100 to-violet-50 text-violet-500">⚙️</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">B2B 영업 자동화</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">에너지가 소모되는 제안과 상담 과정을 시스템화하여 빠르고 세련되게 처리합니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 웹(HTML) 기반 제안서 생성</li>
-                                <li>✔ 원클릭 이메일·메신저 발송</li>
-                                <li>✔ 상담 및 리드 수집 극대화</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-amber-50/60 border border-amber-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(245,158,11,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-amber-100 to-amber-50 text-amber-500">🔧</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">PC·키폰 유지보수</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">오랜 노하우로 매장 내 모든 전자기기와 IT 환경이 중단 없이 돌아가도록 완벽 관리합니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 하드웨어 장애 긴급 조치</li>
-                                <li>✔ 메인 PC·키폰 시스템 점검</li>
-                                <li>✔ 중요 데이터 백업 및 복구</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide h-auto">
-                        <div class="bg-rose-50/60 border border-rose-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(244,63,94,0.05)]">
-                            <div class="service-icon bg-gradient-to-br from-rose-100 to-rose-50 text-rose-500">💡</div>
-                            <h3 class="text-xl font-black text-slate-900 mb-3">AI 맞춤 솔루션 개발</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">단순 업무를 자동화하고 수익 창출 파이프라인을 만들어줄 전용 소프트웨어를 기획·개발합니다.</p>
-                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
-                                <li>✔ 데이터 수집 크롤링 봇 제작</li>
-                                <li>✔ 강력한 라이선스 서버 구축</li>
-                                <li>✔ 비즈니스 맞춤형 SaaS 기획</li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
-                <div class="swiper-pagination-business mt-10 flex justify-center gap-2"></div>
+                
+                <div class="presenter-status">
+                    <span class="status-dot pulsed" id="statusDot"></span>
+                    <span id="statusText">대본 로딩 완료 (정지 상태)</span>
+                </div>
+            </div>
+
+            <!-- Subtitle / Mode Info Card -->
+            <div class="subtitle-card">
+                <div class="subtitle-text" id="subtitleText">
+                    "광고 시작하기 버튼을 누르면 새로운 세일즈 파트너 '감자맵스'의 비디오 프레젠테이션 시뮬레이터가 시작됩니다."
+                </div>
+            </div>
+
+            <!-- TIMELINE MODE PANEL -->
+            <div class="mode-panel-content" id="panelTimelineContent">
+                <div class="timeline-container">
+                    <h3>📢 광고 대본 타임라인</h3>
+                    <div class="timeline" id="timelineList">
+                        <!-- Dynamic timeline nodes -->
+                    </div>
+                </div>
+
+                <div class="ad-control-card">
+                    <div class="control-row">
+                        <button class="btn-control btn-play" id="btnPlayAd">
+                            <span class="icon">▶</span> <span class="text">광고 시작하기</span>
+                        </button>
+                        <button class="btn-control btn-reset" id="btnResetAd" disabled>
+                            <span class="icon">🔄</span> 처음부터
+                        </button>
+                    </div>
+                    <div class="control-settings">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggleTts" checked>
+                            <span class="slider"></span>
+                            <span class="label-text">🎙️ AI 음성(TTS) 낭독 사용</span>
+                        </label>
+                        <div class="volume-control">
+                            <span>🔊</span>
+                            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.8">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FREE DEMO MODE PANEL (Instructions and Live Stats) -->
+            <div class="mode-panel-content hidden" id="panelFreeContent">
+                <div class="free-instruction-card">
+                    <h3>🎮 자유 데모 조작 모드 활성화</h3>
+                    <p class="description">대본 자동 진행 없이 우측 스마트폰의 기능을 실제 앱처럼 하나씩 조작해 보실 수 있습니다.</p>
+                    
+                    <ul class="steps-guide">
+                        <li>
+                            <strong>1. 상권 골든타겟 검색 (타이밍)</strong>
+                            <p>스마트폰의 [타이밍] 탭을 눌러 원하는 식당 이름(예: 마포갈비)을 입력하고 스캔해 보세요.</p>
+                        </li>
+                        <li>
+                            <strong>2. 실시간 슬라이더 연동 (추적)</strong>
+                            <p>[추적] 탭에서 사장님 화면의 슬라이더를 밀면, 영업사원 화면에 진짜 실시간 알림음(FCM)과 타이머가 연동됩니다.</p>
+                        </li>
+                        <li>
+                            <strong>3. AI 거절 역할극 (AI예습)</strong>
+                            <p>[AI예습] 탭에서 훈련 상대(박사장, 이사장, 최사장)를 골라 실제 세일즈 대화 훈련을 하고 성적표를 해제해 보세요.</p>
+                        </li>
+                        <li>
+                            <strong>4. 로컬 영업 일지 저장</strong>
+                            <p>영업 완료 후 작성한 메모들은 브라우저 내부 DB(localStorage)에 안전하게 저장 및 유지됩니다.</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="database-status-card">
+                    <h4>📊 실시간 시뮬레이션 상태</h4>
+                    <div class="status-grid-free">
+                        <div class="status-item-free">
+                            <span class="lbl">저장된 영업일지</span>
+                            <strong id="statDiaryCount">0건</strong>
+                        </div>
+                        <div class="status-item-free">
+                            <span class="lbl">최근 모의훈련 점수</span>
+                            <strong id="statLastScore">- 점</strong>
+                        </div>
+                    </div>
+                    <button class="btn-clear-db" id="btnClearDb">🔄 시뮬레이션 데이터 초기화</button>
+                </div>
+            </div>
+
+            <div class="script-author-note">
+                <strong>대본 핵심 업데이트:</strong> 잡상인 취급 탈피 ➔ 타이밍 스캔(신규🔥, 골목💎, 브레이크🟢) ➔ 실시간 FCM 추적 ➔ AI 가상 사장님 거절 롤플레잉(🔒 훈련 기록표).
+            </div>
+            
+            <!-- PDF Download Button -->
+            <div class="download-cheat-sheet-container" style="margin-top: 15px;">
+                <a href="감자맵스 영업 치트키 - 소상공인 거절 극복 세일즈 오답노트.pdf" download="감자맵스 영업 치트키 - 소상공인 거절 극복 세일즈 오답노트.pdf" class="btn-download-pdf">
+                    <span>📥</span> 광고주 거절 극복 세일즈 스크립트 오답노트 다운로드
+                </a>
             </div>
         </div>
         
-        <div class="max-w-7xl mx-auto px-6 mt-16 pt-16 border-t border-slate-100">
-            <!-- [가이드라인 준수 완벽 수정] 띠배너 수수료 문구를 상단으로 이동 -->
-            <div class="mb-8 p-4 bg-slate-100 rounded-xl text-center border border-slate-200">
-                <p class="text-sm md:text-base text-slate-900 font-black">
-                    <span class="text-red-600">[유료 광고]</span> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-                </p>
-            </div>
-
-            <div class="flex flex-col lg:flex-row items-center justify-between mb-8 gap-6">
-                <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2 shrink-0">
-                    <span class="text-sky-600 text-3xl">🔥</span> 비즈니스 필수 아이템 최저가
-                </h2>
-                <div class="w-full lg:max-w-[600px] flex justify-center bg-white rounded-lg overflow-hidden border border-slate-100 shadow-sm">
-                    <iframe src="https://coupa.ng/cmFRj5" width="100%" height="75" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
-                </div>
-            </div>
-
-            <div class="swiper product-swiper overflow-hidden">
-                <div class="swiper-wrapper" id="dynamic-product-list">
-                    <div class="swiper-slide p-12 text-center text-slate-400 font-bold">비즈니스 추천 상품을 연동 중입니다...</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- [신규 추가] 감자맵스 전용 섹션 -->
-    <section id="gamjamaps" class="py-24 bg-slate-50 border-t border-b border-slate-200 relative overflow-hidden">
-        <div class="absolute top-1/2 left-0 w-96 h-96 bg-amber-500/10 blur-[100px] rounded-full z-0"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            
-            <div class="grid lg:grid-cols-12 gap-12 items-center">
-                
-                <!-- 좌측 설명 텍스트 -->
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="inline-block py-1 px-3 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-600 text-sm font-bold">
-                        Gamja Maps AI Sales Assistant
-                    </div>
-                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 leading-tight">
-                        잡상인 영업은 끝났습니다.<br>
-                        승률 200%의 <span class="text-amber-600 font-black">AI 상권 영업 치트키</span>
-                    </h2>
-                    <p class="text-slate-600 text-lg leading-relaxed">
-                        전국 상권 인허가 빅데이터 실시간 스캔과 AI 행동 추적 기술이 결합했습니다. 소상공인 사장님의 '숨은 기회 손실액'을 눈앞에 직접 증명하고 골든타임에 세일즈를 성사시키세요.
-                    </p>
-
-                    <div class="grid sm:grid-cols-2 gap-6 pt-4">
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">🔥</div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-base">골든타겟 1초 스캔</h4>
-                                <p class="text-sm text-slate-500 mt-1">50일 내 신규 매장, 틈새 골목 상권, 그리고 사장님이 여유로운 브레이크 타임을 자동으로 포착합니다.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">🔔</div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-base">실시간 고객 추적 (FCM)</h4>
-                                <p class="text-sm text-slate-500 mt-1">발송한 제안서를 사장님이 열어보는 바로 그 순간, 스마트폰 실시간 알림을 받아 최고의 타이밍에 접근합니다.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">🤖</div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-base">AI 거절 극복 롤플레잉</h4>
-                                <p class="text-sm text-slate-500 mt-1">현장 방문 전, 까다로운 거절 시나리오를 학습한 AI 가상 사장님과 대화 훈련을 진행하고 특급 영업 화법을 복기합니다.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">👑</div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-base">VIP 전용 멤버십 패키지</h4>
-                                <p class="text-sm text-slate-500 mt-1">매일 아침 업데이트되는 전국 점포 인허가 타겟 자동 발송 및 대행사 전용 다중 슬라이더 관리 기능을 제공합니다.</p>
-                            </div>
+        <!-- Right Side: Gamja Maps Smartphone Simulation Panel -->
+        <div class="phone-panel">
+            <div class="smartphone-bezel">
+                <div class="smartphone-screen" id="phoneScreen">
+                    
+                    <!-- Top Status Bar -->
+                    <div class="phone-status-bar">
+                        <span class="phone-time" id="phoneTime">14:25</span>
+                        <div class="phone-icons">
+                            <span>📡</span>
+                            <span>📶</span>
+                            <span>🔋 94%</span>
                         </div>
                     </div>
 
-                    <div class="pt-6">
-                        <!-- 데모 웹 시뮬레이터 링크 연동 -->
-                        <a href="./GamjaMaps_WebSimulator/index.html" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold text-lg rounded-2xl transition shadow-lg shadow-amber-500/20">
-                            실시간 데모 시뮬레이터 체험 ⚡
-                        </a>
+                    <!-- App Header -->
+                    <div class="app-header" id="appHeader">
+                        <div class="app-logo">
+                            <img src="icon.png" alt="Icon" class="potato-emoji-img" style="width: 18px; height: 18px; border-radius: 4px; vertical-align: middle; margin-right: 4px;">
+                            <span>감자맵스</span>
+                            <span class="vip-badge">VIP</span>
+                        </div>
+                        <div class="app-actions">
+                            <span class="gps-indicator" id="gpsIndicator">● GPS ON</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 우측 가상 모바일 목업 그래픽 -->
-                <div class="lg:col-span-5 flex justify-center">
-                    <div class="w-[300px] h-[550px] bg-slate-950 border-8 border-slate-800 rounded-[38px] shadow-2xl relative overflow-hidden flex flex-col justify-between p-3 glow-effect">
-                        <!-- 스피커 & 노치 -->
-                        <div class="w-24 h-4 bg-slate-800 rounded-full mx-auto mb-2 flex items-center justify-center"><div class="w-2 h-2 bg-black rounded-full"></div></div>
+                    <!-- Screen Container (Contains the active view) -->
+                    <div class="screen-container" id="screenContainer">
                         
-                        <!-- 모바일 내부 화면 렌더링 -->
-                        <div class="flex-grow bg-[#0f1524] rounded-[24px] p-3 text-white flex flex-col justify-between overflow-hidden relative">
-                            <!-- GPS 및 헤더 -->
-                            <div class="flex justify-between items-center text-[10px] opacity-75 border-b border-white/10 pb-2">
-                                <span>📡 감자맵스 VIP</span>
-                                <span class="text-emerald-400 font-bold">● LIVE SCANNING</span>
+                        <!-- ================= SCREEN 1: MAIN DASHBOARD ================= -->
+                        <div class="app-view active" id="view-dashboard">
+                            <div class="dashboard-top">
+                                <div class="dropdown-mock">
+                                    <span>📊 상권 분석 대시보드</span>
+                                    <span>▼</span>
+                                </div>
+                                <button class="btn-scan-trigger" id="btnStartDashboardScan">⚡ 실시간 상권 분석</button>
                             </div>
-
-                            <!-- 레이더 스캔 목업 그래픽 -->
-                            <div class="flex-grow flex flex-col items-center justify-center relative my-4">
-                                <div class="w-32 h-32 rounded-full border border-amber-500/30 flex items-center justify-center relative animate-pulse">
-                                    <div class="w-20 h-20 rounded-full border border-amber-500/40 flex items-center justify-center">
-                                        <div class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-lg">🥔</div>
+                            
+                            <div class="chart-card">
+                                <div class="card-title-row">
+                                    <h4>📈 마케팅 매출 전환 추이</h4>
+                                    <span class="trend-indicator up">▲ 24% 급상승</span>
+                                </div>
+                                <div class="chart-svg-container">
+                                    <svg viewBox="0 0 200 80" class="line-chart-svg">
+                                        <path d="M 10 70 L 40 60 L 70 65 L 100 40 L 130 50 L 160 25 L 190 15" fill="none" stroke="#f43f5e" stroke-width="2.5" class="chart-path" />
+                                        <circle cx="190" cy="15" r="4" fill="#f43f5e" />
+                                    </svg>
+                                    <div class="chart-labels">
+                                        <span>4월</span>
+                                        <span>5월</span>
+                                        <span>현재</span>
                                     </div>
                                 </div>
-                                <div class="absolute text-center mt-20">
-                                    <span class="text-[11px] font-black text-amber-400">강남역 300m 스캔 완료</span>
+                            </div>
+
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <span class="stat-label">목표 달성률</span>
+                                    <div class="radial-progress-container">
+                                        <svg viewBox="0 0 36 36" class="circular-chart">
+                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <path class="circle" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <text x="18" y="20.35" class="percentage">85%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card">
+                                    <span class="stat-label">상권 평균 매출</span>
+                                    <div class="bar-stats-container">
+                                        <div class="bar-row">
+                                            <span class="bar-label">어제</span>
+                                            <div class="bar-fill-bg"><div class="bar-fill" style="width: 60%"></div></div>
+                                        </div>
+                                        <div class="bar-row">
+                                            <span class="bar-label">통계</span>
+                                            <div class="bar-fill-bg"><div class="bar-fill fill-accent" style="width: 85%"></div></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- 카드 매출 손실 팝업 그래픽 -->
-                            <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-3 text-center">
-                                <div class="text-[9px] text-red-400 font-bold mb-1">경쟁 매장 대비 기회 손실액</div>
-                                <div class="text-xl font-black text-red-500 font-mono leading-none">-₩4,200,000</div>
-                                <div class="text-[8px] text-slate-400 mt-1">블로그/플레이스 광고 점유 이탈 방어 시 시급</div>
+                            <div class="warning-loss-card">
+                                <div class="warning-header">
+                                    <span class="warning-icon">⚠</span>
+                                    <span>경고: 1등 매장 대비 상권 손실량</span>
+                                </div>
+                                <div class="warning-content">
+                                    <div class="loss-amount" id="dashLossAmount">-₩1,250,000</div>
+                                    <p class="loss-desc">주변 경쟁 매장의 광고 노출 점유 증가로 인한 이번 주 예상 영업 손실액입니다.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-            </div>
-
-        </div>
-    </section>
-
-    <section id="gamjabuilder" class="py-24 bg-[#0f172a] text-white border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <div class="inline-block py-1 px-3 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-sm font-bold mb-4">
-                    GamjaBuilder V8.0 Premium Studio
-                </div>
-                <h2 class="text-3xl md:text-5xl font-extrabold mb-6">웹에이전시가 필요 없는 혁신</h2>
-                <p class="text-slate-400 text-lg max-w-2xl mx-auto">업체명과 업종만 입력하세요. 제미나이(Gemini) AI가 전문 카피라이터 수준의 텍스트와 완벽한 반응형 럭셔리 웹사이트를 1분 만에 완성해 냅니다.</p>
-            </div>
-            <div class="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] border border-white/10 glass-card-dark p-2 md:p-3 mb-20">
-                <div class="aspect-video rounded-xl overflow-hidden bg-black relative">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sdXP62CD6FA?autoplay=1&mute=1&loop=1&playlist=sdXP62CD6FA" title="GamjaBuilder Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
-                    <div class="text-4xl mb-6">✨</div>
-                    <h3 class="text-xl font-bold mb-4">AI 수석 카피라이터 내장</h3>
-                    <p class="text-slate-400 leading-relaxed">디자인부터 텍스트, 다국어 번역, 스마트폰 리뷰 응대까지. 자체 내장된 AI 엔진이 브랜드의 품격을 올려줍니다.</p>
-                </div>
-                <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
-                    <div class="text-4xl mb-6">📱</div>
-                    <h3 class="text-xl font-bold mb-4">실시간 텔레그램 리드 연동</h3>
-                    <p class="text-slate-400 leading-relaxed">웹사이트에서 고객이 문의를 남기는 즉시, 사장님의 스마트폰으로 다이렉트 알림이 전송되어 기회를 놓치지 않습니다.</p>
-                </div>
-                <div class="glass-card-dark p-8 rounded-2xl hover:-translate-y-2 transition duration-300">
-                    <div class="text-4xl mb-6">🛡️</div>
-                    <h3 class="text-xl font-bold mb-4">철저한 중앙 라이선스 제어</h3>
-                    <p class="text-slate-400 leading-relaxed">대리점별 생성 횟수 제한, 만료일 설정, 배포 관리 등을 감자네트워크 본사 시스템을 통해 완벽하게 통제합니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="pricing" class="py-24 bg-slate-900 text-white border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4">감자빌더 파트너 요금제</h2>
-                <p class="text-slate-400">비즈니스 규모에 맞는 라이선스를 선택하고, 프리미엄의 가치를 고객에게 직접 제안하세요.</p>
-                <div class="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl max-w-2xl mx-auto">
-                    <p class="text-sm text-amber-400 font-bold">💡 특별 프로모션: PRO 요금제 가입 시, 감자맵스 마케터 라이선스 슬롯 패키지가 무료 연동됩니다.</p>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-slate-500 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-2">BASIC</h3>
-                    <p class="text-slate-400 mb-6">영세 1인 대리점용</p>
-                    <div class="text-4xl font-bold mb-8">₩250,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
-                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
-                        <li>✔️ <span class="text-white font-bold">월 20회</span> 생성 한도</li>
-                        <li>✔️ Gemini AI 카피라이팅 지원</li>
-                        <li>✔️ 실시간 텔레그램 연동</li>
-                    </ul>
-                </div>
-                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-blue-500 transform md:-translate-y-4 shadow-2xl shadow-blue-500/20 relative bg-blue-900/10 flex flex-col">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold">BEST PARTNER</div>
-                    <h3 class="text-2xl font-bold mb-2">PRO</h3>
-                    <p class="text-slate-400 mb-6">일반 마케팅 에이전시</p>
-                    <div class="text-4xl font-bold mb-8 text-blue-400">₩450,000<span class="text-lg text-slate-400 font-normal"> /월</span></div>
-                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
-                        <li>✔️ <span class="text-blue-400 font-bold">월 50회</span> 생성 한도</li>
-                        <li>✔️ <span class="text-blue-400 font-bold">감자빌더 실물 패키지</span> (USB+매뉴얼) 배송</li>
-                        <li>✔️ 본사 핫라인 기술 집중 지원</li>
-                        <li>✔️ <span class="text-amber-400 font-bold">감자맵스 영업 툴</span> 5개 슬롯 기본 탑재</li>
-                    </ul>
-                </div>
-                <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-purple-500 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-2">ULTRA</h3>
-                    <p class="text-slate-400 mb-6">기업형 총판 및 프랜차이즈</p>
-                    <div class="text-4xl font-bold mb-8">별도 문의</div>
-                    <ul class="space-y-4 mb-8 text-slate-300 flex-grow">
-                        <li>✔️ <span class="text-purple-400 font-bold">무제한</span> 생성 라이선스</li>
-                        <li>✔️ VVIP 전용 프리미엄 패키지 세트</li>
-                        <li>✔️ 마스터 관리자 커스텀 앱 제공</li>
-                        <li>✔️ 독립 서버 통합 세팅 지원</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-24 px-6 bg-slate-50 border-t border-slate-200">
-        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            
-            <div>
-                <div class="text-sm font-extrabold tracking-widest text-blue-600 mb-3">CONTACT US</div>
-                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-6">
-                    솔루션 도입부터 인프라 구축까지<br>지금 바로 상의하세요.
-                </h2>
-                <p class="text-slate-600 text-lg mb-10 leading-relaxed">
-                    테이블 오더, 기업 통신 등의 로컬 컨설팅부터 감자빌더 파트너 도입에 이르기까지. 궁금하신 점을 남겨주시거나 아래 연락처로 다이렉트 문의해 주세요.
-                </p>
-                <div class="space-y-4">
-                    <a href="tel:01046530114" class="flex items-center gap-4 p-5 bg-white border border-slate-200 rounded-2xl hover-lift">
-                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl">📞</div>
-                        <div>
-                            <div class="text-sm font-bold text-slate-400">김성준 대표 다이렉트</div>
-                            <div class="text-2xl font-black text-slate-800">010-4653-0114</div>
-                        </div>
-                    </a>
-                    <a href="http://pf.kakao.com/_iJMxfn/chat" target="_blank" class="flex items-center gap-4 p-5 bg-[#FEE500] rounded-2xl hover-lift">
-                        <div class="w-14 h-14 bg-black/10 rounded-xl flex items-center justify-center">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="#191919"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.27 6.054l-.77 2.82c-.083.306.1.6.4.524l3.32-.835c.57.043 1.155.066 1.78.066 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"/></svg>
-                        </div>
-                        <div>
-                            <div class="text-sm font-bold text-slate-800/60">카카오톡 공식 채널</div>
-                            <div class="text-2xl font-black text-slate-900">1:1 실시간 채팅 상담</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-slate-100">
-                <h3 class="text-2xl font-bold text-slate-800 mb-6">온라인 다이렉트 접수</h3>
-                <form action="http://gjnetwork.kr/api/leads/submit" method="POST" class="space-y-5">
-                    <input type="hidden" name="license_key" value="GAMJA_OFFICIAL_SITE">
-                    <input type="hidden" name="target_chat_id" value="7745000281"> 
-                    <div>
-                        <label class="block text-sm font-bold text-slate-600 mb-2">업체명 / 성함</label>
-                        <input type="text" name="name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition" placeholder="예: 감자네트워크 김성준" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-600 mb-2">연락처</label>
-                        <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition" placeholder="010-0000-0000" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-600 mb-2">상담 내용</label>
-                        <textarea name="message" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition resize-none" placeholder="로컬 인프라 세팅 컨설팅 또는 감자빌더 도입 등 궁금하신 점을 자유롭게 적어주세요."></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg py-4 rounded-xl transition shadow-lg mt-2">
-                        문의 접수하기
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-12 text-center bg-slate-900 text-slate-500 text-sm border-t border-slate-800">
-        <div class="flex flex-wrap justify-center gap-3 mb-6">
-            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자네트워크</span>
-            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">GamjaBuilder</span>
-            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자맵스</span>
-            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">제주 비즈니스 솔루션</span>
-        </div>
-        <p>© 2026 Gamja Network. All rights reserved.</p>
-        <p class="mt-2">대표: 김성준 | 솔루션 문의: 010-4653-0114</p>
-    </footer>
-
-    <!-- 1분 시뮬레이터 로딩 모달 -->
-    <div id="simLoadingModal" class="fixed inset-0 z-[100000] hidden bg-slate-900/95 flex flex-col items-center justify-center text-white backdrop-blur-sm">
-        <div class="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-8"></div>
-        <h3 id="simLoadingText" class="text-2xl md:text-3xl font-bold mb-6 text-center px-4">AI가 브랜드 스토리를 분석 중입니다...</h3>
-        <div class="w-64 h-2 bg-slate-700 rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 animate-[loadingBar_3s_ease-in-out_forwards]"></div>
-        </div>
-    </div>
-
-    <!-- 1분 시뮬레이터 결과(리드 수집) 모달 -->
-    <div id="simResultModal" class="fixed inset-0 z-[100000] hidden bg-black/80 flex items-center justify-center backdrop-blur-sm">
-        <div class="bg-white text-slate-800 p-10 rounded-3xl max-w-md w-full mx-4 relative shadow-2xl animate-[popDropIn_0.3s_forwards]">
-            <button onclick="closeSimResult()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-500 rounded-full font-bold hover:bg-slate-200 transition">&times;</button>
-            <div class="text-center mb-6">
-                <div class="text-5xl mb-4">🎉</div>
-                <h3 class="text-2xl font-black text-slate-900 mb-2">가안이 완성되었습니다!</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">입력해주신 <span id="sim-display-name" class="font-bold text-blue-600 text-base"></span>의 럭셔리 AI 웹사이트 시안이 준비되었습니다.<br>링크를 받아보실 연락처를 남겨주세요.</p>
-            </div>
-            <form action="http://gjnetwork.kr/api/leads/submit" method="POST" class="space-y-4">
-                <input type="hidden" name="license_key" value="GAMJA_SIMULATOR">
-                <input type="hidden" name="target_chat_id" value="7745000281"> 
-                <input type="hidden" id="sim-hidden-name" name="message" value="">
-                <div>
-                    <input type="text" name="name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" placeholder="담당자 성함" required>
-                </div>
-                <div>
-                    <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition" placeholder="연락처 (010-0000-0000)" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition mt-2">
-                    무료 시안 링크 받기 🚀
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- 실시간 소셜 푸루프 토스트 알림 -->
-    <div id="social-toast" class="fixed left-6 bottom-6 z-[9998] bg-white border border-slate-200 shadow-[0_10px_40px_rgba(0,0,0,0.12)] rounded-2xl p-4 flex items-center gap-4 transition-all duration-500 opacity-0 translate-y-8 pointer-events-none w-max max-w-[320px]">
-        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl shrink-0 border border-blue-100">
-            🔔
-        </div>
-        <div class="pr-2">
-            <p id="toast-msg" class="text-[13px] font-bold text-slate-800 leading-snug word-break-keep">알림을 불러오는 중입니다.</p>
-            <p id="toast-time" class="text-[11px] text-slate-400 mt-1 font-medium">방금 전</p>
-        </div>
-    </div>
-
-    <!-- 스크립트 영역 -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        // 🛡️ [불펌 방지 로직] 우클릭 및 개발자 도구 차단
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode == 123) { event.preventDefault(); }
-            if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { event.preventDefault(); }
-            if (event.ctrlKey && event.keyCode == 85) { event.preventDefault(); }
-        });
-
-        window.addEventListener('DOMContentLoaded', function() {
-            loadDynamicCoupangData(); 
-            
-            var businessSwiper = new Swiper(".businessSwiper", {
-                slidesPerView: 1,
-                spaceBetween: 20,
-                loop: true,
-                autoplay: { delay: 3500, disableOnInteraction: false },
-                pagination: { el: ".swiper-pagination-business", clickable: true },
-                breakpoints: {
-                    768: { slidesPerView: 2, spaceBetween: 24 },
-                    1024: { slidesPerView: 3, spaceBetween: 30 }
-                }
-            });
-        });
-
-        function startSimulation() {
-            const bizName = document.getElementById('sim-business-name').value.trim();
-            if (!bizName) {
-                alert("사장님의 상호명을 입력해주세요!");
-                return;
-            }
-            
-            document.getElementById('simLoadingModal').style.display = 'flex';
-            const loadingText = document.getElementById('simLoadingText');
-            
-            loadingText.innerText = "AI가 '" + bizName + "'의 브랜드 스토리를 분석 중입니다...";
-            
-            setTimeout(() => {
-                loadingText.innerText = "업종 맞춤형 럭셔리 디자인을 세팅 중입니다...";
-            }, 1000);
-            
-            setTimeout(() => {
-                loadingText.innerText = "마케팅 카피라이팅 적용 및 최종 렌더링 중...";
-            }, 2000);
-            
-            setTimeout(() => {
-                document.getElementById('simLoadingModal').style.display = 'none';
-                document.getElementById('sim-display-name').innerText = bizName;
-                document.getElementById('sim-hidden-name').value = "[시뮬레이터 시안 요청] 상호명: " + bizName;
-                document.getElementById('simResultModal').style.display = 'flex';
-            }, 3000);
-        }
-
-        function closeSimResult() {
-            document.getElementById('simResultModal').style.display = 'none';
-        }
-
-        async function loadDynamicCoupangData() {
-            try {
-                const API_URL = './coupang_data.json'; 
-                let data = [];
-                
-                try {
-                    const response = await fetch(API_URL);
-                    if (!response.ok) throw new Error("JSON 파일 로드 실패");
-                    data = await response.json();
-                } catch (err) {
-                    data = [
-                        { name: "LG전자 2024 그램 16 노트북", price: "1,450,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" },
-                        { name: "실버 순은 999.9 실버바 100g", price: "480,000원", link: "https://link.coupang.com/a/eAduSI", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/5815/8863f82f80c65377f0a8c201404988299109405786801878486985012351.jpg" },
-                        { name: "인체공학 무선 키보드 세트", price: "59,000원", link: "#", img: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80" },
-                        { name: "4K 울트라 HD 모니터", price: "349,000원", link: "#", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&q=80" }
-                    ];
-                }
-
-                const container = document.getElementById('dynamic-product-list');
-                container.innerHTML = ''; 
-
-                const displayData = [...data, ...data]; 
-
-                displayData.forEach(item => {
-                    container.innerHTML += `
-                        <div class="swiper-slide p-2">
-                            <a href="${item.link}" target="_blank" class="block bg-white border border-slate-200 rounded-2xl overflow-hidden hover-lift shadow-sm">
-                                <img src="${item.img}" referrerpolicy="no-referrer" class="w-full h-44 object-cover" alt="${item.name}">
-                                <div class="p-4">
-                                    <div class="text-xs font-bold text-slate-400 mb-1">최저가 보장</div>
-                                    <div class="text-sm font-bold text-slate-800 truncate mb-1">${item.name}</div>
-                                    <div class="text-blue-600 font-black">${item.price}</div>
+                        <!-- ================= SCREEN 2: TIMING MAP SCANNER ================= -->
+                        <div class="app-view" id="view-timing">
+                            <div class="scanner-header">
+                                <h3>📍 실시간 상권 골든타겟 스캔</h3>
+                            </div>
+                            
+                            <!-- Search Form inside Map view -->
+                            <div class="map-search-bar-container">
+                                <input type="text" id="mapSearchInput" placeholder="식당 이름 입력 (예: 마포갈비)" value="강남 부대찌개">
+                                <button class="btn-scan-act" id="btnTriggerMapScan">⚡ 스캔</button>
+                            </div>
+                            
+                            <!-- Interactive Map View -->
+                            <div class="map-view-container" id="mapView">
+                                <div class="map-grid-overlay"></div>
+                                <div class="radar-sweep" id="radarSweep"></div>
+                                
+                                <div class="center-marker">
+                                    <div class="pulse-ring"></div>
+                                    <div class="dot"></div>
                                 </div>
-                            </a>
+                                
+                                <div class="map-pins-container" id="mapPins">
+                                    <!-- Dynamic pins -->
+                                </div>
+                            </div>
+                            
+                            <div class="scanner-status-card" id="scannerStatusCard">
+                                <p id="scannerStatusText">"스캔 시작 버튼을 누르면 50일 이내 개업 신규 매장, 틈새 골목, 여유 사장님을 즉시 포착합니다."</p>
+                            </div>
                         </div>
-                    `;
-                });
 
-                new Swiper('.product-swiper', {
-                    slidesPerView: 1, 
-                    spaceBetween: 15,
-                    loop: true,                 
-                    speed: 3000,                
-                    autoplay: { delay: 0, disableOnInteraction: false },
-                    allowTouchMove: false, 
-                    breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } }
-                });
-            } catch (e) { console.error("크리티컬 에러:", e); }
-        }
+                        <!-- ================= SCREEN 3: REAL-TIME TRACKING ================= -->
+                        <div class="app-view" id="view-tracking">
+                            <div class="dual-mode-header">
+                                <button class="tab-btn active" id="tabOwner">Owner (사장님 화면)</button>
+                                <button class="tab-btn" id="tabSalesman">Salesman (내 스마트폰)</button>
+                            </div>
+                            
+                            <div class="dual-views-container">
+                                <!-- OWNER VIEW -->
+                                <div class="dual-view-pane active" id="paneOwner">
+                                    <div class="owner-proposal-container">
+                                        <div class="proposal-badge">📋 감자마케팅 특별 제안서</div>
+                                        <h2 id="ownerProposalTitle">강남 부대찌개 상권 최적화 분석안</h2>
+                                        <p class="proposal-intro">대장님, 주변 경쟁 매장들이 배달 앱 광고 구역을 78% 이상 선점하여 매월 약 420만 원의 손실이 예상됩니다.</p>
+                                        
+                                        <div class="proposal-calculator">
+                                            <h4>📊 예상 손실 회복 계산기</h4>
+                                            <p class="calc-subtitle">마케팅 예산 비중에 따른 잠재 매출 상승 추정액</p>
+                                            
+                                            <div class="slider-field">
+                                                <div class="slider-labels">
+                                                    <span>최소 광고</span>
+                                                    <span>집중 노출</span>
+                                                </div>
+                                                <input type="range" class="proposal-slider" id="proposalSlider" min="10" max="100" value="40">
+                                            </div>
+                                            
+                                            <div class="calc-results">
+                                                <div class="calc-res-item">
+                                                    <span class="label">예상 노출 점유</span>
+                                                    <span class="value text-orange" id="calcPercent">40%</span>
+                                                </div>
+                                                <div class="calc-res-item">
+                                                    <span class="label">회복 예상 매출</span>
+                                                    <span class="value text-green" id="calcSales">₩2,100,000</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <p class="calc-helper">💡 슬라이더를 조정하여 직접 시뮬레이션해 보세요.</p>
+                                        </div>
+                                        <button class="btn-proposal-call" id="btnProposalCallOwner">📞 마케팅 상담원 문의하기</button>
+                                    </div>
+                                </div>
 
-        // 실시간 소셜 푸루프(Social Proof) 토스트 알림 (감자맵스 추가 포함)
-        const toastMessages = [
-            "방금 전 제주시 연동 식당에서 감자빌더 PRO를 문의하셨습니다.",
-            "어제 마케팅 컨설팅 예약이 3건 완료되었습니다.",
-            "제주 파인다이닝 '화란'에서 웹사이트 구축을 완료했습니다.",
-            "방금 전 '매콤갈치명태촌'에서 테이블 오더 구축을 신청했습니다.",
-            "오토컴퍼니 전기차 랜딩페이지가 성공적으로 배포되었습니다.",
-            "신규 기업 네트워크 및 보안 점검이 접수되었습니다.",
-            "제주 노형동 뷰티샵에서 감자빌더 BASIC을 결제하셨습니다.",
-            "제주시 애월읍 카페에서 감자빌더 PRO 솔루션을 도입했습니다.",
-            "서귀포시 펜션에서 감자빌더 다국어 웹사이트 제작을 문의하셨습니다.",
-            "방금 전 서울 강남구 피트니스 센터에서 감자빌더 ULTRA를 결제하셨습니다.",
-            "감자빌더를 통한 신규 랜딩페이지 배포가 5건 완료되었습니다.",
-            "제주 구좌읍 베이커리에서 AI 카피라이팅 기능 사용을 시작했습니다.",
-            "감자빌더 BASIC 구독자가 오늘 12명 돌파했습니다.",
-            "서귀포 요가 스튜디오에서 프리미엄 웹사이트 시안을 요청하셨습니다.",
-            "방금 전 감자빌더 실물 패키지(USB+매뉴얼) 3세트가 발송되었습니다.",
-            "제주시청 인근 흑돼지 전문점에서 네이버 플레이스 상위노출 컨설팅을 시작했습니다.",
-            "어제 진행한 마케팅 컨설팅으로 OOO업체의 문의량이 200% 증가했습니다.",
-            "제주 인플루언서 마케팅 패키지 당월 TO가 2자리 남았습니다.",
-            "방금 전 서귀포 횟집에서 인스타그램 숏폼 제작 대행을 문의하셨습니다.",
-            "제주 연동 네일샵에서 당근마켓 단골 모으기 캠페인을 세팅했습니다.",
-            "매출 퀀텀점프 컨설팅 신규 예약이 접수되었습니다.",
-            "제주 첨단과학기술단지 입주 기업에서 사내 네트워크 보안 점검을 요청하셨습니다.",
-            "방금 전 제주 시내 대형 병원에서 기업인터넷 및 랜공사 견적을 받아보셨습니다.",
-            "서귀포 신축 호텔에서 전 객실 무선 AP 구축 계약을 체결했습니다.",
-            "방금 전 매장용 고화질 CCTV 4채널 설치가 완료되었습니다.",
-            "제주시 대형 마트에서 보안장비(방화벽) 시스템 정기 유지보수를 갱신하셨습니다.",
-            "랜섬웨어 대비 사내 데이터 백업 시스템 구축이 완료되었습니다.",
-            "제주 한림읍 해물탕집에서 KT 하이오더 15대 설치를 완료했습니다.",
-            "방금 전 서귀포 흑돼지 전문점에서 테이블 오더 시스템 도입 문의를 남기셨습니다.",
-            "도두동 이자카야에서 테이블 오더 메뉴판 세팅을 요청하셨습니다.",
-            "하이오더 도입 후 인건비 절감 사례가 신규 업데이트 되었습니다.",
-            "제주 도내 부동산 중개업소에서 B2B 영업 제안 자동화 시스템을 도입하셨습니다.",
-            "방금 전 서울 마케팅 대리점에서 감자빌더 파트너(총판) 문의를 주셨습니다.",
-            "맞춤형 고객 데이터 크롤링 봇 개발이 성공적으로 납품되었습니다.",
-            "제주 렌터카 업체에서 예약 관리 자동화 솔루션 개발을 의뢰하셨습니다.",
-            "방금 전 B2B 영업 제안서 자동 생성 세팅이 완료되었습니다.",
-            "이번 달 감자네트워크 VIP 컨설팅 잔여 TO가 1자리 남았습니다.",
+                                <!-- SALESMAN VIEW -->
+                                <div class="dual-view-pane" id="paneSalesman">
+                                    <div class="salesman-crm-container">
+                                        <div class="crm-header">
+                                            <h4>📥 실시간 관심 고객 타겟 보드</h4>
+                                            <span class="crm-badge">LIVE tracking</span>
+                                        </div>
+                                        
+                                        <!-- CRM Feed Items -->
+                                        <div class="crm-feed" id="crmFeed">
+                                            <div class="crm-item empty">
+                                                <p>사장님 화면 탭에서 제안서 슬라이더를 조작하거나 문의하기 버튼을 누르면 실시간 알림이 발송됩니다.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Simulated Call Action Card -->
+                                        <div class="gold-time-card" id="goldTimeCard">
+                                            <div class="gold-header">
+                                                <span class="fire-emoji">🔥</span>
+                                                <span>골든타임 영업 기회 포착!</span>
+                                            </div>
+                                            <p>사장님이 현재 <strong>매출 계산기 슬라이더</strong>를 직접 조작하며 깊은 관심을 보이고 있습니다.</p>
+                                            <div class="closing-timer">
+                                                <span>⌛ 최적 통화 타이밍:</span>
+                                                <span class="timer-countdown" id="goldCountdown">01:00</span>
+                                            </div>
+                                            <button class="btn-gold-call" id="btnGoldCallAction">📞 사장님께 전화 걸어 클로징하기</button>
+                                        </div>
+
+                                        <!-- REAL-TIME DIARY DATABASE LOGS (Free Demo Mode ONLY) -->
+                                        <div class="sales-diary-database" id="salesDiaryDatabase">
+                                            <h4>📝 로컬 저장된 영업 일지 목록</h4>
+                                            <div class="diary-list" id="diaryList">
+                                                <!-- Dynamic entries -->
+                                                <div class="diary-item-empty">저장된 영업일지가 없습니다.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ================= SCREEN 4: AI ROLEPLAYING ================= -->
+                        <div class="app-view" id="view-roleplay">
+                            <div class="roleplay-setup" id="roleplaySetup">
+                                <div class="setup-illustration">🤖💼</div>
+                                <h3>AI 가상 사장님 거절 극복 훈련</h3>
+                                <p class="setup-desc">방문 미팅 직전, 까다로운 거절 패턴을 학습한 AI 가상 사장님과 대화식 훈련을 진행하세요!</p>
+                                
+                                <div class="level-select-card">
+                                    <h4>훈련 상대 설정</h4>
+                                    <!-- Boss Select Dropdown -->
+                                    <div class="boss-select-container">
+                                        <select class="boss-select-dropdown" id="bossSelect">
+                                            <option value="0">👨🍳 박길동 사장님 (돈가스집 - 난이도: ★★★★☆)</option>
+                                            <option value="1">👩🍳 이영희 사장님 (카페 - 난이도: ★★★☆☆)</option>
+                                            <option value="2">👨🍳 최성진 사장님 (횟집 - 난이도: ★★★★★)</option>
+                                        </select>
+                                    </div>
+                                    <div class="boss-profile" style="margin-top: 10px;">
+                                        <span class="boss-avatar" id="bossAvatarDisp">👨🍳</span>
+                                        <div class="boss-info">
+                                            <strong id="bossNameDisp">박길동 사장님 (돈가스 전문점)</strong>
+                                            <span id="bossDescDisp">성격: 깐깐함, 광고 불신 심함</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-start-roleplay" id="btnStartRoleplay">🎯 모의 훈련 시작</button>
+                            </div>
+
+                            <div class="roleplay-chat-container" id="roleplayChatContainer" style="display: none;">
+                                <div class="chat-header">
+                                    <div class="boss-mini">
+                                        <span id="chatBossAvatar">👨🍳</span>
+                                        <div>
+                                            <strong id="chatBossName">박길동 사장님 (AI)</strong>
+                                            <span class="status">● 실시간 대화 중</span>
+                                        </div>
+                                    </div>
+                                    <span class="round-indicator" id="chatRound">ROUND 1/3</span>
+                                </div>
+
+                                <div class="chat-messages" id="chatMessages">
+                                    <!-- Dynamic chat messages -->
+                                </div>
+
+                                <div class="chat-input-area" id="chatInputArea">
+                                    <p class="input-title">💡 최적의 세일즈 답변을 선택하세요:</p>
+                                    <div class="options-grid" id="chatOptions">
+                                        <!-- Dynamic buttons -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Scorecard Overlay -->
+                            <div class="scorecard-overlay" id="scorecardOverlay" style="display: none;">
+                                <div class="scorecard-card">
+                                    <div class="lock-icon" id="scorecardLockIcon">🔓</div>
+                                    <h2>AI 영업 훈련 기록표</h2>
+                                    <p class="scorecard-subtitle">방금 진행한 모의 훈련 결과 오답노트</p>
+                                    
+                                    <div class="score-badge">
+                                        <span class="score-num" id="scoreNum">92</span>
+                                        <span class="score-max">/ 100점</span>
+                                    </div>
+                                    
+                                    <div class="score-evaluation">
+                                        <h4 id="scoreEvalTitle">훌륭한 영업 화법입니다!</h4>
+                                        <p id="scoreEvalDesc">거절 반응에 대해 감정적 대응 대신 합리적 수치와 손실 프레이밍을 활용하여 설득력을 크게 높였습니다.</p>
+                                    </div>
+
+                                    <div class="cheat-sheet-card">
+                                        <h4>🔑 특급 치트키 영업 화법 복기</h4>
+                                        <ul class="cheat-list" id="cheatList">
+                                            <!-- Dynamic scripts based on selected boss -->
+                                        </ul>
+                                    </div>
+                                    
+                                    <button class="btn-scorecard-close" id="btnRestartRoleplay">🔄 다시 훈련하기</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ================= SCREEN 5: GOOGLE PLAY DOWNLOAD ================= -->
+                        <div class="app-view" id="view-download">
+                            <div class="playstore-container">
+                                <div class="ps-header">
+                                    <div class="ps-search-bar">
+                                        <span>🔍</span>
+                                        <input type="text" value="감자맵스" disabled>
+                                    </div>
+                                </div>
+                                
+                                <div class="ps-app-card">
+                                    <div class="app-info-row">
+                                        <div class="app-logo-box" style="padding:0; overflow:hidden;"><img src="icon.png" alt="Logo" style="width:100%; height:100%; object-fit:cover; border-radius:12px;"></div>
+                                        <div class="app-details">
+                                            <h1>감자맵스</h1>
+                                            <p class="developer">Gamja Network Ltd.</p>
+                                            <p class="category">비즈니스 / 마케팅 / 지도</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="app-stats-row">
+                                        <div class="ps-stat">
+                                            <strong class="val">4.8 ★</strong>
+                                            <span class="lbl">별점 4.5만 개</span>
+                                        </div>
+                                        <div class="ps-stat line">
+                                            <strong class="val">10만+</strong>
+                                            <span class="lbl">다운로드</span>
+                                        </div>
+                                        <div class="ps-stat line">
+                                            <strong class="val">3+</strong>
+                                            <span class="lbl">만 3세 이상</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Install Button -->
+                                    <button class="btn-ps-install" id="btnPsInstall">설치</button>
+                                </div>
+
+                                <div class="ps-screenshots-carousel">
+                                    <div class="screenshot-item">
+                                        <span>🔥 신규 매장 포착</span>
+                                    </div>
+                                    <div class="screenshot-item">
+                                        <span>🔔 실시간 FCM 알림</span>
+                                    </div>
+                                    <div class="screenshot-item">
+                                        <span>🤖 AI 거절 훈련</span>
+                                    </div>
+                                </div>
+
+                                <div class="ps-vip-membership-banner">
+                                    <div class="banner-content">
+                                        <h3>👑 감자맵스 VIP 멤버십</h3>
+                                        <p>전국 인허가 상권 실시간 배달 + 무제한 AI 영업 롤플레잉!</p>
+                                        <div class="highlight">당신의 매출 그래프를 바꾸는 영업 치트키.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- End of Screen Container -->
+                    
+                    <!-- Bottom Navigation Bar -->
+                    <div class="phone-navbar" id="phoneNavbar">
+                        <button class="nav-item active" data-view="dashboard" id="navDash">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-lbl">분석</span>
+                        </button>
+                        <button class="nav-item" data-view="timing" id="navTiming">
+                            <span class="nav-icon">📍</span>
+                            <span class="nav-lbl">타이밍</span>
+                        </button>
+                        <button class="nav-item" data-view="tracking" id="navTracking">
+                            <span class="nav-icon">🔔</span>
+                            <span class="nav-lbl">추적</span>
+                        </button>
+                        <button class="nav-item" data-view="roleplay" id="navRoleplay">
+                            <span class="nav-icon">🤖</span>
+                            <span class="nav-lbl">AI예습</span>
+                        </button>
+                        <button class="nav-item" data-view="download" id="navDownload">
+                            <span class="nav-icon">📲</span>
+                            <span class="nav-lbl">설치</span>
+                        </button>
+                    </div>
+
+                    <!-- Push Notification Banner Overlay (FCM Alert popup) -->
+                    <div class="fcm-push-banner" id="fcmPushBanner">
+                        <div class="fcm-icon" style="padding:0; overflow:hidden; display:flex; justify-content:center; align-items:center;"><img src="icon.png" alt="FCM" style="width:100%; height:100%; object-fit:cover; border-radius:6px;"></div>
+                        <div class="fcm-text-box">
+                            <h5 id="fcmTitle">감자맵스 푸시 알림</h5>
+                            <p id="fcmMessage">알림 메시지 본문이 들어갑니다.</p>
+                        </div>
+                        <span class="fcm-time">방금</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Floating Sound Chime Pre-loader / Help Modal -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-card">
+            <h2><img src="icon.png" alt="Logo" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 8px; box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);">감자맵스 웹 시뮬레이터</h2>
+            <p>마케팅 영업의 치트키, 감자맵스의 신규 광고 대본을 시연하고 실제로 앱을 조작할 수 있는 고급 프로토타입 시뮬레이터입니다.</p>
             
-            // 🥔 감자맵스 소셜 프루프 멘트 추가
-            "방금 전 서울 강남구 대행사에서 감자맵스 VIP 멤버십을 구독하셨습니다.",
-            "방금 전 인천 계양구 테스터가 AI 거절 극복 훈련 점수 96점을 획득했습니다.",
-            "어제 감자맵스 신규 개업 스캔을 통해 마케팅 계약이 2건 성사되었습니다.",
-            "방금 전 부산 수영구 마케팅 실행사에서 감자맵스 10슬롯 라이선스를 결제하셨습니다.",
-            "제주 노형동 마케터님이 감자맵스 웰컴 오답노트 PDF를 다운로드하셨습니다."
-        ];
+            <div class="features-summary">
+                <div class="feat-summary-item">
+                    <span>🎙️</span>
+                    <div>
+                        <strong>음성 안내 동기화</strong>
+                        <p>브라우저 AI 음성(TTS)을 사용해 대본 낭독에 맞춰 앱 화면이 유기적으로 자동 변환됩니다.</p>
+                    </div>
+                </div>
+                <div class="feat-summary-item">
+                    <span>💡</span>
+                    <div>
+                        <strong>실제 작동하는 시뮬레이션</strong>
+                        <p>레이더 스캔, 실시간 제안서 연동 알림(FCM), AI 가상 사장님과의 역할 대화 훈련을 실제로 체험할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
 
-        function showSocialToast() {
-            const toast = document.getElementById('social-toast');
-            const msgEl = document.getElementById('toast-msg');
-            const timeEl = document.getElementById('toast-time');
-            
-            const randomMsg = toastMessages[Math.floor(Math.random() * toastMessages.length)];
-            const times = ["방금 전", "1분 전", "2분 전", "3분 전", "5분 전"];
-            const randomTime = times[Math.floor(Math.random() * times.length)];
+            <button class="btn-welcome-start" id="btnWelcomeStart">체험 시작하기</button>
+        </div>
+    </div>
 
-            msgEl.innerText = randomMsg;
-            timeEl.innerText = randomTime;
-
-            toast.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
-            toast.classList.add('opacity-100', 'translate-y-0');
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
-                toast.classList.remove('opacity-100', 'translate-y-0');
-            }, 5000); 
-
-            const nextTime = Math.floor(Math.random() * 13000) + 12000;
-            setTimeout(showSocialToast, nextTime);
-        }
-
-        setTimeout(showSocialToast, 4000);
-    </script>
+    <script src="script.js?v=4.1"></script>
 </body>
 </html>
