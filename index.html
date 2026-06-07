@@ -37,6 +37,11 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .gradient-text-gold {
+            background: linear-gradient(to right, #f59e0b, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .glass-card-dark {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -86,6 +91,24 @@
             0% { width: 0%; }
             100% { width: 100%; }
         }
+
+        /* 호버 맥북/폰 목업 광채 애니메이션 */
+        .glow-effect {
+            position: relative;
+        }
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .glow-effect:hover::after {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-500 selection:text-white overflow-x-hidden">
@@ -103,6 +126,7 @@
             </div>
             <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-600">
                 <a href="#local-business" class="hover:text-sky-600 transition">핵심 사업영역</a>
+                <a href="#gamjamaps" class="hover:text-amber-600 transition">감자맵스 (AI 영업)</a>
                 <a href="#gamjabuilder" class="hover:text-blue-600 transition">감자빌더 (AI SaaS)</a>
                 <a href="#pricing" class="hover:text-blue-600 transition">파트너 요금제</a>
                 <div class="flex items-center gap-3 pl-4 border-l border-slate-300">
@@ -145,6 +169,9 @@
                 <a href="#local-business" class="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition text-sm">
                     통합 인프라 솔루션 보기
                 </a>
+                <a href="#gamjamaps" class="px-6 py-3 bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/30 text-amber-400 font-bold rounded-xl transition text-sm">
+                    감자맵스 (AI 영업) 보기
+                </a>
                 <a href="#gamjabuilder" class="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl transition text-sm">
                     감자빌더 V8.0 기능 보기
                 </a>
@@ -164,6 +191,21 @@
             <div class="swiper businessSwiper px-2">
                 <div class="swiper-wrapper items-stretch">
                     
+                    <!-- [추가] 감자맵스 슬라이드 -->
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-amber-50/60 border border-amber-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(245,158,11,0.05)] relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">HOT</div>
+                            <div class="service-icon bg-gradient-to-br from-amber-100 to-amber-50 text-amber-600">🥔</div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3">감자맵스 (AI 영업 솔루션)</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">인허가 데이터 기반 상권 스캔과 AI 거절 대응 모의 훈련을 통해 대행 계약 성공률을 극대화하는 세일즈 지원 툴입니다.</p>
+                            <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                <li>✔ 신규 개업 및 브레이크 타임 스캔</li>
+                                <li>✔ 제안서 열람 감지 실시간 FCM 알림</li>
+                                <li>✔ AI 가상 사장님 거절 극복 롤플레잉</li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="swiper-slide h-auto">
                         <div class="bg-orange-50/60 border border-orange-100 rounded-3xl p-8 hover-lift flex flex-col h-full shadow-[0_4px_20px_rgba(251,146,60,0.05)]">
                             <div class="service-icon bg-gradient-to-br from-orange-100 to-orange-50 text-orange-500">🍽️</div>
@@ -312,100 +354,103 @@
         </div>
     </section>
 
-    <section class="py-12 bg-white border-y border-slate-200 overflow-hidden relative">
-        <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-        
-        <div class="text-center mb-8">
-            <h3 class="text-xl md:text-2xl font-black text-slate-800">이미 수많은 비즈니스가 감자네트워크의 솔루션으로 증명하고 있습니다</h3>
-        </div>
-        
-        <div class="flex overflow-hidden">
-            <div class="animate-marquee gap-6 px-3 items-center">
-                <!-- 세트 1 -->
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="화란.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="화란">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-blue-300 font-bold mb-1">파인다이닝 웹 구축</div>
-                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'<br>럭셔리 브랜드 세팅</div>
+    <!-- [신규 추가] 감자맵스 전용 섹션 -->
+    <section id="gamjamaps" class="py-24 bg-slate-50 border-t border-b border-slate-200 relative overflow-hidden">
+        <div class="absolute top-1/2 left-0 w-96 h-96 bg-amber-500/10 blur-[100px] rounded-full z-0"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- 좌측 설명 텍스트 -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-block py-1 px-3 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-600 text-sm font-bold">
+                        Gamja Maps AI Sales Assistant
                     </div>
-                </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="매콤갈치명태촌.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="명태촌">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-orange-300 font-bold mb-1">테이블 오더 시스템</div>
-                        <div class="text-white font-bold text-lg leading-tight">'매콤갈치명태촌'<br>매장 자동화 인프라 도입</div>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 leading-tight">
+                        잡상인 영업은 끝났습니다.<br>
+                        승률 200%의 <span class="text-amber-600 font-black">AI 상권 영업 치트키</span>
+                    </h2>
+                    <p class="text-slate-600 text-lg leading-relaxed">
+                        전국 상권 인허가 빅데이터 실시간 스캔과 AI 행동 추적 기술이 결합했습니다. 소상공인 사장님의 '숨은 기회 손실액'을 눈앞에 직접 증명하고 골든타임에 세일즈를 성사시키세요.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-6 pt-4">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">🔥</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-base">골든타겟 1초 스캔</h4>
+                                <p class="text-sm text-slate-500 mt-1">50일 내 신규 매장, 틈새 골목 상권, 그리고 사장님이 여유로운 브레이크 타임을 자동으로 포착합니다.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">🔔</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-base">실시간 고객 추적 (FCM)</h4>
+                                <p class="text-sm text-slate-500 mt-1">발송한 제안서를 사장님이 열어보는 바로 그 순간, 스마트폰 실시간 알림을 받아 최고의 타이밍에 접근합니다.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">🤖</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-base">AI 거절 극복 롤플레잉</h4>
+                                <p class="text-sm text-slate-500 mt-1">현장 방문 전, 까다로운 거절 시나리오를 학습한 AI 가상 사장님과 대화 훈련을 진행하고 특급 영업 화법을 복기합니다.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-slate-100 shrink-0">👑</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-base">VIP 전용 멤버십 패키지</h4>
+                                <p class="text-sm text-slate-500 mt-1">매일 아침 업데이트되는 전국 점포 인허가 타겟 자동 발송 및 대행사 전용 다중 슬라이더 관리 기능을 제공합니다.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="전기차">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-emerald-300 font-bold mb-1">고급형 랜딩페이지</div>
-                        <div class="text-white font-bold text-lg leading-tight">Auto Company<br>전기차 모델 풀페이지</div>
-                    </div>
-                </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="뷰티.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="뷰티">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-pink-300 font-bold mb-1">프리미엄 마케팅</div>
-                        <div class="text-white font-bold text-lg leading-tight">지역 에스테틱 샵<br>포털 리뷰 및 로컬 점령</div>
-                    </div>
-                </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="기업통신">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-indigo-300 font-bold mb-1">보안 네트워크 인프라</div>
-                        <div class="text-white font-bold text-lg leading-tight">대형 복합 비즈니스<br>기업인터넷 및 랜공사</div>
+
+                    <div class="pt-6">
+                        <!-- 데모 웹 시뮬레이터 링크 연동 -->
+                        <a href="./GamjaMaps_WebSimulator/index.html" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold text-lg rounded-2xl transition shadow-lg shadow-amber-500/20">
+                            실시간 데모 시뮬레이터 체험 ⚡
+                        </a>
                     </div>
                 </div>
 
-                <!-- 세트 2 (무한 롤링) -->
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="화란.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="화란">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-blue-300 font-bold mb-1">파인다이닝 웹 구축</div>
-                        <div class="text-white font-bold text-lg leading-tight">프리미엄 다이닝 '화란'<br>럭셔리 브랜드 세팅</div>
+                <!-- 우측 가상 모바일 목업 그래픽 -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="w-[300px] h-[550px] bg-slate-950 border-8 border-slate-800 rounded-[38px] shadow-2xl relative overflow-hidden flex flex-col justify-between p-3 glow-effect">
+                        <!-- 스피커 & 노치 -->
+                        <div class="w-24 h-4 bg-slate-800 rounded-full mx-auto mb-2 flex items-center justify-center"><div class="w-2 h-2 bg-black rounded-full"></div></div>
+                        
+                        <!-- 모바일 내부 화면 렌더링 -->
+                        <div class="flex-grow bg-[#0f1524] rounded-[24px] p-3 text-white flex flex-col justify-between overflow-hidden relative">
+                            <!-- GPS 및 헤더 -->
+                            <div class="flex justify-between items-center text-[10px] opacity-75 border-b border-white/10 pb-2">
+                                <span>📡 감자맵스 VIP</span>
+                                <span class="text-emerald-400 font-bold">● LIVE SCANNING</span>
+                            </div>
+
+                            <!-- 레이더 스캔 목업 그래픽 -->
+                            <div class="flex-grow flex flex-col items-center justify-center relative my-4">
+                                <div class="w-32 h-32 rounded-full border border-amber-500/30 flex items-center justify-center relative animate-pulse">
+                                    <div class="w-20 h-20 rounded-full border border-amber-500/40 flex items-center justify-center">
+                                        <div class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-lg">🥔</div>
+                                    </div>
+                                </div>
+                                <div class="absolute text-center mt-20">
+                                    <span class="text-[11px] font-black text-amber-400">강남역 300m 스캔 완료</span>
+                                </div>
+                            </div>
+
+                            <!-- 카드 매출 손실 팝업 그래픽 -->
+                            <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-3 text-center">
+                                <div class="text-[9px] text-red-400 font-bold mb-1">경쟁 매장 대비 기회 손실액</div>
+                                <div class="text-xl font-black text-red-500 font-mono leading-none">-₩4,200,000</div>
+                                <div class="text-[8px] text-slate-400 mt-1">블로그/플레이스 광고 점유 이탈 방어 시 시급</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="매콤갈치명태촌.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="명태촌">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-orange-300 font-bold mb-1">테이블 오더 시스템</div>
-                        <div class="text-white font-bold text-lg leading-tight">'매콤갈치명태촌'<br>매장 자동화 인프라 도입</div>
-                    </div>
-                </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="전기차">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-emerald-300 font-bold mb-1">고급형 랜딩페이지</div>
-                        <div class="text-white font-bold text-lg leading-tight">Auto Company<br>전기차 모델 풀페이지</div>
-                    </div>
-                </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="뷰티.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="뷰티">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-pink-300 font-bold mb-1">프리미엄 마케팅</div>
-                        <div class="text-white font-bold text-lg leading-tight">지역 에스테틱 샵<br>포털 리뷰 및 로컬 점령</div>
-                    </div>
-                </div>
-                <div class="w-[280px] h-[180px] rounded-2xl overflow-hidden relative group cursor-pointer border border-slate-100 shadow-sm shrink-0">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="기업통신">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-4 left-4 right-4">
-                        <div class="text-xs text-indigo-300 font-bold mb-1">보안 네트워크 인프라</div>
-                        <div class="text-white font-bold text-lg leading-tight">대형 복합 비즈니스<br>기업인터넷 및 랜공사</div>
-                    </div>
-                </div>
+
             </div>
+
         </div>
     </section>
 
@@ -448,6 +493,9 @@
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-5xl font-bold mb-4">감자빌더 파트너 요금제</h2>
                 <p class="text-slate-400">비즈니스 규모에 맞는 라이선스를 선택하고, 프리미엄의 가치를 고객에게 직접 제안하세요.</p>
+                <div class="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl max-w-2xl mx-auto">
+                    <p class="text-sm text-amber-400 font-bold">💡 특별 프로모션: PRO 요금제 가입 시, 감자맵스 마케터 라이선스 슬롯 패키지가 무료 연동됩니다.</p>
+                </div>
             </div>
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-slate-500 flex flex-col">
@@ -469,6 +517,7 @@
                         <li>✔️ <span class="text-blue-400 font-bold">월 50회</span> 생성 한도</li>
                         <li>✔️ <span class="text-blue-400 font-bold">감자빌더 실물 패키지</span> (USB+매뉴얼) 배송</li>
                         <li>✔️ 본사 핫라인 기술 집중 지원</li>
+                        <li>✔️ <span class="text-amber-400 font-bold">감자맵스 영업 툴</span> 5개 슬롯 기본 탑재</li>
                     </ul>
                 </div>
                 <div class="glass-card-dark p-10 rounded-2xl border-t-4 border-purple-500 flex flex-col">
@@ -545,6 +594,7 @@
         <div class="flex flex-wrap justify-center gap-3 mb-6">
             <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자네트워크</span>
             <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">GamjaBuilder</span>
+            <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">감자맵스</span>
             <span class="px-3 py-1 bg-slate-800 rounded-full text-xs">제주 비즈니스 솔루션</span>
         </div>
         <p>© 2026 Gamja Network. All rights reserved.</p>
@@ -677,7 +727,6 @@
                 const container = document.getElementById('dynamic-product-list');
                 container.innerHTML = ''; 
 
-                // ✅ [핵심 해결책] 슬라이더 멈춤 현상 해결을 위해 데이터 배열을 2배로 복제
                 const displayData = [...data, ...data]; 
 
                 displayData.forEach(item => {
@@ -695,20 +744,19 @@
                     `;
                 });
 
-                // ✅ 부드러운 무한 롤링을 위한 최적화 설정 추가
                 new Swiper('.product-swiper', {
                     slidesPerView: 1, 
                     spaceBetween: 15,
                     loop: true,                 
                     speed: 3000,                
                     autoplay: { delay: 0, disableOnInteraction: false },
-                    allowTouchMove: false, // 마우스 드래그 방지, 자연스러운 스크롤 유지
+                    allowTouchMove: false, 
                     breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } }
                 });
             } catch (e) { console.error("크리티컬 에러:", e); }
         }
 
-        // 실시간 소셜 푸루프(Social Proof) 토스트 알림 37개 확장
+        // 실시간 소셜 푸루프(Social Proof) 토스트 알림 (감자맵스 추가 포함)
         const toastMessages = [
             "방금 전 제주시 연동 식당에서 감자빌더 PRO를 문의하셨습니다.",
             "어제 마케팅 컨설팅 예약이 3건 완료되었습니다.",
@@ -746,7 +794,14 @@
             "맞춤형 고객 데이터 크롤링 봇 개발이 성공적으로 납품되었습니다.",
             "제주 렌터카 업체에서 예약 관리 자동화 솔루션 개발을 의뢰하셨습니다.",
             "방금 전 B2B 영업 제안서 자동 생성 세팅이 완료되었습니다.",
-            "이번 달 감자네트워크 VIP 컨설팅 잔여 TO가 1자리 남았습니다."
+            "이번 달 감자네트워크 VIP 컨설팅 잔여 TO가 1자리 남았습니다.",
+            
+            // 🥔 감자맵스 소셜 프루프 멘트 추가
+            "방금 전 서울 강남구 대행사에서 감자맵스 VIP 멤버십을 구독하셨습니다.",
+            "방금 전 인천 계양구 테스터가 AI 거절 극복 훈련 점수 96점을 획득했습니다.",
+            "어제 감자맵스 신규 개업 스캔을 통해 마케팅 계약이 2건 성사되었습니다.",
+            "방금 전 부산 수영구 마케팅 실행사에서 감자맵스 10슬롯 라이선스를 결제하셨습니다.",
+            "제주 노형동 마케터님이 감자맵스 웰컴 오답노트 PDF를 다운로드하셨습니다."
         ];
 
         function showSocialToast() {
