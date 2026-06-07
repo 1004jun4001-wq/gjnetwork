@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감자맵스 - 마케팅 영업의 치트키 시뮬레이터</title>
+    <!-- Google Fonts: Inter, Outfit, and Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        
+        <!-- Left Side: Advertising Video Presentation / Demo Instruction Panel -->
+        <div class="ad-panel" id="adPanel">
+            <div class="ad-header">
+                <div class="logo">
+                    <span class="logo-icon">🥔</span>
+                    <span class="logo-text">GAMJA <span>MAPS</span></span>
+                </div>
+                <!-- Mode Selector Toggle -->
+                <div class="mode-selector-tabs">
+                    <button class="mode-tab active" id="modeTimeline" title="대본 낭독에 맞춰 자동으로 연동되는 화면">광고 시연</button>
+                    <button class="mode-tab" id="modeFree" title="직접 검색하고 영업일지를 남기는 자유 테스트 모드">자유 데모</button>
+                </div>
+            </div>
+
+            <!-- AI Video Anchor Face / Avatar -->
+            <div class="avatar-container">
+                <div class="avatar-box" id="avatarBox">
+                    <div class="hologram-ring"></div>
+                    <div class="hologram-ring ring-2"></div>
+                    
+                    <svg viewBox="0 0 100 100" class="anchor-svg" id="anchorSvg">
+                        <defs>
+                            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ff9900" stop-opacity="0.3"/>
+                                <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
+                            </radialGradient>
+                            <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#f43f5e" />
+                                <stop offset="100%" stop-color="#ec4899" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50%" cy="50%" r="48" fill="url(#glow)"/>
+                        
+                        <path d="M25,90 C25,75 35,65 50,65 C65,65 75,75 75,90 Z" fill="url(#suitGrad)" />
+                        <path d="M43,65 L50,75 L57,65 Z" fill="#f8fafc" />
+                        <line x1="50" y1="75" x2="50" y2="82" stroke="#1e293b" stroke-width="1.5" />
+                        <circle cx="50" cy="82" r="2.5" fill="#0f172a" />
+                        
+                        <rect x="44" y="55" width="12" height="12" rx="3" fill="#fed7aa" />
+                        <ellipse cx="50" cy="42" rx="17" ry="20" fill="#fed7aa" />
+                        <path d="M30,42 C30,22 40,16 50,16 C60,16 70,22 70,42 C70,47 68,54 67,56 C62,40 38,40 33,56 C32,54 30,47 30,42 Z" fill="#1e1b4b" />
+                        <path d="M30,35 C28,45 29,55 31,60 C32,60 33,55 33,45 Z" fill="#1b153f" />
+                        <path d="M70,35 C72,45 71,55 69,60 C68,60 67,55 67,45 Z" fill="#1b153f" />
+                        
+                        <ellipse cx="43" cy="38" rx="2.5" ry="1.5" fill="#1e1b4b" />
+                        <circle cx="43.5" cy="37.5" r="0.7" fill="#ffffff" />
+                        <path d="M40,34 Q43,33 46,35" stroke="#1e1b4b" stroke-width="1.2" fill="none" />
+                        
+                        <ellipse cx="57" cy="38" rx="2.5" ry="1.5" fill="#1e1b4b" />
+                        <circle cx="57.5" cy="37.5" r="0.7" fill="#ffffff" />
+                        <path d="M54,34 Q57,33 60,35" stroke="#1e1b4b" stroke-width="1.2" fill="none" />
+                        
+                        <path d="M41,37 Q43,36 45,37" stroke="#1e1b4b" stroke-width="0.8" fill="none" />
+                        <path d="M55,37 Q57,36 59,37" stroke="#1e1b4b" stroke-width="0.8" fill="none" />
+                        
+                        <circle cx="38" cy="44" r="2" fill="#f43f5e" opacity="0.3" />
+                        <circle cx="62" cy="44" r="2" fill="#f43f5e" opacity="0.3" />
+                        
+                        <path id="mouth" d="M44,48 Q50,49 56,48 Q50,50 44,48" fill="#e11d48" stroke="#be123c" stroke-width="0.5" />
+                        
+                        <path id="left-blink" d="M40.5,38 L45.5,38" stroke="#1e1b4b" stroke-width="1.5" stroke-linecap="round" display="none" />
+                        <path id="right-blink" d="M54.5,38 L59.5,38" stroke="#1e1b4b" stroke-width="1.5" stroke-linecap="round" display="none" />
+                    </svg>
+
+                    <div class="voice-wave" id="voiceWave">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                </div>
+                
+                <div class="presenter-status">
+                    <span class="status-dot pulsed" id="statusDot"></span>
+                    <span id="statusText">대본 로딩 완료 (정지 상태)</span>
+                </div>
+            </div>
+
+            <!-- Subtitle / Mode Info Card -->
+            <div class="subtitle-card">
+                <div class="subtitle-text" id="subtitleText">
+                    "광고 시작하기 버튼을 누르면 새로운 세일즈 파트너 '감자맵스'의 비디오 프레젠테이션 시뮬레이터가 시작됩니다."
+                </div>
+            </div>
+
+            <!-- TIMELINE MODE PANEL -->
+            <div class="mode-panel-content" id="panelTimelineContent">
+                <div class="timeline-container">
+                    <h3>📢 광고 대본 타임라인</h3>
+                    <div class="timeline" id="timelineList">
+                        <!-- Dynamic timeline nodes -->
+                    </div>
+                </div>
+
+                <div class="ad-control-card">
+                    <div class="control-row">
+                        <button class="btn-control btn-play" id="btnPlayAd">
+                            <span class="icon">▶</span> <span class="text">광고 시작하기</span>
+                        </button>
+                        <button class="btn-control btn-reset" id="btnResetAd" disabled>
+                            <span class="icon">🔄</span> 처음부터
+                        </button>
+                    </div>
+                    <div class="control-settings">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggleTts" checked>
+                            <span class="slider"></span>
+                            <span class="label-text">🎙️ AI 음성(TTS) 낭독 사용</span>
+                        </label>
+                        <div class="volume-control">
+                            <span>🔊</span>
+                            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.8">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FREE DEMO MODE PANEL (Instructions and Live Stats) -->
+            <div class="mode-panel-content hidden" id="panelFreeContent">
+                <div class="free-instruction-card">
+                    <h3>🎮 자유 데모 조작 모드 활성화</h3>
+                    <p class="description">대본 자동 진행 없이 우측 스마트폰의 기능을 실제 앱처럼 하나씩 조작해 보실 수 있습니다.</p>
+                    
+                    <ul class="steps-guide">
+                        <li>
+                            <strong>1. 상권 골든타겟 검색 (타이밍)</strong>
+                            <p>스마트폰의 [타이밍] 탭을 눌러 원하는 식당 이름(예: 마포갈비)을 입력하고 스캔해 보세요.</p>
+                        </li>
+                        <li>
+                            <strong>2. 실시간 슬라이더 연동 (추적)</strong>
+                            <p>[추적] 탭에서 사장님 화면의 슬라이더를 밀면, 영업사원 화면에 진짜 실시간 알림음(FCM)과 타이머가 연동됩니다.</p>
+                        </li>
+                        <li>
+                            <strong>3. AI 거절 역할극 (AI예습)</strong>
+                            <p>[AI예습] 탭에서 훈련 상대(박사장, 이사장, 최사장)를 골라 실제 세일즈 대화 훈련을 하고 성적표를 해제해 보세요.</p>
+                        </li>
+                        <li>
+                            <strong>4. 로컬 영업 일지 저장</strong>
+                            <p>영업 완료 후 작성한 메모들은 브라우저 내부 DB(localStorage)에 안전하게 저장 및 유지됩니다.</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="database-status-card">
+                    <h4>📊 실시간 시뮬레이션 상태</h4>
+                    <div class="status-grid-free">
+                        <div class="status-item-free">
+                            <span class="lbl">저장된 영업일지</span>
+                            <strong id="statDiaryCount">0건</strong>
+                        </div>
+                        <div class="status-item-free">
+                            <span class="lbl">최근 모의훈련 점수</span>
+                            <strong id="statLastScore">- 점</strong>
+                        </div>
+                    </div>
+                    <button class="btn-clear-db" id="btnClearDb">🔄 시뮬레이션 데이터 초기화</button>
+                </div>
+            </div>
+
+            <div class="script-author-note">
+                <strong>대본 핵심 업데이트:</strong> 잡상인 취급 탈피 ➔ 타이밍 스캔(신규🔥, 골목💎, 브레이크🟢) ➔ 실시간 FCM 추적 ➔ AI 가상 사장님 거절 롤플레잉(🔒 훈련 기록표).
+            </div>
+        </div>
+        
+        <!-- Right Side: Gamja Maps Smartphone Simulation Panel -->
+        <div class="phone-panel">
+            <div class="smartphone-bezel">
+                <div class="smartphone-screen" id="phoneScreen">
+                    
+                    <!-- Top Status Bar -->
+                    <div class="phone-status-bar">
+                        <span class="phone-time" id="phoneTime">14:25</span>
+                        <div class="phone-icons">
+                            <span>📡</span>
+                            <span>📶</span>
+                            <span>🔋 94%</span>
+                        </div>
+                    </div>
+
+                    <!-- App Header -->
+                    <div class="app-header" id="appHeader">
+                        <div class="app-logo">
+                            <span class="potato-emoji">🥔</span>
+                            <span>감자맵스</span>
+                            <span class="vip-badge">VIP</span>
+                        </div>
+                        <div class="app-actions">
+                            <span class="gps-indicator" id="gpsIndicator">● GPS ON</span>
+                        </div>
+                    </div>
+
+                    <!-- Screen Container (Contains the active view) -->
+                    <div class="screen-container" id="screenContainer">
+                        
+                        <!-- ================= SCREEN 1: MAIN DASHBOARD ================= -->
+                        <div class="app-view active" id="view-dashboard">
+                            <div class="dashboard-top">
+                                <div class="dropdown-mock">
+                                    <span>📊 상권 분석 대시보드</span>
+                                    <span>▼</span>
+                                </div>
+                                <button class="btn-scan-trigger" id="btnStartDashboardScan">⚡ 실시간 상권 분석</button>
+                            </div>
+                            
+                            <div class="chart-card">
+                                <div class="card-title-row">
+                                    <h4>📈 마케팅 매출 전환 추이</h4>
+                                    <span class="trend-indicator up">▲ 24% 급상승</span>
+                                </div>
+                                <div class="chart-svg-container">
+                                    <svg viewBox="0 0 200 80" class="line-chart-svg">
+                                        <path d="M 10 70 L 40 60 L 70 65 L 100 40 L 130 50 L 160 25 L 190 15" fill="none" stroke="#f43f5e" stroke-width="2.5" class="chart-path" />
+                                        <circle cx="190" cy="15" r="4" fill="#f43f5e" />
+                                    </svg>
+                                    <div class="chart-labels">
+                                        <span>4월</span>
+                                        <span>5월</span>
+                                        <span>현재</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <span class="stat-label">목표 달성률</span>
+                                    <div class="radial-progress-container">
+                                        <svg viewBox="0 0 36 36" class="circular-chart">
+                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <path class="circle" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <text x="18" y="20.35" class="percentage">85%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card">
+                                    <span class="stat-label">상권 평균 매출</span>
+                                    <div class="bar-stats-container">
+                                        <div class="bar-row">
+                                            <span class="bar-label">어제</span>
+                                            <div class="bar-fill-bg"><div class="bar-fill" style="width: 60%"></div></div>
+                                        </div>
+                                        <div class="bar-row">
+                                            <span class="bar-label">통계</span>
+                                            <div class="bar-fill-bg"><div class="bar-fill fill-accent" style="width: 85%"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="warning-loss-card">
+                                <div class="warning-header">
+                                    <span class="warning-icon">⚠</span>
+                                    <span>경고: 1등 매장 대비 상권 손실량</span>
+                                </div>
+                                <div class="warning-content">
+                                    <div class="loss-amount" id="dashLossAmount">-₩1,250,000</div>
+                                    <p class="loss-desc">주변 경쟁 매장의 광고 노출 점유 증가로 인한 이번 주 예상 영업 손실액입니다.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ================= SCREEN 2: TIMING MAP SCANNER ================= -->
+                        <div class="app-view" id="view-timing">
+                            <div class="scanner-header">
+                                <h3>📍 실시간 상권 골든타겟 스캔</h3>
+                            </div>
+                            
+                            <!-- Search Form inside Map view -->
+                            <div class="map-search-bar-container">
+                                <input type="text" id="mapSearchInput" placeholder="식당 이름 입력 (예: 마포갈비)" value="강남 부대찌개">
+                                <button class="btn-scan-act" id="btnTriggerMapScan">⚡ 스캔</button>
+                            </div>
+                            
+                            <!-- Interactive Map View -->
+                            <div class="map-view-container" id="mapView">
+                                <div class="map-grid-overlay"></div>
+                                <div class="radar-sweep" id="radarSweep"></div>
+                                
+                                <div class="center-marker">
+                                    <div class="pulse-ring"></div>
+                                    <div class="dot"></div>
+                                </div>
+                                
+                                <div class="map-pins-container" id="mapPins">
+                                    <!-- Dynamic pins -->
+                                </div>
+                            </div>
+                            
+                            <div class="scanner-status-card" id="scannerStatusCard">
+                                <p id="scannerStatusText">"스캔 시작 버튼을 누르면 50일 이내 개업 신규 매장, 틈새 골목, 여유 사장님을 즉시 포착합니다."</p>
+                            </div>
+                        </div>
+
+                        <!-- ================= SCREEN 3: REAL-TIME TRACKING ================= -->
+                        <div class="app-view" id="view-tracking">
+                            <div class="dual-mode-header">
+                                <button class="tab-btn active" id="tabOwner">Owner (사장님 화면)</button>
+                                <button class="tab-btn" id="tabSalesman">Salesman (내 스마트폰)</button>
+                            </div>
+                            
+                            <div class="dual-views-container">
+                                <!-- OWNER VIEW -->
+                                <div class="dual-view-pane active" id="paneOwner">
+                                    <div class="owner-proposal-container">
+                                        <div class="proposal-badge">📋 감자마케팅 특별 제안서</div>
+                                        <h2 id="ownerProposalTitle">강남 부대찌개 상권 최적화 분석안</h2>
+                                        <p class="proposal-intro">대장님, 주변 경쟁 매장들이 배달 앱 광고 구역을 78% 이상 선점하여 매월 약 420만 원의 손실이 예상됩니다.</p>
+                                        
+                                        <div class="proposal-calculator">
+                                            <h4>📊 예상 손실 회복 계산기</h4>
+                                            <p class="calc-subtitle">마케팅 예산 비중에 따른 잠재 매출 상승 추정액</p>
+                                            
+                                            <div class="slider-field">
+                                                <div class="slider-labels">
+                                                    <span>최소 광고</span>
+                                                    <span>집중 노출</span>
+                                                </div>
+                                                <input type="range" class="proposal-slider" id="proposalSlider" min="10" max="100" value="40">
+                                            </div>
+                                            
+                                            <div class="calc-results">
+                                                <div class="calc-res-item">
+                                                    <span class="label">예상 노출 점유</span>
+                                                    <span class="value text-orange" id="calcPercent">40%</span>
+                                                </div>
+                                                <div class="calc-res-item">
+                                                    <span class="label">회복 예상 매출</span>
+                                                    <span class="value text-green" id="calcSales">₩2,100,000</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <p class="calc-helper">💡 슬라이더를 조정하여 직접 시뮬레이션해 보세요.</p>
+                                        </div>
+                                        <button class="btn-proposal-call" id="btnProposalCallOwner">📞 마케팅 상담원 문의하기</button>
+                                    </div>
+                                </div>
+
+                                <!-- SALESMAN VIEW -->
+                                <div class="dual-view-pane" id="paneSalesman">
+                                    <div class="salesman-crm-container">
+                                        <div class="crm-header">
+                                            <h4>📥 실시간 관심 고객 타겟 보드</h4>
+                                            <span class="crm-badge">LIVE tracking</span>
+                                        </div>
+                                        
+                                        <!-- CRM Feed Items -->
+                                        <div class="crm-feed" id="crmFeed">
+                                            <div class="crm-item empty">
+                                                <p>사장님 화면 탭에서 제안서 슬라이더를 조작하거나 문의하기 버튼을 누르면 실시간 알림이 발송됩니다.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Simulated Call Action Card -->
+                                        <div class="gold-time-card" id="goldTimeCard">
+                                            <div class="gold-header">
+                                                <span class="fire-emoji">🔥</span>
+                                                <span>골든타임 영업 기회 포착!</span>
+                                            </div>
+                                            <p>사장님이 현재 <strong>매출 계산기 슬라이더</strong>를 직접 조작하며 깊은 관심을 보이고 있습니다.</p>
+                                            <div class="closing-timer">
+                                                <span>⌛ 최적 통화 타이밍:</span>
+                                                <span class="timer-countdown" id="goldCountdown">01:00</span>
+                                            </div>
+                                            <button class="btn-gold-call" id="btnGoldCallAction">📞 사장님께 전화 걸어 클로징하기</button>
+                                        </div>
+
+                                        <!-- REAL-TIME DIARY DATABASE LOGS (Free Demo Mode ONLY) -->
+                                        <div class="sales-diary-database" id="salesDiaryDatabase">
+                                            <h4>📝 로컬 저장된 영업 일지 목록</h4>
+                                            <div class="diary-list" id="diaryList">
+                                                <!-- Dynamic entries -->
+                                                <div class="diary-item-empty">저장된 영업일지가 없습니다.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ================= SCREEN 4: AI ROLEPLAYING ================= -->
+                        <div class="app-view" id="view-roleplay">
+                            <div class="roleplay-setup" id="roleplaySetup">
+                                <div class="setup-illustration">🤖💼</div>
+                                <h3>AI 가상 사장님 거절 극복 훈련</h3>
+                                <p class="setup-desc">방문 미팅 직전, 까다로운 거절 패턴을 학습한 AI 가상 사장님과 대화식 훈련을 진행하세요!</p>
+                                
+                                <div class="level-select-card">
+                                    <h4>훈련 상대 설정</h4>
+                                    <!-- Boss Select Dropdown -->
+                                    <div class="boss-select-container">
+                                        <select class="boss-select-dropdown" id="bossSelect">
+                                            <option value="0">👨‍🍳 박길동 사장님 (돈가스집 - 난이도: ★★★★☆)</option>
+                                            <option value="1">👩‍🍳 이영희 사장님 (카페 - 난이도: ★★★☆☆)</option>
+                                            <option value="2">👨‍🍳 최성진 사장님 (횟집 - 난이도: ★★★★★)</option>
+                                        </select>
+                                    </div>
+                                    <div class="boss-profile" style="margin-top: 10px;">
+                                        <span class="boss-avatar" id="bossAvatarDisp">👨‍🍳</span>
+                                        <div class="boss-info">
+                                            <strong id="bossNameDisp">박길동 사장님 (돈가스 전문점)</strong>
+                                            <span id="bossDescDisp">성격: 깐깐함, 광고 불신 심함</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-start-roleplay" id="btnStartRoleplay">🎯 모의 훈련 시작</button>
+                            </div>
+
+                            <div class="roleplay-chat-container" id="roleplayChatContainer" style="display: none;">
+                                <div class="chat-header">
+                                    <div class="boss-mini">
+                                        <span id="chatBossAvatar">👨‍🍳</span>
+                                        <div>
+                                            <strong id="chatBossName">박길동 사장님 (AI)</strong>
+                                            <span class="status">● 실시간 대화 중</span>
+                                        </div>
+                                    </div>
+                                    <span class="round-indicator" id="chatRound">ROUND 1/3</span>
+                                </div>
+
+                                <div class="chat-messages" id="chatMessages">
+                                    <!-- Dynamic chat messages -->
+                                </div>
+
+                                <div class="chat-input-area" id="chatInputArea">
+                                    <p class="input-title">💡 최적의 세일즈 답변을 선택하세요:</p>
+                                    <div class="options-grid" id="chatOptions">
+                                        <!-- Dynamic buttons -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Scorecard Overlay -->
+                            <div class="scorecard-overlay" id="scorecardOverlay" style="display: none;">
+                                <div class="scorecard-card">
+                                    <div class="lock-icon" id="scorecardLockIcon">🔓</div>
+                                    <h2>AI 영업 훈련 기록표</h2>
+                                    <p class="scorecard-subtitle">방금 진행한 모의 훈련 결과 오답노트</p>
+                                    
+                                    <div class="score-badge">
+                                        <span class="score-num" id="scoreNum">92</span>
+                                        <span class="score-max">/ 100점</span>
+                                    </div>
+                                    
+                                    <div class="score-evaluation">
+                                        <h4 id="scoreEvalTitle">훌륭한 영업 화법입니다!</h4>
+                                        <p id="scoreEvalDesc">거절 반응에 대해 감정적 대응 대신 합리적 수치와 손실 프레이밍을 활용하여 설득력을 크게 높였습니다.</p>
+                                    </div>
+
+                                    <div class="cheat-sheet-card">
+                                        <h4>🔑 특급 치트키 영업 화법 복기</h4>
+                                        <ul class="cheat-list" id="cheatList">
+                                            <!-- Dynamic scripts based on selected boss -->
+                                        </ul>
+                                    </div>
+                                    
+                                    <button class="btn-scorecard-close" id="btnRestartRoleplay">🔄 다시 훈련하기</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ================= SCREEN 5: GOOGLE PLAY DOWNLOAD ================= -->
+                        <div class="app-view" id="view-download">
+                            <div class="playstore-container">
+                                <div class="ps-header">
+                                    <div class="ps-search-bar">
+                                        <span>🔍</span>
+                                        <input type="text" value="감자맵스" disabled>
+                                    </div>
+                                </div>
+                                
+                                <div class="ps-app-card">
+                                    <div class="app-info-row">
+                                        <div class="app-logo-box">🥔</div>
+                                        <div class="app-details">
+                                            <h1>감자맵스</h1>
+                                            <p class="developer">Gamja Network Ltd.</p>
+                                            <p class="category">비즈니스 / 마케팅 / 지도</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="app-stats-row">
+                                        <div class="ps-stat">
+                                            <strong class="val">4.8 ★</strong>
+                                            <span class="lbl">별점 4.5만 개</span>
+                                        </div>
+                                        <div class="ps-stat line">
+                                            <strong class="val">10만+</strong>
+                                            <span class="lbl">다운로드</span>
+                                        </div>
+                                        <div class="ps-stat line">
+                                            <strong class="val">3+</strong>
+                                            <span class="lbl">만 3세 이상</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Install Button -->
+                                    <button class="btn-ps-install" id="btnPsInstall">설치</button>
+                                </div>
+
+                                <div class="ps-screenshots-carousel">
+                                    <div class="screenshot-item">
+                                        <span>🔥 신규 매장 포착</span>
+                                    </div>
+                                    <div class="screenshot-item">
+                                        <span>🔔 실시간 FCM 알림</span>
+                                    </div>
+                                    <div class="screenshot-item">
+                                        <span>🤖 AI 거절 훈련</span>
+                                    </div>
+                                </div>
+
+                                <div class="ps-vip-membership-banner">
+                                    <div class="banner-content">
+                                        <h3>👑 감자맵스 VIP 멤버십</h3>
+                                        <p>전국 인허가 상권 실시간 배달 + 무제한 AI 영업 롤플레잉!</p>
+                                        <div class="highlight">당신의 매출 그래프를 바꾸는 영업 치트키.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- End of Screen Container -->
+                    
+                    <!-- Bottom Navigation Bar -->
+                    <div class="phone-navbar" id="phoneNavbar">
+                        <button class="nav-item active" data-view="dashboard" id="navDash">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-lbl">분석</span>
+                        </button>
+                        <button class="nav-item" data-view="timing" id="navTiming">
+                            <span class="nav-icon">📍</span>
+                            <span class="nav-lbl">타이밍</span>
+                        </button>
+                        <button class="nav-item" data-view="tracking" id="navTracking">
+                            <span class="nav-icon">🔔</span>
+                            <span class="nav-lbl">추적</span>
+                        </button>
+                        <button class="nav-item" data-view="roleplay" id="navRoleplay">
+                            <span class="nav-icon">🤖</span>
+                            <span class="nav-lbl">AI예습</span>
+                        </button>
+                        <button class="nav-item" data-view="download" id="navDownload">
+                            <span class="nav-icon">📲</span>
+                            <span class="nav-lbl">설치</span>
+                        </button>
+                    </div>
+
+                    <!-- Push Notification Banner Overlay (FCM Alert popup) -->
+                    <div class="fcm-push-banner" id="fcmPushBanner">
+                        <div class="fcm-icon">🥔</div>
+                        <div class="fcm-text-box">
+                            <h5 id="fcmTitle">감자맵스 푸시 알림</h5>
+                            <p id="fcmMessage">알림 메시지 본문이 들어갑니다.</p>
+                        </div>
+                        <span class="fcm-time">방금</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Floating Sound Chime Pre-loader / Help Modal -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-card">
+            <h2>🥔 감자맵스 웹 시뮬레이터</h2>
+            <p>마케팅 영업의 치트키, 감자맵스의 신규 광고 대본을 시연하고 실제로 앱을 조작할 수 있는 고급 프로토타입 시뮬레이터입니다.</p>
+            
+            <div class="features-summary">
+                <div class="feat-summary-item">
+                    <span>🎙️</span>
+                    <div>
+                        <strong>음성 안내 동기화</strong>
+                        <p>브라우저 AI 음성(TTS)을 사용해 대본 낭독에 맞춰 앱 화면이 유기적으로 자동 변환됩니다.</p>
+                    </div>
+                </div>
+                <div class="feat-summary-item">
+                    <span>💡</span>
+                    <div>
+                        <strong>실제 작동하는 시뮬레이션</strong>
+                        <p>레이더 스캔, 실시간 제안서 연동 알림(FCM), AI 가상 사장님과의 역할 대화 훈련을 실제로 체험할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-welcome-start" id="btnWelcomeStart">체험 시작하기</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

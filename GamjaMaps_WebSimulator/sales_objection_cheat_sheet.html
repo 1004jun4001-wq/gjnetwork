@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감자맵스 영업 치트키 - 소상공인 거절 극복 세일즈 오답노트</title>
+    <!-- Google Fonts: Noto Sans KR & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d97706;
+            --primary-dark: #b45309;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-600: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--slate-900);
+            background-color: #f8fafc;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-200);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px double var(--primary);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .badge {
+            background-color: #fef3c7;
+            color: #d97706;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--slate-900);
+            line-height: 1.3;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            font-weight: 400;
+        }
+
+        .doc-meta {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .intro-box {
+            background-color: var(--gray-100);
+            border-left: 5px solid var(--slate-800);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            color: var(--gray-600);
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--slate-800);
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .case-card {
+            background: #ffffff;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .case-header {
+            background-color: #fffbeb;
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .case-num {
+            font-family: 'Outfit', sans-serif;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .objection-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #991b1b;
+            margin-top: 4px;
+        }
+
+        .case-body {
+            padding: 24px;
+        }
+
+        .analysis-block {
+            margin-bottom: 18px;
+        }
+
+        .analysis-block h4 {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .analysis-block p {
+            font-size: 0.92rem;
+            color: var(--slate-800);
+        }
+
+        .script-block {
+            background-color: #fafafa;
+            border: 1px dashed var(--primary);
+            border-radius: 8px;
+            padding: 18px;
+            position: relative;
+        }
+
+        .script-block h4 {
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .script-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--slate-900);
+            line-height: 1.7;
+            word-break: keep-all;
+        }
+
+        .highlight-word {
+            color: #c2410c;
+            font-weight: 700;
+            background-color: #fff7ed;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        .btn-print {
+            display: block;
+            width: max-content;
+            margin: 20px auto 0 auto;
+            background-color: var(--slate-800);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-print:hover {
+            background-color: var(--slate-900);
+        }
+
+        /* Print Optimization styling */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            .btn-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <span class="badge">GAMJA MAPS SALES MANUAL</span>
+            <h1>소상공인 거절 극복 세일즈 오답노트</h1>
+            <p class="subtitle">마케팅 계약 성공률을 200% 극대화하는 실전 화법 가이드</p>
+            <div class="doc-meta">Issued by Gamja Network // com.gamja.salesanalyzer</div>
+        </header>
+
+        <div class="intro-box">
+            본 매뉴얼은 현장 영업(콜드 아웃바운드) 또는 제안 미팅 단계에서 소상공인 사장님들이 제기하는 대표적인 거절 반응들을 분석하고, 감자맵스의 데이터 솔루션을 활용하여 논리적으로 설득 및 계약 체결(Closing)로 이끄는 역발상 세일즈 가이드라인입니다.
+        </div>
+
+        <h3 class="section-title">📌 거절 패턴 유형별 오답노트</h3>
+
+        <!-- CASE 1 -->
+        <div class="case-card">
+            <div class="case-header">
+                <span class="case-num">Case 01. 매출 방어형 거절</span>
+                <h3 class="objection-text">"우리는 마케팅 필요 없어요. 인터넷 안 해도 손님 알아서 잘 옵니다."</h3>
+            </div>
+            <div class="case-body">
+                <div class="analysis-block">
+                    <h4>원인 분석</h4>
+                    <p>사장님은 현재 발생하는 매출에 안주하고 있으며, 자신도 모르게 인근 상권 내 1등 매장에 신규 고객을 빼앗기고 있는 '보이지 않는 매출 손실'을 체감하지 못하고 있습니다.</p>
+                </div>
+                <div class="script-block">
+                    <h4>💡 감자맵스 대응 스크립트</h4>
+                    <p class="script-text">
+                        "사장님, 매장에 손님이 꾸준히 오는 것은 사실입니다. 하지만 감자맵스 상권 통계에 따르면, 인근 300m 내 경쟁점 A가 최근 집중 광고를 집행하면서 사장님이 얻을 수 있었던 잠재 신규 유입의 약 64%를 흡수하고 있습니다.<br>
+                        이로 인해 사장님 매장에서 <span class="highlight-word">매월 420만 원 상당의 기회 손실액</span>이 발생하고 있습니다. 마케팅은 단순히 돈을 쓰는 것이 아니라, <strong>1등 매장에게 빼앗기고 있는 사장님의 몫을 되찾아오는 것</strong>입니다."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE 2 -->
+        <div class="case-card">
+            <div class="case-header">
+                <span class="case-num">Case 02. 트라우마형 거절</span>
+                <h3 class="objection-text">"인터넷 광고 다 사기 아니에요? 옛날에 돈만 날리고 효과 하나도 없었어요."</h3>
+            </div>
+            <div class="case-body">
+                <div class="analysis-block">
+                    <h4>원인 분석</h4>
+                    <p>과거에 단순 상위노출이나 전화 영업에 속아 비싼 월 사용료만 날리고 전환(실제 매출)이 이루어지지 않아 바이럴 대행업체 전체에 대한 강한 불신을 느끼고 있습니다.</p>
+                </div>
+                <div class="script-block">
+                    <h4>💡 감자맵스 대응 스크립트</h4>
+                    <p class="script-text">
+                        "네, 사장님. 월 수십만 원씩 내며 노출 보장만 외치고 실제 손님은 늘지 않아 속상하셨던 경험이 있으실 겁니다. 기존 광고주들이 효과를 못 본 이유는 정밀한 타겟팅 없이 돈만 태웠기 때문입니다.<br>
+                        저희는 국토부 및 공공 데이터 포털의 실시간 인허가 정보와 주간 검색 유입 통계만을 기반으로 작동합니다. <span class="highlight-word">사기식 약정이 아니라, 매주 어떤 키워드로 손님이 몇 명 유입되었는지 데이터 수치</span>로 투명하게 증명해 드립니다."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE 3 -->
+        <div class="case-card">
+            <div class="case-header">
+                <span class="case-num">Case 03. 환경 회피형 거절</span>
+                <h3 class="objection-text">"지금 장사 준비하느라(또는 손님 많아서) 엄청 바빠요. 나중에 오세요."</h3>
+            </div>
+            <div class="case-body">
+                <div class="analysis-block">
+                    <h4>원인 분석</h4>
+                    <p>실제 매장이 혼잡한 피크 타임이거나 재료 준비 시간(Prep)에 불쑥 방문하여 제안서 자체를 검토할 정신적 여유가 없는 물리적 상황입니다.</p>
+                </div>
+                <div class="script-block">
+                    <h4>💡 감자맵스 대응 스크립트</h4>
+                    <p class="script-text">
+                        "장사로 바쁘신 귀한 시간에 갑자기 찾아뵈어 대단히 죄송합니다. 사장님들의 황금 같은 시간을 아끼기 위해, 저희 감자맵스에서는 <span class="highlight-word">식당 브레이크 타임인 오후 3시 반(여유 배지 표시 시간)</span>에 맞추어 다시 연락드리거나 잠시 들르겠습니다.<br>
+                        그때 사장님 상권 분석 보고서만 딱 5분간 투명하게 요약 브리핑해 드리고 깔끔하게 물러나겠습니다."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE 4 -->
+        <div class="case-card">
+            <div class="case-header">
+                <span class="case-num">Case 04. 비용 부담형 거절</span>
+                <h3 class="objection-text">"설명은 좋은데 월 50만 원 마케팅 대행비는 요새 불경기라 너무 비싸네요."</h3>
+            </div>
+            <div class="case-body">
+                <div class="analysis-block">
+                    <h4>원인 분석</h4>
+                    <p>마케팅 비용을 당장 내야 하는 '지출(Cost)'로만 간주하며, 마케팅을 통해 얻을 수 있는 추가 수익(ROI)과의 상쇄 관계를 비교 분석하지 못하고 있습니다.</p>
+                </div>
+                <div class="script-block">
+                    <h4>💡 감자맵스 대응 스크립트</h4>
+                    <p class="script-text">
+                        "사장님, 매달 50만 원이라는 현금이 나가는 것은 불경기에 당연히 부담스러운 큰 결심입니다. 하지만 이렇게 한번 생각해 봐 주십시오.<br>
+                        감자맵스 시뮬레이션 결과, 마케팅 투자가 부재할 시 매월 누적되는 기회 손실액은 420만 원입니다. <span class="highlight-word">월 50만 원을 지출하여 420만 원의 손실을 방어하고 이를 매출로 돌릴 수 있다면</span>, 이는 소비가 아닌 8배 이상의 확실한 수익 거래입니다. 이 기회를 잡으셔야 합니다."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="window.print()" class="btn-print">🖨️ PDF / 인쇄물로 저장하기</button>
+
+        <footer>
+            <p>© 2026 Gamja Network. All rights reserved.</p>
+            <p>본 자료는 무단 복제 및 전재를 금하며, 감자네트워크 파트너 마케터들에게만 독점 제공됩니다.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
